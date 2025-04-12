@@ -51,6 +51,7 @@ def main():
         print(f"Time : {round(end - start, 3)}s")
 
         logger.info(f"Finished {path} in {round(end - start, 3)} seconds")
+        logger.info("")
 
 if __name__ == "__main__":
     main()
