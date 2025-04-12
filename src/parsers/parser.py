@@ -241,7 +241,7 @@ def reverse_replace_instruction(syntax_tree, replacement_map):
         if isinstance(syntax_tree.cond, VarExpr) and bool(re.match(r'^guard_\d+$', syntax_tree.cond.var)):
             syntax_tree.cond = GuardExpr(replacement_map[syntax_tree.cond.var])
         reverse_replace_instruction(syntax_tree.true, replacement_map)
-        reverse_replace_instruction(syntax_tree.fals, replacement_map)
+        reverse_replace_instruction(syntax_tree.false, replacement_map)
 
     elif isinstance(syntax_tree, ChoiceInstr):
         reverse_replace_instruction(syntax_tree.lhs, replacement_map)

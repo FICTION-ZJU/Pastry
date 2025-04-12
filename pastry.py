@@ -14,12 +14,12 @@ import logging
 parser = ArgumentParser(description="Run Pastry on probabilistic counter programs stored in files")
 
 parser.add_argument(
-    "--benchmarks",
-    dest="benchmarks",
+    "--input",
+    dest="input",
     required=True,
     type=str,
     nargs="+",
-    help="A list of benchmarks to run Pastry on"
+    help="A list of files to run Pastry on"
 )
 
 parser.add_argument(
@@ -34,9 +34,9 @@ def main():
     setup_logger(logging.CRITICAL, logging.DEBUG)
 
     args = parser.parse_args()
-    args.benchmarks = [b for bs in map(glob.glob, args.benchmarks) for b in bs]
+    args.input = [b for bs in map(glob.glob, args.input) for b in bs]
 
-    for path in args.benchmarks:
+    for path in args.input:
         print(f"Running: {path}")
         with open(path, "r", encoding="utf-8") as f:
             prog_str = f.read()
