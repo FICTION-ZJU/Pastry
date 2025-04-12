@@ -31,9 +31,6 @@ parser.add_argument(
 )
 
 def main():
-    setup_logger(logging.CRITICAL, logging.DEBUG)
-    logger = logging.getLogger("pastry")
-
     args = parser.parse_args()
     args.input = [b for bs in map(glob.glob, args.input) for b in bs]
 
@@ -41,6 +38,13 @@ def main():
         print(f"Running: {path}")
         with open(path, "r", encoding="utf-8") as f:
             prog_str = f.read()
+
+        # Extract file name without path and extension
+        file_name = os.path.splitext(os.path.basename(path))[0]
+
+        # Create a new logger for each input file
+        setup_logger(file_name, logging.CRITICAL, logging.DEBUG)
+        logger = logging.getLogger("pastry")
 
         start = time.time()
         result = run_core_analysis(prog_str)
