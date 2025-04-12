@@ -37,25 +37,25 @@ To thest the correctness of the setup, run:
 
 ```bash
 docker run --rm -v $(pwd):/data pastry:latest --input \
-/data/benchmarks/test/ast.txt \
-/data/benchmarks/test/past.txt \
-/data/benchmarks/test/none.txt
+/data/test/ast.txt \
+/data/test/past.txt \
+/data/test/none.txt
 ```
 
 Expected output is: 
 ```
-Running: benchmarks/test/ast.txt
+Running: /data/test/ast.txt
 AST  : True
 PAST : False
-Time : 0.033s
-Running: benchmarks/test/past.txt
+Time : 0.097s
+Running: /data/test/past.txt
 AST  : True
 PAST : True
 Time : 0.013s
-Running: benchmarks/test/none.txt
+Running: /data/test/none.txt
 AST  : False
 PAST : False
-Time : 0.011s
+Time : 0.01s
 ```
 
 ## Setup (Poetry)
@@ -69,22 +69,22 @@ To thest the correctness of the setup, run:
 
 ```bash
 poetry run python pastry.py --input \
-/data/benchmarks/test/ast.txt \
-/data/benchmarks/test/past.txt \
-/data/benchmarks/test/none.txt
+./test/ast.txt \
+./test/past.txt \
+./test/none.txt
 ```
 
 Expected output is: 
 ```
-Running: benchmarks/test/ast.txt
+Running: ./test/ast.txt
 AST  : True
 PAST : False
-Time : 0.033s
-Running: benchmarks/test/past.txt
+Time : 0.053s
+Running: ./test/past.txt
 AST  : True
 PAST : True
-Time : 0.013s
-Running: benchmarks/test/none.txt
+Time : 0.017s
+Running: ./test/none.txt
 AST  : False
 PAST : False
 Time : 0.011s
