@@ -19,9 +19,10 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 - [Becnhmarks](#benchmarks)
 - [Building Artifacts](#building-artifacts)
 
-## Requirements
 
-- Docker 
+## Requirements
+- Install Docker (https://www.docker.com/get-started/) in case you do not have it yet.
+- Experiments in the paper are conducted on a 3.22 GHz Apple M1 Pro processor with 16GB RAM running macOS Sonoma. Make sure to have similar specs when comparing timing results and consider differences running in a sanbox (docker).
 
 ## Project Structure
 
@@ -33,7 +34,7 @@ docker load -i artifacts/pastry.tar
 
 ## Smoke test (Docker)
 
-To thest the correctness of the setup, run:
+For a quick test to see if everything works:
 
 ```bash
 docker run --rm -v $(pwd):/data pastry:latest --input \
