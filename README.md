@@ -9,29 +9,70 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 ## Contents
 - [Project Structure](#project-structure)
 - [Requirements](#requirements)
-- [Building the Docker image (Optional)](#building-the-docker-image-optional)
-- [Smoke test](#smoke-test)
+(#building-the-docker-image-optional)
+- [Setup (Docker)](#setup-docker)
+- [Smoke test (Docker)](#smoke-test-docker)
+- [Setup (Poetry)](#setup-poetry)
+- [Smoke test (Poetry)](#smoke-test-poetry)
 - [Replicating the results from the paper](#replicating-the-results-from-the-paper)
 - [Writing your own example](#writing-your-own-example)
 - [Running your own example](#running-your-own-example)
+- [Becnhmarks](#benchmarks)
+- [Building Artifacts](#building-artifacts)
 
+## Requirements
+
+- Docker 
 
 ## Project Structure
 
-## Setup
+## Setup (Docker)
 To create a docker container from the provided tar file:
 ```bash
 docker load -i artifacts/pastry.tar
 ```
-## Smoke test
+
+## Smoke test (Docker)
+
+To thest the correctness of the setup, run:
+
+```bash
+docker run --rm -v $(pwd):/data pastry:latest --input \
+/data/benchmarks/test/ast.txt \
+/data/benchmarks/test/past.txt \
+/data/benchmarks/test/none.txt
+```
+
+Expected output is: 
+```
+Running: benchmarks/test/ast.txt
+AST  : True
+PAST : False
+Time : 0.033s
+Running: benchmarks/test/past.txt
+AST  : True
+PAST : True
+Time : 0.013s
+Running: benchmarks/test/none.txt
+AST  : False
+PAST : False
+Time : 0.011s
+```
+
+## Setup (Poetry)
+```bash
+poetry install
+```
+
+## Smoke test (Poetry)
 
 To thest the correctness of the setup, run:
 
 ```bash
 poetry run python pastry.py --input \
-benchmarks/test/ast.txt \
-benchmarks/test/past.txt \
-benchmarks/test/none.txt
+/data/benchmarks/test/ast.txt \
+/data/benchmarks/test/past.txt \
+/data/benchmarks/test/none.txt
 ```
 
 Expected output is: 
@@ -52,6 +93,13 @@ Time : 0.011s
 
 ## Replicating the results from the paper
 
+To run the benchmark suite, run: 
+
+```bash
+docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
+```
+
+The detailed logs will be available in the `./outputs/logs/` folder
 
 ## Writing your own example
 
@@ -127,7 +175,7 @@ An example of 1-d PCP:
 ```
 # this is a comment
 int x = 10
-while(x**5 - 4*x**2 + *x >= 0){
+while(x**5 - 4*x**2 + x >= 0){
     if(x <= 1000){
         {x := x - 2}[1/2]{x := x + 1} 
     }else{
@@ -205,11 +253,7 @@ More examples can be found in the benchmarks folder.
 
 
 
-### Getting Started
 
-```bash
-poetry install
-```
 
 
 ### Running 
@@ -240,6 +284,14 @@ To run on the benchmar suite:
 find benchmarks -name "*.txt" -type f | sort | xargs -I{} poetry run python pastry.py --input {}
 ```
 
+### Benchmarks
+
+To run on the benchmark suite, run: 
+
+```bash
+docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
+```
+
 
 ### Building Artifacts 
 
@@ -254,12 +306,4 @@ To run the docker image on a file located at the host's path `/path/to/data/inpu
 
 ```bash
 docker run --rm -v /path/to/data:/data pastry:latest --input /data/input.txt
-```
-
-### Benchmarks
-
-To run on the benchmark suite, run: 
-
-```bash
-docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
 ```
