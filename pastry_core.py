@@ -37,5 +37,7 @@ def run_core_analysis(prog_str):
 
     # Construct the finite labeled Markov chain that simulates the program's termination behavior
     lmc = LabeledMarkovChain(pts, threshold, rmc_forward, rmc_backward)
-    return lmc.is_ast_and_past()
+    result = lmc.is_ast_and_past()
+    logger.info(f"Analysis result: AST={result['ast']}, PAST={result['past']}")
+    return result
 
