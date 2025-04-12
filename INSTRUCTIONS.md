@@ -220,12 +220,11 @@ More examples can be found in the benchmarks folder.
 
 ### Running your own example
 
-Suppose you saved your example in a file `/path/to/your/folder/input.txt`. Than the tool can be run as:
+Suppose you saved your example in a file `input.txt`. Than the tool can be run as:
 
 
 ```bash
-docker run --rm -v /path/to/your/folder/:/data pastry:latest --input \
-poetry run python pastry.py --input input.txt
+bash run.sh input.txt
 ```
 
 
