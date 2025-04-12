@@ -1,17 +1,16 @@
 import logging
 import os
-from datetime import datetime
+import time
 
 
-def setup_logger(cmd_loglevel, file_loglevel):
+def setup_logger(file_name, cmd_loglevel, file_loglevel):
     logger = logging.getLogger("pastry")
     logger.setLevel(min(cmd_loglevel, file_loglevel))
 
     # Fixed log output path: outputs/logs/pastry_<timestamp>.log
     log_dir = os.path.join("outputs", "logs")
     os.makedirs(log_dir, exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    logfile = os.path.join(log_dir, f"pastry_{timestamp}.log")
+    logfile = os.path.join(log_dir, f"{int(time.time()}_{filename}.log")
 
     # create file handler which logs even debug messages
     fh = logging.FileHandler(logfile)
