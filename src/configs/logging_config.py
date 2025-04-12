@@ -5,7 +5,7 @@ from datetime import datetime
 
 def setup_logger(cmd_loglevel, file_loglevel):
     logger = logging.getLogger("pastry")
-    logger.setLevel(cmd_loglevel)
+    logger.setLevel(min(cmd_loglevel, file_loglevel))
 
     # Fixed log output path: outputs/logs/pastry_<timestamp>.log
     log_dir = os.path.join("outputs", "logs")
