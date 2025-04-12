@@ -32,6 +32,7 @@ parser.add_argument(
 
 def main():
     setup_logger(logging.CRITICAL, logging.DEBUG)
+    logger = logging.getLogger("pastry")
 
     args = parser.parse_args()
     args.input = [b for bs in map(glob.glob, args.input) for b in bs]
@@ -48,6 +49,8 @@ def main():
         print(f"AST  : {result['ast']}")
         print(f"PAST : {result['past']}")
         print(f"Time : {round(end - start, 3)}s")
+
+        logger.info(f"Finished {path} in {round(end - start, 3)} seconds")
 
 if __name__ == "__main__":
     main()
