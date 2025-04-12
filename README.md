@@ -9,7 +9,6 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 ## Contents
 - [Project Structure](#project-structure)
 - [Requirements](#requirements)
-(#building-the-docker-image-optional)
 - [Setup (Docker)](#setup-docker)
 - [Smoke test (Docker)](#smoke-test-docker)
 - [Setup (Poetry)](#setup-poetry)
