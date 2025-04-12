@@ -14,7 +14,7 @@ def setup_logger(file_name, cmd_loglevel, file_loglevel):
     # Fixed log output path: outputs/logs/pastry_<timestamp>.log
     log_dir = os.path.join("outputs", "logs")
     os.makedirs(log_dir, exist_ok=True)
-    logfile = os.path.join(log_dir, f"{int(time.time())}_{filename}.log")
+    logfile = os.path.join(log_dir, f"{int(time.time())}_{file_name}.log")
 
     # create file handler
     fh = logging.FileHandler(logfile)
