@@ -21,6 +21,7 @@ COPY pyproject.toml ./
 COPY pastry.py pastry_core.py ./
 COPY src/ ./src/
 COPY benchmarks/ ./benchmarks/
+COPY benchmark.sh ./
 
 RUN cat pyproject.toml
 

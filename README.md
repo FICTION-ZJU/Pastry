@@ -54,6 +54,5 @@ docker run --rm -v /path/to/data:/data pastry:latest --input /data/input.txt
 To run on the benchmark suite, run: 
 
 ```bash
-docker run --rm -v $(pwd)/outputs:/app/outputs pastry:latest --input /app/benchmarks/src01/2d_bounded_rw.txt
+docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
 ```
-
