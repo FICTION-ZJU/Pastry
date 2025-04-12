@@ -7,16 +7,20 @@ def setup_logger(file_name, cmd_loglevel, file_loglevel):
     logger = logging.getLogger("pastry")
     logger.setLevel(min(cmd_loglevel, file_loglevel))
 
+    # Clear existing handlers to avoid duplicate logs
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
     # Fixed log output path: outputs/logs/pastry_<timestamp>.log
     log_dir = os.path.join("outputs", "logs")
     os.makedirs(log_dir, exist_ok=True)
     logfile = os.path.join(log_dir, f"{int(time.time()}_{filename}.log")
 
-    # create file handler which logs even debug messages
+    # create file handler
     fh = logging.FileHandler(logfile)
     fh.setLevel(file_loglevel)
 
-    # create console handler with a higher log level
+    # create console handler
     ch = logging.StreamHandler()
     ch.setLevel(cmd_loglevel)
 
