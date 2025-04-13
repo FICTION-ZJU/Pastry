@@ -74,7 +74,6 @@ Time : 0.01s
 Reproduce the Table 1 presented in the paper by typing
 
 ```bash
-
 ```
 
 The result in CSV format can be found in ' ' folder.
@@ -86,8 +85,9 @@ To run the benchmark suite, run:
 ```bash
 docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
 ```
-or run Pastry on a specific benchmark:
-```
+or run Pastry on a specific benchmark `path/to/program.txt`:
+```bash 
+bash run.sh path/to/program.txt
 ```
 
 The detailed logs will be available in the `  ` folder.
