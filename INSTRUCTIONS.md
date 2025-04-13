@@ -110,12 +110,12 @@ declaration: "int" var "=" INT
 
 instructions: instruction* -> instructions
 
-instruction: "skip"                                                 -> skip
-            | "while" "(" guard ")" "{" block "}"                   -> while
-            | "if" "(" guard ")" "{" block "}" "else" "{" block "}" -> if
-            | "{" block "}" "[" PROB "]" "{" block "}"              -> choice
-            | var ":=" var "+" NAT                                  -> inc_assign
-            | var ":=" var "-" NAT                                  -> dec_assign
+instruction: "skip"                                 -> skip
+            | "while" "(" guard ")" block           -> while
+            | "if" "(" guard ")" block "else" block -> if
+            | block "[" PROB "]" block              -> choice
+            | var ":=" var "+" NAT                  -> inc_assign
+            | var ":=" var "-" NAT                  -> dec_assign
 
 block: "{" instruction* "}"
 
