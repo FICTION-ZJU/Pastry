@@ -1,5 +1,6 @@
 artifacts
 outputs
+pastry.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

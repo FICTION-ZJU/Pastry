@@ -18,6 +18,7 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 - [Running your own example](#running-your-own-example)
 - [Becnhmarks](#benchmarks)
 - [Building Artifacts](#building-artifacts)
+- [One-Click Table Generation](#one-click-table-generation)
 
 
 ## Requirements
@@ -306,4 +307,12 @@ To run the docker image on a file located at the host's path `/path/to/data/inpu
 
 ```bash
 docker run --rm -v /path/to/data:/data pastry:latest --input /data/input.txt
+```
+
+
+### One Click Table Generation
+To generate csv file for pastry:
+
+```bash
+bash gen_csv.sh
 ```
