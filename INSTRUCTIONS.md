@@ -14,7 +14,6 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 - [Replicating the results from the paper](#replicating-the-results-from-the-paper)
 - [Writing your own example](#writing-your-own-example)
 - [Running your own example](#running-your-own-example)
-- [Result Reproduction](#results-reproduction)
 
 
 
@@ -225,13 +224,5 @@ Suppose you saved your example in a file `input.txt`. Than the tool can be run a
 bash run.sh input.txt
 ```
 
-
-### Results Reproduction
-
-To run on the benchmark suite, run: 
-
-```bash
-docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
-```
 
 
