@@ -151,7 +151,7 @@ var: CNAME
 
 
 
-**Note:** Direct assignment format like `var := c` are not allowed. Instead, use two consecutive counter-style loops to simulate the direct assignment:
+**Note:** Direct assignment format like `var := c` are not allowed. Instead, use two consecutive counter-style loops to simulate the direct assignment `var := c`:
  ``` 
  while (var < c) { var := var + 1 }
  while (var > c) { var := var - 1 }
