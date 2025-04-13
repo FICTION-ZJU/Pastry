@@ -77,7 +77,7 @@ Reproduce the Table 1 presented in the paper by typing
 ./run.sh --run-all -t 90
 ```
 
-The result in CSV format can be found in ' ' folder.
+The result in CSV format can be found in '/home/artifact/' folder.
 
 
 ## Running Pastry on benchmarks
