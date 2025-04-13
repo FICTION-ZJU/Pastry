@@ -27,6 +27,10 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 
 ## Project Structure
 
+We provide two possilbe ways of project setup: 
+1. Building a docker container 
+2. Using [Poetry](https://python-poetry.org/) package manager
+
 ## Setup (Docker)
 To create a docker container from the provided tar file:
 ```bash
@@ -254,10 +258,7 @@ More examples can be found in the benchmarks folder.
 
 
 
-
-
-
-### Running 
+### Running (Poetry)
 Pastry accepts a list of program files, printing the termination status for each of the file, for example
 
 ```bash
@@ -285,6 +286,21 @@ To run on the benchmar suite:
 find benchmarks -name "*.txt" -type f | sort | xargs -I{} poetry run python pastry.py --input {}
 ```
 
+### Running (Docker)
+Docker image can be envoked either using a wrapper: 
+
+```bash
+bash run.sh program.txt
+```
+
+optionally, it can be done by mounting a directory containing the target intput. Suppose, the target program is located at `/host/location/program.txt`, then docker image can be invoked as 
+
+```bash 
+docker run --rm -v /host/location/:/data pastry:latest --input /data/program.txt
+```
+
+
+
 ### Benchmarks
 
 To run on the benchmark suite, run: 
@@ -293,6 +309,7 @@ To run on the benchmark suite, run:
 docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
 ```
 
+------
 
 ### Building Artifacts 
 
