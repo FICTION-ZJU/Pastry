@@ -120,7 +120,7 @@ instruction: "skip"                                                 -> skip
 block: "{" instruction* "}"
 
 expression: var                                  -> var
-           | INT                                 -> nat
+           | INT                                 -> int
            | expression "+" expression           -> add
            | expression "-" expression           -> sub
            | expression "*" expression           -> mul
