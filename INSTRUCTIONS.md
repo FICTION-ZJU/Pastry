@@ -17,13 +17,17 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 The structure of the artifact is as follows.
 
 ```bash
-/root/artifact
-├── Pastry
-│   ├── benchmarks       
+/home/artifact
+├── benchmarks
+│   ├── pastry
+│   ├── amber
+│   ├── KoAT1
+│   └── KoAT2
+├── pastry     
 │   ├── outputs     
 │   └── src          
-├── Baselines          
-├── ├── Amber           
+├── baselines          
+├── ├── amber           
 ├── ├── KoAT1
 ├── └── KoAT2  
 └── ...            
