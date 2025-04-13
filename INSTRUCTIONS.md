@@ -135,7 +135,7 @@ guard: "true"                                  -> true
       | expression ">=" expression             -> ge
       | expression "<=" expression             -> le
       | "Eq" "(" expression "," expression ")" -> eq
-      | expression "!=" expression             -> neq
+      | "Ne" "(" expression "," expression ")" -> neq
       | guard "&" guard                        -> and
       | guard "|" guard                        -> or
       | "Not" "(" guard ")"                    -> not
