@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 import time
 import glob
 import logging
-
+import signal
 
 
 parser = ArgumentParser(description="Run Pastry on probabilistic counter programs stored in files")
@@ -25,8 +25,8 @@ parser.add_argument(
 parser.add_argument(
     "--timeout",
     dest="timeout",
-    type=int,
-    default=90,
+    type=float,
+    default=90.0,
     help="Timeout in seconds for each benchmark (default: 90)"
 )
 
@@ -56,17 +56,48 @@ def main():
         setup_logger(file_name, logging.CRITICAL, logging.DEBUG)
         logger = logging.getLogger("pastry")
 
+
+        # for handling timeouts
+        def timeout_handler(signum, frame):
+            raise TimeoutError("Function execution timed out")
+
         start = time.time()
-        result = run_core_analysis(prog_str)
+        
+        timeout_occured = False
+        timeout = int(args.timeout)
+        # Set the signal handler and a timeout
+        signal.signal(signal.SIGALRM, timeout_handler)
+        signal.alarm(timeout)
+
+        try:
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(timeout)
+            result = run_core_analysis(prog_str)
+        except TimeoutError as e:
+            timeout_occured = True
+            result = {
+                "ast": "TIMEOUT",
+                "past": "TIMEOUT"
+            }
+
         end = time.time()
 
+
         if not args.csv:
-            print(f"AST  : {result['ast']}")
-            print(f"PAST : {result['past']}")
-            print(f"Time : {round(end - start, 3)}s")
+            if timeout_occured:
+                print(f"AST  : None")
+                print(f"PAST : None")
+                print(f"Time : TO")
+            else:
+                print(f"AST  : {result['ast']}")
+                print(f"PAST : {result['past']}")
+                print(f"Time : {round(end - start, 3)}s")
         else:
             file_name_no_ext = os.path.splitext(os.path.basename(path))[0]
-            print(f"{file_name_no_ext},{result['ast']},{result['past']},{round(end - start, 3)}")
+            if timeout_occured:
+                print(f"{file_name_no_ext},None,None,TO")
+            else:
+                print(f"{file_name_no_ext},{result['ast']},{result['past']},{round(end - start, 3)}")
         
 
 if __name__ == "__main__":
