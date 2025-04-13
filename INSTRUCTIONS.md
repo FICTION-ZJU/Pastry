@@ -77,7 +77,7 @@ Reproduce the Table 1 presented in the paper by typing
 
 ```
 
-The detailed logs will be available in the `  ` folder
+The result in CSV format can be found in ' ' folder.
 
 
 ## Running Pastry on benchmarks
@@ -90,7 +90,7 @@ or run Pastry on a specific benchmark:
 ```
 ```
 
-The detailed logs will be available in the `  ` folder
+The detailed logs will be available in the `  ` folder.
 
 
 ## Writing your own example
