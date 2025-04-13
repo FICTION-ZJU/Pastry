@@ -1,7 +1,4 @@
 
-
-
-
 # Pastry: the Positive AST pRototYpe
 
 Pastry is an academic prototype for deciding (positive) Almost-Sure Termination of essentially 1-d probabilistic counter programs (PCPs).
@@ -12,16 +9,31 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 - [Setup](#setup)
 - [Smoke test](#smoke-test)
 - [Replicating the results from the paper](#replicating-the-results-from-the-paper)
+- [Running Pastry on benchmarks](#running-pastry-on-benchmarks)
 - [Writing your own example](#writing-your-own-example)
 - [Running your own example](#running-your-own-example)
 
+## Project Structure
+The structure of the artifact is as follows.
 
+```bash
+/root/artifact
+├── Pastry
+│   ├── benchmarks       
+│   ├── outputs     
+│   └── src          
+├── Baselines          
+├── ├── Amber           
+├── ├── KoAT1
+├── └── KoAT2  
+└── ...            
+```
 
 ## Requirements
 - Install Docker (https://www.docker.com/get-started/) in case you do not have it yet.
 - Experiments in the paper are conducted on a 3.22 GHz Apple M1 Pro processor with 16GB RAM running macOS Sonoma. Make sure to have similar specs when comparing timing results and consider differences running in a sanbox (docker).
 
-## Project Structure
+
 
 ## Setup
 To create a docker container from the provided tar file:
@@ -59,20 +71,34 @@ Time : 0.01s
 
 ## Replicating the results from the paper
 
-To run the benchmark suite, run: 
+Reproduce the Table 1 presented in the paper by typing
 
+```bash
+
+```
+
+The detailed logs will be available in the `  ` folder
+
+
+## Running Pastry on benchmarks
+
+To run the benchmark suite, run:
 ```bash
 docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
 ```
+or run Pastry on a specific benchmark:
+```
+```
 
-The detailed logs will be available in the `./outputs/logs/` folder
+The detailed logs will be available in the `  ` folder
+
 
 ## Writing your own example
 
 This section describes the input language used by Pastry and how users can write, annotate their own probabilistic counter programs, along with example programs illustrating the format.
 
 
-### Progeam syntax rules:
+### Progeam syntax rules
 
 
 ```
@@ -135,7 +161,7 @@ In addition to 1-d PCPs, Pastry also supports verification for four classes of k
 - For **All But One Counters are Bounded PCPs**, users are required to annotate the unbounded variable and the closed intervals for other variables at the top of the program using the following format: ```/*@Bounded, <unbounded_var>, <var1>[<lower>,<upper>], <var2>[<lower>,<upper>], ...@*/```. If all variable are bounded, the ```<unbounded_var>``` can be omitted from the annotation: ```/*@Bounded, <var1>[<lower>,<upper>], <var2>[<lower>,<upper>], ...@*/```
 - For **Conditionally Bounded PCPs**, users are required to provide coefficient information at the top of the program using the following format: ```/*@CondBounded, y, x1[A1,B1,C1,D1], x2[A2,B2,C2,D2], ...@*/```
 
-### Program examples:
+### Program examples
 
 An example of 1-d PCP:
 ```
@@ -215,7 +241,7 @@ while(x + y >= 0){
 
 More examples can be found in the benchmarks folder.
 
-### Running your own example
+## Running your own example
 
 Suppose you saved your example in a file `input.txt`. Than the tool can be run as:
 
@@ -223,6 +249,5 @@ Suppose you saved your example in a file `input.txt`. Than the tool can be run a
 ```bash
 bash run.sh input.txt
 ```
-
 
 
