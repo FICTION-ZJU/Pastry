@@ -30,7 +30,7 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 ## Setup (Docker)
 To create a docker container from the provided tar file:
 ```bash
-docker load -i artifacts/pastry.tar
+docker build -t pastry:latest .
 ```
 
 ## Smoke test (Docker)
