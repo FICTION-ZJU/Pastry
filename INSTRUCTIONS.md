@@ -74,6 +74,7 @@ Time : 0.01s
 Reproduce the Table 1 presented in the paper by typing
 
 ```bash
+./run.sh --run-all -t 90
 ```
 
 The result in CSV format can be found in ' ' folder.
