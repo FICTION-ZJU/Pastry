@@ -98,7 +98,7 @@ The detailed logs will be available in the `  ` folder
 This section describes the input language used by Pastry and how users can write, annotate their own probabilistic counter programs, along with example programs illustrating the format.
 
 
-### Progeam syntax rules
+### Program syntax rules
 
 
 ```
