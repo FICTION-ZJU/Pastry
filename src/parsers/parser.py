@@ -253,10 +253,10 @@ def parse_pcp(pcp_str):
         if meta_info[0]:
             if meta_info[0] == 'Bounded':
                 logger.info(f"Program classified as Bounded ({len(pcp_dict)}-d PCP).")
-                convert_bounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], meta_info[4])
+                convert_bounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], meta_info[4], True)
             elif meta_info[0] == 'CondBounded':
                 logger.info(f"Program classified as Conditionally Bounded ({len(pcp_dict)}-d PCP).")
-                convert_condbounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3])
+                convert_condbounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], True)
         else:
             is_valid, ct_guard_dict, bench_coeff_dict = check_const_guard(replacement_map)
             if is_valid:
