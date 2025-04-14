@@ -88,9 +88,6 @@ def convert_const_AST(syntax_tree, ct_guard_dict, bench_coeff_dict):
         new_value = int(syntax_tree.rhs.rhs.value * bench_coeff_dict[sp.Symbol(ovar)])
         syntax_tree.lhs = 'z_ct'
         syntax_tree.rhs = create_AsgnInstr_rhs('z_ct', new_value)
-
-    else:
-        raise TypeError(f"Unsupported type: {type(syntax_tree).__name__}")
         
         
 def convert_const_pcp(sd_pgcl_prog, ct_guard_dict, bench_coeff_dict):
