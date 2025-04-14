@@ -4,7 +4,7 @@
 
 # Pastry: the Positive AST pRototYpe
 
-![logo](img/pastry_probabilistic_termination_verification_toolpastry_letters.png)
+![logo](pastry/img/pastry_probabilistic_termination_verification_toolpastry_letters.png)
 
 Pastry is an academic prototype for deciding (positive) Almost-Sure Termination of essentially 1-d probabilistic counter programs (PCPs).
 
