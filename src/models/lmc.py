@@ -4,23 +4,19 @@ import logging
 
 logger = logging.getLogger("pastry")
 
-
 class LabeledMarkovChain:
     def __init__(self, pts, threshold, forward_rmc, backward_rmc):
-        
         logger.info("Starting creation of Labeled Markov Chain.")
         
         self.pts = pts
         self.threshold = threshold
         self.forward_rmc = forward_rmc
         self.backward_rmc = backward_rmc
-
         self.initial_state = (0, self.pts.init_val)
         self.terminal_state = (self.pts.states_num - 1, 0)
         self.transient_states, self.null_recurrent_states = set(), set()
 
         self.G = nx.DiGraph()
-
         self.G.add_node(self.initial_state)
         self.G.add_node(self.terminal_state)
 
@@ -52,7 +48,8 @@ class LabeledMarkovChain:
                             self.G.add_edge((state_pair[0], x), (state_pair[1], x - 1))
 
                 else:
-                    raise ValueError("Invalid update value")
+                    logger.error(f"Invalid update value encountered: {transition['update_value']} for state pair: {state_pair}")
+                    raise ValueError(f"Invalid update value {transition['update_value']} encountered for state pair {state_pair}")
 
     def _convert_regular_part_to_graph(self, direction):
         if direction == 'forward':
