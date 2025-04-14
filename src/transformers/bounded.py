@@ -6,11 +6,6 @@ import sympy as sp
 def get_bounded_coeffs(var_comp_dict, var_bound_dict, M_str):
     """
     Calculate intermediate results, preparing for the convertion process.
-    
-    :param var_comp_dict: A dictionary mapping each variable to the minimum value that must be added to make it non-negative.
-    :param var_bound_dict: A dictionary mapping each variable to the bound.
-    :param M_str: The unbounded variable. If no unbounded variable exists, this value will be None.
-    :return: intermediate results used for the convertion process.
     """
     var_coeff_dict = {}
     var_sub_dict = {}
@@ -34,17 +29,9 @@ def get_bounded_coeffs(var_comp_dict, var_bound_dict, M_str):
         var_sub_dict[M_str] = DIV(z_bd, cum_coeff)
     return var_coeff_dict, var_sub_dict
 
-
 def convert_bounded_AST(syntax_tree, replacement_map, var_coeff_dict, var_sub_dict):
     """
-    Convert the syntax tree of a bounded k-d PCP to a 1-d PCP syntax tree by replacing guards
-    and assignments.
-    
-    :param syntax_tree: The syntax tree of the bounded k-d PCP to be transformed.
-    :param replacement_map: A dictionary mapping guard labels (e.g., "guard_0") to their original symbolic expressions.
-    :param var_coeff_dict: A dictionary mapping variables to the coefficients, used for updating assignments.
-    :param var_sub_dict: A dictionary for variable substitutions, used for updating guard expressions.
-    :return:
+    Convert the syntax tree of a bounded k-d PCP to a 1-d PCP syntax tree by replacing guards and assignments.
     """
     if isinstance(syntax_tree, list):
         for item in syntax_tree:
@@ -52,23 +39,18 @@ def convert_bounded_AST(syntax_tree, replacement_map, var_coeff_dict, var_sub_di
 
     elif isinstance(syntax_tree, WhileInstr):
         init_guard = replacement_map[syntax_tree.cond.var]
-        syntax_tree.cond = GuardExpr(init_guard.subs(var_sub_dict)) if init_guard.free_symbols else GuardExpr(init_guard)
-        for body in syntax_tree.body:
-            convert_bounded_AST(body, replacement_map, var_coeff_dict, var_sub_dict)
+        syntax_tree.cond = GuardExpr(init_guard.subs(var_sub_dict))
+        convert_bounded_AST(syntax_tree.body, replacement_map, var_coeff_dict, var_sub_dict)
 
     elif isinstance(syntax_tree, IfInstr):
         init_guard = replacement_map[syntax_tree.cond.var]
-        syntax_tree.cond = GuardExpr(init_guard.subs(var_sub_dict)) if init_guard.free_symbols else GuardExpr(init_guard)
-        for body in syntax_tree.true:
-            convert_bounded_AST(body, replacement_map, var_coeff_dict, var_sub_dict)
-        for body in syntax_tree.false:
-            convert_bounded_AST(body, replacement_map, var_coeff_dict, var_sub_dict)
+        syntax_tree.cond = GuardExpr(init_guard.subs(var_sub_dict))
+        convert_bounded_AST(syntax_tree.true, replacement_map, var_coeff_dict, var_sub_dict)
+        convert_bounded_AST(syntax_tree.false, replacement_map, var_coeff_dict, var_sub_dict)
 
     elif isinstance(syntax_tree, ChoiceInstr):
-        for body in syntax_tree.lhs:
-            convert_bounded_AST(body, replacement_map, var_coeff_dict, var_sub_dict)
-        for body in syntax_tree.rhs:
-            convert_bounded_AST(body, replacement_map, var_coeff_dict, var_sub_dict)
+        convert_bounded_AST(syntax_tree.lhs, replacement_map, var_coeff_dict, var_sub_dict)
+        convert_bounded_AST(syntax_tree.rhs, replacement_map, var_coeff_dict, var_sub_dict)
 
     elif isinstance(syntax_tree, AsgnInstr):
         ovar = syntax_tree.lhs
@@ -76,17 +58,9 @@ def convert_bounded_AST(syntax_tree, replacement_map, var_coeff_dict, var_sub_di
         syntax_tree.rhs.lhs = VarExpr('z_bd')
         syntax_tree.rhs.rhs = NatLitExpr(int(syntax_tree.rhs.rhs.value * var_coeff_dict[ovar]))
 
-
 def convert_bounded_pcp(sd_pgcl_prog, replacement_map, var_comp_dict, var_bound_dict, M_str):
     """
     Convert a bounded k-d PCP to a 1-d PCP.
-    
-    :param sd_pgcl_prog: A bounded k-d PCP object.
-    :param replacement_map: A dictionary mapping guard labels (e.g., "guard_0") to their original symbolic expressions.
-    :param var_comp_dict: A dictionary mapping each variable to the minimum value that must be added to make it non-negative.
-    :param var_bound_dict: A dictionary mapping each variable to the bound.
-    :param M_str: The unbounded variable. If no unbounded variable exists, this value will be None.
-    :return:
     """
     # Calculate intermediate results, preparing for the convertion process.
     var_coeff_dict, var_sub_dict = get_bounded_coeffs(var_comp_dict, var_bound_dict, M_str)
