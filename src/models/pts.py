@@ -260,7 +260,6 @@ class ProbabilisticTransitionSystem:
             output_image_path = 'probabilistic_transition_system.png'
         else:
             output_image_path = file_path
-
         G.draw(output_image_path)
 
         if ifshow:
