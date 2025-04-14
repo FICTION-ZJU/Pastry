@@ -94,11 +94,11 @@ def convert_const_pcp(sd_pgcl_prog, ct_guard_dict, bench_coeff_dict):
     """
     Convert a constant k-d PCP to a 1-d PCP.
     """
-    # Update the program's variables and their initial values.
+    # Update the program's variables and their initial values
     init_val = 0
     for var, var_init in sd_pgcl_prog.variables.items():
         init_val += int(bench_coeff_dict[sp.Symbol(var)] * var_init)
     sd_pgcl_prog.variables = {'z_ct': init_val}
     
-    # Transform the program's instructions by updating guards and assignments.
+    # Transform the program's instructions by updating guards and assignments
     convert_const_AST(sd_pgcl_prog.instructions, ct_guard_dict, bench_coeff_dict)
