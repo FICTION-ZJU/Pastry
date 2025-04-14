@@ -16,9 +16,6 @@ logger = logging.getLogger('pastry')
 def remove_comments_from_code(input_string):
     """
     Remove all single-line comments (starting with '#') from the given program string.
-
-    :param input_string: The full program as a string, possibly containing line comments.
-    :return: A string with all line comments removed.
     """
     lines = input_string.splitlines()
     cleaned_lines = [line.split('#', 1)[0].rstrip() for line in lines]
@@ -79,13 +76,7 @@ def split_string(input_string):
     """
     Split the program string into two parts: the initial variable declarations and the remaining program body. 
     Also extract the initialized values of the declared variables.
-
-    :param input_string: The program string, including variable declarations.
-    :return: A tuple containing:
-             - remaining_part (str): the program string with declarations removed.
-             - variables_dict (dict): a mapping from variable names to their initialized values.
     """
-    
     # Remove leading whitespace from the input
     input_string = input_string.lstrip()
     
@@ -123,14 +114,7 @@ def replace_guards(code):
     and collect the set of variables that appear in any guard condition.
     This transformation is necessary to ensure that the resulting program string can be parsed
     by the `probably` library.
-    
-    :param code: The program string containing guard expressions.
-    :return: A tuple containing:
-             - modified_code (str): the program string with guard expressions replaced by labels.
-             - replacement_map (dict): mapping from each guard label to its parsed expression.
-             - meaningful_vars (set): set of variables used in all guard expressions.
     """
-    
     # Match 'if (...) {' or 'while (...) {' blocks and capture the inner guard condition
     pattern = re.compile(r'\b(if|while)\s*\(\s*(.*?)\s*\)\s*{', re.DOTALL)
     replacement_map = {}
@@ -164,16 +148,6 @@ def remove_redundant_instructions(syntax_tree, meaningful_vars):
     """
     Recursively remove redundant assignment and control instructions that do not affect 
     the termination behavior of the program.
-
-    Specifically, this includes:
-        - Skip statements
-        - Assignments to variables that never appear in any guard condition
-        - Identity updates, e.g., x := x + 0 or x := x - 0
-        - Trivial assignments, e.g., x := x + 0
-
-    :param syntax_tree: The program syntax tree to be simplified.
-    :param meaningful_vars: Set of variables that appear in guard conditions.
-    :return: 
     """
     if isinstance(syntax_tree, list): 
         i = 0
@@ -222,11 +196,6 @@ def reverse_replace_instruction(syntax_tree, replacement_map):
     """
     Reverse the earlier transformation that replaced complex guard expressions 
     with labels such as "guard_0", "guard_1", etc.
-
-    :param syntax_tree: The program syntax tree to be updated.
-    :param replacement_map: A dictionary mapping guard label (e.g., "guard_0") 
-                            to its original symbolic expression.
-    :return: 
     """
     if isinstance(syntax_tree, list):
         for item in syntax_tree:
@@ -251,12 +220,8 @@ def reverse_replace_instruction(syntax_tree, replacement_map):
 def parse_pcp(pcp_str):
     """
     Parse a probabilistic counter program string into a syntax tree.
-    
     Automatically detects and handles 1-d, Constant, and Monotone PCPs. 
     For Bounded or Conditionally Bounded PCPs, requires annotation via /*@...@*/.
-
-    :param pcp_str: The raw probabilistic counter program string.
-    :return: The input program parsed into a normalized syntax tree object.
     """
     logger.info("Preprocessing started.")
     
