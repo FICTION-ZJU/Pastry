@@ -2,12 +2,13 @@
 #    {fail:=0;sent:=sent+1}[0.9{fail:=fail+1;totalFail:=totalFail+1}]
 #}
 
-#Parameter setting: maxFail = toSend = 4
+#Parameter setting: maxFail = toSend = 5
 
-/*@Bounded,fail,[0,4],sent,[0,4]@*/
+/*@Bounded,totalFail,fail,[0,5],sent,[0,5]@*/
 int sent=0;
 int fail=0;
-while((sent<4)&(fail<4)){
+int totalFail=0;
+while((sent<5)&(fail<5)){
     {
         while(fail>0){
             fail:=fail-1
@@ -15,5 +16,6 @@ while((sent<4)&(fail<4)){
         sent:=sent+1
     }[9/10]{
         fail:=fail+1;
+        totalFail:=totalFail + 1
     }  
 }
