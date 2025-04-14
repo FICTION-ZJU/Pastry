@@ -21,7 +21,7 @@ def get_bounded_coeffs(var_comp_dict, var_bound_dict, M_str):
             var_sub_dict[var] = DIV(z_bd, cum_coeff) - comp
         else:
             var_sub_dict[var] = DIV((MOD(z_bd, ne_cum_coeff) - cum_expr), cum_coeff) - comp
-            cum_expr += cum_coeff * (sp.Symbol(var) + comp)
+            cum_expr += (cum_coeff * (sp.Symbol(var) + comp)).subs(sp.Symbol(var), var_sub_dict[var])
         cum_coeff = ne_cum_coeff
 
     if M_str:
