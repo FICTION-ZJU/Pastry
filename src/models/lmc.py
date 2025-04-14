@@ -59,11 +59,11 @@ class LabeledMarkovChain:
             rmc = self.backward_rmc
             boundary_value = -self.threshold
         else:
+            logger.error("Invalid direction: '%s'. Expected 'forward' or 'backward'.", direction)
             raise ValueError("Invalid direction")
 
         connection_rmc_states = {(direction, (0, i)) for i in range(self.pts.states_num)}
         connection_irmc_states = {(i, boundary_value) for i in range(self.pts.states_num)}
-
         for connection_rmc_state in connection_rmc_states:
             rmc_state = rmc.get_global_state(connection_rmc_state[1])
             for connection_irmc_state in connection_irmc_states:
@@ -74,12 +74,10 @@ class LabeledMarkovChain:
 
         for i, j in rmc.B_nonzero_locs:
             self.G.add_edge((direction, (0, i)), (direction, (0, j)))
-
         for i, j in rmc.C_nonzero_locs:
             self.G.add_edge((direction, (0, i)), (direction, (1, j)))
 
         transient_level1_states, nullrec_level1_states, reachability_matrix = rmc.get_level1_info()
-
         for i, j in np.ndindex(reachability_matrix.shape):
             if reachability_matrix[i, j]:
                 self.G.add_edge((direction, (1, i)), (direction, (0, j)))
@@ -87,9 +85,7 @@ class LabeledMarkovChain:
         self.transient_states |= transient_level1_states
         self.null_recurrent_states |= nullrec_level1_states
   
-
     def visualize(self, ifshow=False, file_path=None):
-
         try:
             import pygraphviz as pgv
         except ImportError:
@@ -125,13 +121,11 @@ class LabeledMarkovChain:
             output_image_path = 'finite_chain_graph.png'
         else:
             output_image_path = file_path
-
         G.draw(output_image_path)
 
         if ifshow:
             from IPython.display import Image
             return Image(filename=output_image_path)
-
         return output_image_path
 
     def verify_post_set_reachability(self):
@@ -141,7 +135,6 @@ class LabeledMarkovChain:
 
         if self.post_set.intersection(terminal_unreachable_states | self.transient_states):
             return False
-
         return True
 
     def verify_reachability_to_null_recurrent_states(self):
