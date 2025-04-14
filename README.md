@@ -3,7 +3,6 @@
 ![logo](img/pastry_probabilistic_termination_verification_toolpastry_letters.png)
 
 Pastry is an academic prototype for deciding (positive) almost-sure termination ((P)AST) of essentially 1-dimensional probabilistic counter programs (PCPs).
-
 For more technical details, please refer to our CAV'25 paper:
 
 > Sergei Novozhilov, Mingqi Yang, Mingshuai Chen, Zhiyang Li, Jianwei Yin:
