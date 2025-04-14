@@ -25,7 +25,7 @@ On the Almost-Sure Termination of Probabilistic Counter Programs. In Proc. of CA
 
 ## Requirements
 - Install Docker (https://www.docker.com/get-started/) in case you do not have it yet.
-- Experiments in the paper are conducted on a 3.22 GHz Apple M1 Pro processor with 16GB RAM running macOS Sonoma. Make sure to have similar specs when comparing timing results and consider differences running in a sanbox (docker).
+- Experiments in the paper are conducted on a 3.22 GHz Apple M1 Pro processor with 16GB RAM running macOS Sonoma. Make sure to have similar specs when comparing timing results and consider differences running in a sandbox (docker).
 
 ## Project Structure
 
