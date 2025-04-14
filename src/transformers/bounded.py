@@ -81,5 +81,5 @@ def convert_bounded_pcp(sd_pgcl_prog, replacement_map, var_comp_dict, var_bound_
         init_val += var_coeff_dict[M_str] * sd_pgcl_prog.variables[M_str]
     sd_pgcl_prog.variables = {'z_bd': init_val}
     
-    # Transform the program's instructions by updating guards and assignments.
+    # Transform the program's instructions by updating guards and assignments
     convert_bounded_AST(sd_pgcl_prog.instructions, replacement_map, var_coeff_dict, var_sub_dict)
