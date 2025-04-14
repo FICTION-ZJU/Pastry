@@ -11,7 +11,7 @@ Pastry is an academic prototype for deciding (positive) Almost-Sure Termination 
 - [Replicating the results from the paper](#replicating-the-results-from-the-paper)
 - [Running Pastry on benchmarks](#running-pastry-on-benchmarks)
 - [Writing your own example](#writing-your-own-example)
-- [Running your own example](#running-your-own-example)
+- [Running Pastry on your own example](#running-pastry-on-your-own-example)
 
 ## Project Structure
 The structure of the artifact is as follows.
@@ -247,7 +247,7 @@ while(x + y >= 0){
 
 More examples can be found in the benchmarks folder.
 
-## Running your own example
+## Running Pastry on your own example
 
 Suppose you saved your example in a file `input.txt`. Than the tool can be run as:
 
