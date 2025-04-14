@@ -7,7 +7,7 @@ For more technical details, please refer to our CAV'25 paper:
 > Sergei Novozhilov, Mingqi Yang, Mingshuai Chen, Zhiyang Li, Jianwei Yin:
 On the Almost-Sure Termination of Probabilistic Counter Programs. In Proc. of CAV 2025.
 
-This file contains instructions for the artifact evaluation of Pastry. In particular, we show how to reproduce the experimental results as reported in Table 1 of the above paper and how to run Pastry on user-supplied examples.
+This file contains instructions for the artifact evaluation of Pastry. In particular, we show how to reproduce the experimental results as reported in Table 1 of the above paper and how to reuse Pastry beyond the paper, e.g., to run user-supplied examples.
 
 ## Contents
 - [Project Structure](#project-structure)
