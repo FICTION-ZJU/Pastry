@@ -21,7 +21,16 @@ def parse_time_to_seconds(time_str):
 
 
 def run_all(timeout = 100):
-    namelist = [file.name[:-4] for file in sorted(list(Path("./benchmarks/pastry").rglob("**/*.txt")), key = str)]
+    # namelist = [file.name[:-4] for file in sorted(list(Path("./benchmarks/pastry").rglob("**/*.txt")), key = str)]
+    namelist = [
+        "symmetric_rw1", "symmetric_rw2", "biased_rw1", "biased_rw2", "biased_rw3", "biased_rw4",
+        "binomial1", "binomial2", "geometric", "2d_bounded_rw", "geometric_gauss", "asymmetric_rw1",
+        "complex_roots", "high_multiplicity", "neg_binomial", "nast_prog", "npast_prog", "dir_term",
+        "irr_runtime", "tortoise_hare_un", "tortoise_hare", "tortoise_hare_dt", "generalized_rw",
+        "two_endpoints", "infinite_loop", "two_loops", "ast_loop", "ast_rw", "biased_rw5", "skewed_rw",
+        "asymmetric_rw2", "1d_poly_rw", "catmouse", "speedpldi4", "insertsort", "speedpldi2",
+        "speedpldi3", "counterex1b", "Knuth-Yao_dice", "brp_protocol", "zeroconf"
+    ]
     with open("result/all_experiment_data.csv", "w") as f:
         with Progress(
             TimeElapsedColumn(),
