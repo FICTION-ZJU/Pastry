@@ -58,15 +58,16 @@ def convert_bounded_AST(syntax_tree, replacement_map, var_coeff_dict, var_sub_di
         syntax_tree.rhs.lhs = VarExpr('z_bd')
         syntax_tree.rhs.rhs = NatLitExpr(int(syntax_tree.rhs.rhs.value * var_coeff_dict[ovar]))
 
-def convert_bounded_pcp(sd_pgcl_prog, replacement_map, var_comp_dict, var_bound_dict, M_str):
+def convert_bounded_pcp(sd_pgcl_prog, replacement_map, var_comp_dict, var_bound_dict, M_str, filtering):
     """
     Convert a bounded k-d PCP to a 1-d PCP.
     """
-    # Filter and retain only meaningful annotation data for analysis
-    if M_str not in sd_pgcl_prog.variables:
-        M_str = None
-    var_comp_dict = {k: v for k, v in var_comp_dict.items() if k in sd_pgcl_prog.variables}
-    var_bound_dict = {k: v for k, v in var_bound_dict.items() if k in sd_pgcl_prog.variables}
+    if filtering:
+        # Filter and retain only meaningful annotation data for analysis
+        if M_str not in sd_pgcl_prog.variables:
+            M_str = None
+        var_comp_dict = {k: v for k, v in var_comp_dict.items() if k in sd_pgcl_prog.variables}
+        var_bound_dict = {k: v for k, v in var_bound_dict.items() if k in sd_pgcl_prog.variables}
     
     # Calculate intermediate results, preparing for the convertion process.
     var_coeff_dict, var_sub_dict = get_bounded_coeffs(var_comp_dict, var_bound_dict, M_str)
