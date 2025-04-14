@@ -238,12 +238,12 @@ def parse_pcp(pcp_str):
     # Filter out unused variables and redundant instructions from the program
     excluded_vars = set(pcp_dict.keys()) - meaningful_vars
     if excluded_vars:
-        log.info("The following variables were excluded: %s. Since they do not appear in any guard conditions, they are irrelevant to the termination analysis.",
+        logger.info("The following variables were excluded: %s. Since they do not appear in any guard conditions, they are irrelevant to the termination analysis.",
              ", ".join(excluded_vars))
     sd_pgcl_prog.variables = {key: value for key, value in pcp_dict.items() if key in meaningful_vars}
     remove_redundant_instructions(sd_pgcl_prog.instructions, meaningful_vars)
     if not sd_pgcl_prog.variables:
-        log.info("No program variables remain after filtering. A dummy variable 'x' with initial value 0 has been added. This addition does not affect the program's termination semantics.")
+        logger.info("No program variables remain after filtering. A dummy variable 'x' with initial value 0 has been added. This addition does not affect the program's termination semantics.")
         sd_pgcl_prog.variables['x'] = 0
     
     if len(sd_pgcl_prog.variables)>1:
