@@ -119,12 +119,6 @@ def create_WhileInstr(var_str, change_dir, threshold, period, replacement_map):
 def convert_mono_AST(syntax_tree, var_trend_dict, info_dict, replacement_map):
     """
     Convert the syntax tree of a monotone k-d PCP to a bounded k-d PCP syntax tree.
-    
-    :param syntax_tree: The syntax tree of the monotone k-d PCP to be transformed.
-    :param var_trend_dict: A dictionary mapping variables to their trend ('free', None, or boolean value).
-    :param info_dict: A dictionary containing additional information for each variable, including thresholds and periods.
-    :param replacement_map: A dictionary mapping guard labels (e.g., "guard_0") to their original symbolic expressions.
-    :return:
     """
     if isinstance(syntax_tree, list):
         i = 0
@@ -160,13 +154,6 @@ def convert_mono_AST(syntax_tree, var_trend_dict, info_dict, replacement_map):
 def check_mono_pcp(sd_pgcl_prog, replacement_map):
     """
     Check if the given k-d PCP belongs to the class of monotone k-d PCPs.
-
-    :param sd_pgcl_prog: A k-d PCP object.
-    :param replacement_map: A dictionary mapping guard labels (e.g., "guard_0") to their original symbolic expressions.
-    :return: A tuple containing:
-        - A boolean indicating whether the program is a monotone k-d PCP.
-        - A dictionary `var_trend_dict` mapping each variable to its trend ('free', `None`, or boolean).
-        - An information dictionary `info_dict` containing additional details for each variable (threshold and period).
     """ 
     # Initialize the variable trend dictionary for all variables in the program
     var_trend_dict = {key: None for key in sd_pgcl_prog.variables}
@@ -195,12 +182,6 @@ def convert_mono_pcp(sd_pgcl_prog, replacement_map, var_trend_dict, info_dict):
     1. It first converts a constant k-d PCP to a bounded k-d PCP using the `convert_mono_AST` function.
     2. It then calculates intermediate information necessary for further conversion, such as variable bounds 
        and coefficients, and transforms the program into a 1-d PCP using the `convert_bounded_pcp` function.
-
-    :param sd_pgcl_prog: A monotone k-d PCP object.
-    :param replacement_map: A dictionary mapping guard labels (e.g., "guard_0") to their original symbolic expressions.
-    :param var_trend_dict: A dictionary mapping variables to their trend ('free', None, or boolean value).
-    :param info_dict: A dictionary containing additional information for each variable, including thresholds and periods.
-    :return:
     """
     # Convert monotone k-d PCP to bounded k-d PCP.
     convert_mono_AST(sd_pgcl_prog.instructions, var_trend_dict, info_dict, replacement_map)
