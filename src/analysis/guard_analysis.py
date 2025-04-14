@@ -5,7 +5,6 @@ import math
     
 class DIV(sp.Function):
     nargs = 2
-
     @classmethod
     def eval(cls, a, b):
         if b == 1:
@@ -16,7 +15,6 @@ class DIV(sp.Function):
 
 class MOD(sp.Function):
     nargs = 2
-
     @classmethod
     def eval(cls, a, b):
         if b == 1:
