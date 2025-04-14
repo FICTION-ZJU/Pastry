@@ -3,7 +3,6 @@ from src.analysis.guard_analysis import *
 from fractions import Fraction
 import logging
 
-
 logger = logging.getLogger("pastry")
 
 class ProbabilisticTransitionSystem:
@@ -37,10 +36,6 @@ class ProbabilisticTransitionSystem:
     def get_mc_transition_prob(self, mc_state_from, mc_state_to):
         """
         Computes the transition probability between two Markov Chain states.
-
-        :param mc_state_from: Source state, e.g., (0, 2) where 0 is a PTS state and 2 is the value of the variable. (tuple)
-        :param mc_state_to: Target state in the same format as mc_state_from. (tuple)
-        :return: The transition probability between the two states. (float or tuple of int)
         """
         pts_states_pair = (mc_state_from[0], mc_state_to[0])
         if pts_states_pair not in self.states_transitions_dict:
@@ -69,14 +64,6 @@ class ProbabilisticTransitionSystem:
     def _add_transition(self, state_from, state_to, guard, prob_num, prob_den, update_value):
         """
         Creates a transition between two PTS states and updates the internal PTS transition dictionary.
-
-        :param state_from: Source state ID. (int)
-        :param state_to: Target state ID. (int)
-        :param guard: Guard condition for the transition. (GuardExpr)
-        :param prob_num: Numerator of the transition probability. (int)
-        :param prob_den: Denominator of the transition probability. (int)
-        :param update_value: The value by which the variable changes when this transition is taken. (int)
-        :return: None
         """
         if guard.sp_expr.free_symbols:
             self.non_trivial_guards.append(guard)
@@ -93,45 +80,26 @@ class ProbabilisticTransitionSystem:
     def _add_transition_from_info(self, exit_info, entry_info):
         """
         Adds a transition by unpacking information from structured exit and entry tuples.
-
-        :param exit_info: A tuple (source_state, guard, prob_num, prob_den, update_value), 
-                          representing the components needed to define a transition. (tuple)
-        :param entry_info: A tuple whose first element is the target state, e.g., (3,). (tuple)
-        :return: None
         """
         self._add_transition(exit_info[0], entry_info[0], exit_info[1], exit_info[2], exit_info[3], exit_info[4])
 
     def _parse_prob(self, prob_Expr):
         """
         Parses a probability expression into fractional form and computes its complement.
-
-        :param prob_Expr: The probability of a guarded transition. (RealLitExpr or NatLitExpr)
-        :return: A 4-tuple representing both the probability and its complement:
-                 (numerator, denominator, complement_numerator, complement_denominator). (tuple of int)
         """
         frprob = prob_Expr.to_fraction()
         nfrprob = Fraction(1, 1) - frprob
         return frprob.numerator, frprob.denominator, nfrprob.numerator, nfrprob.denominator
     
-    
     def _parse_assign(self, Assign_Expr):
         """
-        Parses an assignment instruction and extracts the integer update value 
-
-        :param Assign_Expr: An assignment expression. (AsgnInstr)
-        :return: The update amount applied to the variable, e.g., 6 or -2. (int)
+        Parses an assignment instruction and extracts the integer update value
         """
         return (-1 if Assign_Expr.rhs.operator == Binop.MINUS else 1)*Assign_Expr.rhs.rhs.value
-    
     
     def _build_block_from_assign_group(self, update_value):
         """
         Builds a PTS block for a group of assignments.
-
-        :param update_value: Update value extracted from assignment instructions.
-        :return: A tuple:
-                 - last_exit_info_list: Source info list for adding outgoing transitions. (list of tuple)
-                 - first_entry_info: Target info for adding incoming transitions. (tuple)
         """
         exists = []
         entries = []
@@ -157,12 +125,7 @@ class ProbabilisticTransitionSystem:
 
     def _build_block_from_subast(self, subast):
         """
-        Recursively builds a PTS block.
-
-        :param subast: A program fragment represented as an abstract syntax tree.
-        :return: A tuple:
-                 - exit_info_list: Source info list for adding outgoing transitions. (list of tuple)
-                 - entry_info: Target info for adding incoming transitions. (tuple)
+        Recursively builds a PTS block
         """
         if isinstance(subast, list):
             if len(subast) == 0:
@@ -255,15 +218,10 @@ class ProbabilisticTransitionSystem:
                 self._add_transition_from_info((state_choice, GuardExpr('true'), nf1, nm1, 0), rhs_entry_info)
             exit_info_list = lhs_exit_info_list + rhs_exit_info_list
             return exit_info_list, entry_info
-
-
+            
     def visualize(self, ifshow=False, file_path=None):
         """
         Visualizes the probabilistic transition system using PyGraphviz.
-
-        :param ifshow: If True, displays the generated graph image.
-        :param file_path: The file path to save the visualized graph. If None, a default file name is used.
-        :return: The file path of the saved image or the image object if displayed.
         """
         try:
             import pygraphviz as pgv
@@ -302,11 +260,9 @@ class ProbabilisticTransitionSystem:
             output_image_path = 'probabilistic_transition_system.png'
         else:
             output_image_path = file_path
-
         G.draw(output_image_path)
 
         if ifshow:
             from IPython.display import Image
             return Image(filename=output_image_path)
-
         return output_image_path

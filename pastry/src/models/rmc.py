@@ -8,15 +8,14 @@ logger = logging.getLogger("pastry")
 
 class RegularMarkovChain:
     """
-    Represents the regular markov chain for a 1-d PCP.
+    Represents the regular markov chain corresponding to a 1-d PCP.
     """
     def __init__(self, pts, direction, threshold, period):
-        
-        # Log the start of the RMC creation process
-        logger.info("Starting creation of Regular Markov Chain with direction '%s'.", direction)
+        logger.info("Starting creation of Regular Markov Chain with '%s' direction.", direction)
         
         # Initialize class variables
         if direction not in ["forward", "backward"]:
+            logger.error("Invalid direction: '%s'. Expected 'forward' or 'backward'.", direction)
             raise ValueError("Unknown direction type")
         self.pts = pts
         self.direction = direction
@@ -25,24 +24,19 @@ class RegularMarkovChain:
         self.pts_states_num = self.pts.states_num
         self.rmc_width = self.period * self.pts.states_num
         
-        # Create transition probability matrices A, B, and C for the RMC
+        # Create transition probability matrices A, B, and C
         level0_rmc_list = [self.get_global_state((0, i)) for i in range(self.rmc_width)]
         level1_rmc_list = [self.get_global_state((1, i)) for i in range(self.rmc_width)]
         self.A, self.A_nonzero_locs = self._create_prob_matrix(level1_rmc_list, level0_rmc_list)
         self.B, self.B_nonzero_locs = self._create_prob_matrix(level1_rmc_list, level1_rmc_list)
         self.C, self.C_nonzero_locs = self._create_prob_matrix(level0_rmc_list, level1_rmc_list)
         
-        # Log the completion of the RMC creation
         logger.info("Regular Markov Chain with direction '%s' successfully created. Each level contains %d states.", direction, self.rmc_width)
 
     def get_global_state(self, rmc_state):
         """
         Converts the regular Markov chain state to a global state.
-
-        :param rmc_state: The regular Markov chain state.
-        :return: The global state.
         """
-
         num = rmc_state[0] * (self.rmc_width) + rmc_state[1]
         multiple, remainder = divmod(num, self.pts_states_num)
         if self.direction == 'forward':
@@ -54,9 +48,7 @@ class RegularMarkovChain:
     def _create_prob_matrix(self, from_global_state_list, to_global_state_list):
         """
         Creates a transition probability matrix.
-
         """
-
         nonzero_locs = set()
         re_matrix = np.zeros((self.rmc_width, self.rmc_width), dtype=object)
         for i in range(self.rmc_width):
@@ -66,8 +58,7 @@ class RegularMarkovChain:
                     nonzero_locs.add((i, j))
                     re_matrix[i, j] = prob
         return re_matrix, nonzero_locs
-
-
+        
     def get_boolean_reachability_matrix(self):
         """
         Calculates boolean reachability matrix using sparse matrix operations.
@@ -98,13 +89,11 @@ class RegularMarkovChain:
             # Update for next iteration
             re_old, re_new = re_new, new_re
 
-
     def get_approximate_reachability_matrix(self, tol=1e-8, max_iter=50000):
         """
         Computes approximate reachability matrix.
-
         """
-
+        # Convert to numpy matrix with float values
         A_float = self.hybrid_to_float_matrix(self.A)
         B_float = self.hybrid_to_float_matrix(self.B)
         C_float = self.hybrid_to_float_matrix(self.C)
@@ -116,11 +105,14 @@ class RegularMarkovChain:
                 print(f"Converged after {iteration + 1} iterations.")
                 return re_next
             re_new = re_next
+        logger.warning("Maximum number of iterations (%d) reached without convergence.", max_iter)
         print("Warning: Maximum number of iterations reached without convergence.")
         return re_new
 
     def hybrid_to_float_matrix(self, hybrid_matrix):
-
+        """
+        Convert a hybrid component numpy matrix to a float numpy matrix.
+        """
         float_matrix = np.zeros(hybrid_matrix.shape, dtype=float)
         for i in range(hybrid_matrix.shape[0]):
             for j in range(hybrid_matrix.shape[1]):
@@ -130,14 +122,15 @@ class RegularMarkovChain:
                 else:
                     numerator, denominator = element
                     float_matrix[i, j] = numerator / denominator
-
         return float_matrix
 
     def hybrid_to_sympy_rational(self, hybrid_matrix):
-
+        """
+        Convert a hybrid component numpy matrix to a rational sympy matrix.
+        """
         rows, cols = hybrid_matrix.shape
         sympy_matrix = []
-
+        
         for i in range(rows):
             row = []
             for j in range(cols):
@@ -148,18 +141,25 @@ class RegularMarkovChain:
                     numerator, denominator = element
                     row.append(sp.Rational(numerator, denominator))
             sympy_matrix.append(row)
-
         return sp.Matrix(sympy_matrix)
 
     def _get_bscc_category(self, bscc, ac_matrix):
-
+        """
+        Determines the category of the bottom strongly connected component by calculating its steady-state distribution.
+        """
         size = len(bscc)
 
+        # Directly return the result for a BSCC with only one state
         if size == 1:
             return bscc[0] // self.rmc_width
 
+        # Extract the submatrix of the adjacency matrix corresponding to the BSCC
         hybrid_matrix = ac_matrix[np.ix_(bscc, bscc)]
+
+        # Convert hybrid matrix to a rational transition matrix
         transition_matrix = self.hybrid_to_sympy_rational(hybrid_matrix)
+
+        # Set up the system of equations for the steady-state distribution
         pi_symbols = sp.symbols(f'pi0:{size}')
         pi_vector = sp.Matrix(pi_symbols)
         equations = [sp.Eq(sum(pi_vector[j] * transition_matrix[j, i] for j in range(size)), pi_vector[i]) for i in
@@ -168,10 +168,13 @@ class RegularMarkovChain:
         solution = sp.solve(equations, pi_symbols, dict=True)
 
         if len(solution) > 1:
+            logger.error("Multiple solutions found for steady-state distribution. Expected a unique solution.")
             raise ValueError("Multiple solutions found, expected a unique solution.")
 
         if solution:
             stationary_distribution = [solution[0][pi_symbols[i]] for i in range(size)]
+
+            # Calculate left and right transition trends
             left_transition_trend = 0
             right_transition_trend = 0
             for i, state in enumerate(bscc):
@@ -187,10 +190,13 @@ class RegularMarkovChain:
             else:
                 return 1
         else:
+            logger.error("No solution found for the stationary distribution.")
             raise ValueError("No solution found for the stationary distribution.")
 
     def _analyze_runway(self, max_level):
-
+        """
+        Constructs and analyzes the runway to identify trap states and exit states.
+        """
         runway = nx.DiGraph()
         level1_nodes = {(1, i) for i in range(self.rmc_width)}
         left_barrier = {(0, i) for i in range(self.rmc_width)}
@@ -199,14 +205,15 @@ class RegularMarkovChain:
         runway.add_nodes_from(left_barrier)
         runway.add_nodes_from(right_barrier)
 
+        #construct runway
         for i, j in self.A_nonzero_locs:
             for k in range(0, max_level):
                 runway.add_edge((k + 1, i), (k, j))
-
+                
         for i, j in self.B_nonzero_locs:
             for k in range(0, max_level + 1):
                 runway.add_edge((k, i), (k, j))
-
+                
         for i, j in self.C_nonzero_locs:
             for k in range(1, max_level):
                 runway.add_edge((k, i), (k + 1, j))
@@ -214,10 +221,8 @@ class RegularMarkovChain:
         boolean_reachability_matrix = self.get_boolean_reachability_matrix()
         source_nodes = [(max_level, i) for i in range(self.rmc_width)]
         target_nodes = [(max_level - 1, j) for j in range(self.rmc_width)]
-
         edges = {(source_nodes[i], target_nodes[j]) for i in range(self.rmc_width) for j in range(self.rmc_width) if
                  boolean_reachability_matrix[i, j]}
-        
         runway.add_edges_from(edges)
         
         trap_nodes = set(runway.nodes)
@@ -228,7 +233,6 @@ class RegularMarkovChain:
         left_barrier_ancestors = nx.ancestors(runway, 'left_fake')
         right_barrier_ancestors = nx.ancestors(runway, 'right_fake')
         trap_nodes = trap_nodes - left_barrier_ancestors - right_barrier_ancestors
-        trap_nodes = trap_nodes - left_barrier - right_barrier
         runway.remove_nodes_from(['left_fake', 'right_fake'])
 
         trapped_level1_states, exit_level1_states = set(), set()
@@ -238,15 +242,12 @@ class RegularMarkovChain:
                 trapped_level1_states.add((self.direction, node))
             elif not (reachable_nodes & right_barrier):
                 exit_level1_states.add((self.direction, node))
-
         return trapped_level1_states, exit_level1_states, boolean_reachability_matrix
 
     def get_level1_info(self):
         """
-        Determines level1 states info based on the abstract chain and runway analysis.
-
+        Determines level1 states info based on the coupled markov chain and runway analysis.
         """
-        
         logger.info("Starting the analysis of Regular Markov Chain with direction: %s.", self.direction)
 
         ac_matrix = np.block([[self.A, self.B, self.C], [self.A, self.B, self.C], [self.A, self.B, self.C]])
@@ -287,7 +288,7 @@ class RegularMarkovChain:
                                 axis_acstates_categories[acstate] = max(axis_acstates_categories[acstate],
                                                                         bottom_category)
                                 
-        logger.info("Starting the analysis of the Runway. Runway state count: %d", 3 * self.rmc_width * self.rmc_width)
+        logger.info("Starting runway analysis. Total runway states to be analyzed: %d.", 3 * self.rmc_width * self.rmc_width)
         
         max_level = 3 * self.rmc_width
         trapped_level1_states, exit_level1_states, boolean_reachability_matrix = self._analyze_runway(max_level)
@@ -306,5 +307,4 @@ class RegularMarkovChain:
                     nullrec_level1_states.add(rmc_state)
                     
         logger.info("Completed the analysis of Regular Markov Chain with direction: %s.", self.direction)
-
         return transient_level1_states, nullrec_level1_states, boolean_reachability_matrix

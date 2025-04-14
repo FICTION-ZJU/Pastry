@@ -5,7 +5,6 @@ import math
     
 class DIV(sp.Function):
     nargs = 2
-
     @classmethod
     def eval(cls, a, b):
         if b == 1:
@@ -16,7 +15,6 @@ class DIV(sp.Function):
 
 class MOD(sp.Function):
     nargs = 2
-
     @classmethod
     def eval(cls, a, b):
         if b == 1:
@@ -30,11 +28,10 @@ global_dict = sp.__dict__.copy()
 global_dict["DIV"] = DIV
 global_dict["MOD"] = MOD
 
+
 class GuardExpr():
     """We introduce a new type to represent guards in PCP programs."""
-
     def __init__(self, guard):
-
         if isinstance(guard, str):
             self.sp_expr = sp.parse_expr(guard, global_dict = global_dict)
         else:
@@ -47,7 +44,6 @@ class GuardExpr():
             self.sp_var = None
 
     def evaluate(self, value):
-
         if isinstance(value, int):
             if self.sp_var:
                 return bool(self.sp_expr.subs(self.sp_var, value))
@@ -71,23 +67,18 @@ def analyze_innermost_MOD_DIV(expr, var, var_tmp):
         nonlocal first_op
         if isinstance(expr, (MOD, DIV)) and not expr.args[0].has(MOD) and not expr.args[0].has(DIV):
             op = expr.args[1]
-
             if first_op is None:
                 first_op = op
-
             if op == first_op:
                 new_arg0 = expr.args[0].subs(var, var_tmp)
                 if isinstance(expr, MOD):
                     return MOD(new_arg0, op)
                 else:
                     return DIV(new_arg0, op)
-
         if expr.args:
             new_args = tuple(traverse(arg) for arg in expr.args)
             return expr.func(*new_args)
-
         return expr
-
     return traverse(expr), first_op
 
 
@@ -119,7 +110,6 @@ def remove_innermost_MOD_DIV(expr, var, var_tmp, xr, A):
 
     if expr.args:
         return expr.func(*[remove_innermost_MOD_DIV(arg, var, var_tmp, xr, A) for arg in expr.args])
-
     return expr
 
 
@@ -145,7 +135,6 @@ def get_threshold_and_period_from_expr(expr, var, var_tmp):
                 remove_innermost_MOD_DIV(expr_subs, var, var_tmp, i, first_op), var, var_tmp)
             thresholds.append(threshold)
             periods.append(period)
-
         return first_op * (1 + max(thresholds)), first_op * math.lcm(*periods)
 
 
@@ -209,14 +198,12 @@ def minimize_guard_threshold_and_period(spguard, var, guard_threshold, guard_per
             deque_n.popleft()
             p_counter -= 1
             n_counter += 1
-
     return guard_threshold, guard_period_p, guard_period_n
 
 
 def evaluate_predicate(guard, variable_value=None):
     if variable_value:
         guard = guard.subs(variable_value)
-
     return bool(guard)
 
 
@@ -248,5 +235,4 @@ def get_threshold_and_period_from_spguard(spguard):
     guard_threshold, guard_period_positive, guard_period_negative = minimize_guard_threshold_and_period(spguard, var,
                                                                                                         guard_threshold,
                                                                                                         guard_period)
-
     return int(guard_threshold), int(guard_period_positive), int(guard_period_negative)

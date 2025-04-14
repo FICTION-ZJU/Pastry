@@ -50,7 +50,11 @@ def convert_condbounded_guards(replacement_map, var_abc_info, central_var):
         replacement_map[guard_label] = spguard.subs(var_sub_dict)
     
         
-def convert_condbounded_pcp(sd_pgcl_prog, replacement_map, var_abc_info, central_var):
+def convert_condbounded_pcp(sd_pgcl_prog, replacement_map, var_abc_info, central_var, filtering=False):
+    if filtering:
+        # Filter and retain only meaningful annotation data for analysis
+        var_abc_info = {k: v for k, v in var_abc_info.items() if k in sd_pgcl_prog.variables}
+        
     central_init = sd_pgcl_prog.variables[central_var]
     for var, abc_info in var_abc_info.items():
         sd_pgcl_prog.variables[var] = abc_info[0]*sd_pgcl_prog.variables[var] - abc_info[1]*central_init - abc_info[2]
