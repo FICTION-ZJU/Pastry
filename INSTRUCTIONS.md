@@ -19,7 +19,7 @@ The structure of the artifact is as follows.
 
 ```bash
 /home/artifact
-├── benchmarks
+├── benchmarks        # benchmarks that are konwn unsupported by a tool are excluded from the corresponding directory
 │   ├── pastry
 │   ├── amber
 │   ├── KoAT1
