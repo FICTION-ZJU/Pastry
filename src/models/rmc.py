@@ -288,7 +288,7 @@ class RegularMarkovChain:
                                 axis_acstates_categories[acstate] = max(axis_acstates_categories[acstate],
                                                                         bottom_category)
                                 
-        logger.info("Starting runway analysis. Runway state count: %d", 3 * self.rmc_width * self.rmc_width)
+        logger.info("Starting runway analysis. Total runway states to be analyzed: %d.", 3 * self.rmc_width * self.rmc_width)
         
         max_level = 3 * self.rmc_width
         trapped_level1_states, exit_level1_states, boolean_reachability_matrix = self._analyze_runway(max_level)
