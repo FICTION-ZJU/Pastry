@@ -16,14 +16,10 @@ logger = logging.getLogger('pastry')
 def remove_comments_from_code(input_string):
     """
     Remove all single-line comments (starting with '#') from the given program string.
-
-    :param input_string: The full program as a string, possibly containing line comments.
-    :return: A string with all line comments removed.
     """
     lines = input_string.splitlines()
     cleaned_lines = [line.split('#', 1)[0].rstrip() for line in lines]
     return '\n'.join(cleaned_lines)
-
 
 
 def parse_program_info(input_string):
@@ -72,6 +68,7 @@ def parse_program_info(input_string):
         return category, remaining_part, var_abc_info, central_var
     
     else:
+        logger.error(f"Unsupported category '{category}' encountered in annotation. Expected 'Bounded' or 'CondBounded'.")
         raise TypeError(f"Unsupported type: {category}")
 
 
@@ -79,20 +76,14 @@ def split_string(input_string):
     """
     Split the program string into two parts: the initial variable declarations and the remaining program body. 
     Also extract the initialized values of the declared variables.
-
-    :param input_string: The program string, including variable declarations.
-    :return: A tuple containing:
-             - remaining_part (str): the program string with declarations removed.
-             - variables_dict (dict): a mapping from variable names to their initialized values.
     """
-    
     # Remove leading whitespace from the input
     input_string = input_string.lstrip()
     
     # Pattern to match one or more variable declarations at the beginning of the string.
-    pattern = r'^\s*(int\s+[a-zA-Z_]\w*\s*=\s*-?\d+\s*(?:;|\r?\n)\s*)+'
+    pattern = r'^\s*(int\s+[a-zA-Z_]\w*\s*=\s*-?\d+\s*(?:;|\r?\n)?\s*)+'
     # Pattern to capture variable name and value from each declaration
-    var_value_pattern = r'int\s+(?P<var>[a-zA-Z_]\w*)\s*=\s*(?P<value>-?\d+)\s*(?:;|\r?\n)'
+    var_value_pattern = r'int\s+(?P<var>[a-zA-Z_]\w*)\s*=\s*(?P<value>-?\d+)\s*(?:;|\r?\n)?'
 
     # Try to match the initial declaration block from the input
     match = re.match(pattern, input_string)
@@ -110,10 +101,9 @@ def split_string(input_string):
 
         # Extract the initialized values of the declared variables
         for var_match in re.finditer(var_value_pattern, declaration_part):
-            var_name = var_match.group('var')
+            var_name = var_match.group('var').strip()
             var_value = int(var_match.group('value'))
             variables_dict[var_name] = var_value
-
     return remaining_part.lstrip(), variables_dict
 
 
@@ -123,14 +113,7 @@ def replace_guards(code):
     and collect the set of variables that appear in any guard condition.
     This transformation is necessary to ensure that the resulting program string can be parsed
     by the `probably` library.
-    
-    :param code: The program string containing guard expressions.
-    :return: A tuple containing:
-             - modified_code (str): the program string with guard expressions replaced by labels.
-             - replacement_map (dict): mapping from each guard label to its parsed expression.
-             - meaningful_vars (set): set of variables used in all guard expressions.
     """
-    
     # Match 'if (...) {' or 'while (...) {' blocks and capture the inner guard condition
     pattern = re.compile(r'\b(if|while)\s*\(\s*(.*?)\s*\)\s*{', re.DOTALL)
     replacement_map = {}
@@ -159,21 +142,10 @@ def replace_guards(code):
     return modified_code, replacement_map, meaningful_vars
 
 
-
 def remove_redundant_instructions(syntax_tree, meaningful_vars):
     """
     Recursively remove redundant assignment and control instructions that do not affect 
     the termination behavior of the program.
-
-    Specifically, this includes:
-        - Skip statements
-        - Assignments to variables that never appear in any guard condition
-        - Identity updates, e.g., x := x + 0 or x := x - 0
-        - Trivial assignments, e.g., x := x + 0
-
-    :param syntax_tree: The program syntax tree to be simplified.
-    :param meaningful_vars: Set of variables that appear in guard conditions.
-    :return: 
     """
     if isinstance(syntax_tree, list): 
         i = 0
@@ -222,11 +194,6 @@ def reverse_replace_instruction(syntax_tree, replacement_map):
     """
     Reverse the earlier transformation that replaced complex guard expressions 
     with labels such as "guard_0", "guard_1", etc.
-
-    :param syntax_tree: The program syntax tree to be updated.
-    :param replacement_map: A dictionary mapping guard label (e.g., "guard_0") 
-                            to its original symbolic expression.
-    :return: 
     """
     if isinstance(syntax_tree, list):
         for item in syntax_tree:
@@ -251,12 +218,8 @@ def reverse_replace_instruction(syntax_tree, replacement_map):
 def parse_pcp(pcp_str):
     """
     Parse a probabilistic counter program string into a syntax tree.
-    
     Automatically detects and handles 1-d, Constant, and Monotone PCPs. 
     For Bounded or Conditionally Bounded PCPs, requires annotation via /*@...@*/.
-
-    :param pcp_str: The raw probabilistic counter program string.
-    :return: The input program parsed into a normalized syntax tree object.
     """
     logger.info("Preprocessing started.")
     
@@ -274,28 +237,33 @@ def parse_pcp(pcp_str):
     sd_pgcl_prog = parse_pgcl(sd_pgcl_str)
     
     # Filter out unused variables and redundant instructions from the program
+    excluded_vars = set(pcp_dict.keys()) - meaningful_vars
+    if excluded_vars:
+        logger.info("The following variables were excluded: %s. Since they do not appear in any guard conditions, they are irrelevant to the termination analysis.",
+             ", ".join(excluded_vars))
     sd_pgcl_prog.variables = {key: value for key, value in pcp_dict.items() if key in meaningful_vars}
-    if not sd_pgcl_prog.variables:
-        sd_pgcl_prog.variables['x'] = 0
     remove_redundant_instructions(sd_pgcl_prog.instructions, meaningful_vars)
+    if not sd_pgcl_prog.variables:
+        logger.info("No program variables remain after filtering. A dummy variable 'x' with initial value 0 has been added. This addition does not affect the program's termination semantics.")
+        sd_pgcl_prog.variables['x'] = 0
     
-    if len(pcp_dict)>1:
+    if len(sd_pgcl_prog.variables)>1:
         if meta_info[0]:
             if meta_info[0] == 'Bounded':
-                logger.info(f"Program classified as Bounded ({len(pcp_dict)}-d PCP).")
-                convert_bounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], meta_info[4])
+                logger.info(f"Program classified as Bounded {len(pcp_dict)}-d PCP.")
+                convert_bounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], meta_info[4], True)
             elif meta_info[0] == 'CondBounded':
-                logger.info(f"Program classified as Conditionally Bounded ({len(pcp_dict)}-d PCP).")
-                convert_condbounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3])
+                logger.info(f"Program classified as Conditionally Bounded {len(pcp_dict)}-d PCP.")
+                convert_condbounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], True)
         else:
             is_valid, ct_guard_dict, bench_coeff_dict = check_const_guard(replacement_map)
             if is_valid:
-                logger.info(f"Program classified as Constant ({len(pcp_dict)}-d PCP).")
+                logger.info(f"Program classified as Constant {len(pcp_dict)}-d PCP.")
                 convert_const_pcp(sd_pgcl_prog, ct_guard_dict, bench_coeff_dict)
             else:
                 is_valid, var_trend_dict, info_dict = check_mono_pcp(sd_pgcl_prog, replacement_map)
                 if is_valid:
-                    logger.info(f"Program classified as Monotone ({len(pcp_dict)}-d PCP).")
+                    logger.info(f"Program classified as Monotone {len(pcp_dict)}-d PCP.")
                     convert_mono_pcp(sd_pgcl_prog, replacement_map, var_trend_dict, info_dict)
                 else:
                     logger.error("Failed to classify input program as any PCP category supported by Pastry.")
