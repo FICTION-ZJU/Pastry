@@ -69,10 +69,10 @@ def convert_bounded_pcp(sd_pgcl_prog, replacement_map, var_comp_dict, var_bound_
         var_comp_dict = {k: v for k, v in var_comp_dict.items() if k in sd_pgcl_prog.variables}
         var_bound_dict = {k: v for k, v in var_bound_dict.items() if k in sd_pgcl_prog.variables}
     
-    # Calculate intermediate results, preparing for the convertion process.
+    # Calculate intermediate results, preparing for the convertion process
     var_coeff_dict, var_sub_dict = get_bounded_coeffs(var_comp_dict, var_bound_dict, M_str)
     
-    # Compute and update the initial value of the new variable 'z_bd'.
+    # Compute and update the initial value of the new variable 'z_bd'
     init_val = 0
     for var, var_coeff in var_coeff_dict.items():
         if var != M_str:
