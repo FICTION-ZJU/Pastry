@@ -1,13 +1,8 @@
 
-# Pastry: The Positive Almost-Sure Termination Prototype
 
-Pastry is an academic prototype for deciding (positive) almost-sure termination ((P)AST) of essentially 1-dimensional probabilistic counter programs (PCPs).
-For more technical details, please refer to our CAV'25 paper:
+# Pastry: the Positive AST pRototYpe
 
-> Sergei Novozhilov, Mingqi Yang, Mingshuai Chen, Zhiyang Li, Jianwei Yin:
-On the Almost-Sure Termination of Probabilistic Counter Programs. In Proc. of CAV 2025.
-
-This file contains instructions for the artifact evaluation of Pastry. In particular, we show how to reproduce the experimental results as reported in Table 1 of the above paper and how to reuse Pastry beyond the paper, e.g., to run user-supplied examples.
+Pastry is an academic prototype for deciding (positive) Almost-Sure Termination of essentially 1-d probabilistic counter programs (PCPs).
 
 ## Contents
 - [Project Structure](#project-structure)
@@ -57,7 +52,7 @@ docker load -i pastry.tar
 For a quick test to see if everything works:
 
 ```bash
-docker run --rm pastry:latest pastry/batch_test.sh --input \
+docker run --rm --entrypoint bash pastry:latest pastry/batch_test.sh --input \
 test/ast.txt \
 test/past.txt \
 test/none.txt
@@ -82,10 +77,18 @@ Time : 0.01s
 
 ## Replicating the results from the paper
 
-Reproduce Table 1 of the paper by typing (take ~ secs):
+Reproduce the Table 1 presented in the paper by typing (take ~ mins):
 
 ```bash
-docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/outputs" -v "$(pwd)/result:/home/artifact/result" --entrypoint bash pastry:latest run.sh --run-all -t 90
+./run.sh --run-all -t 90
+```
+
+```bash
+docker run --rm -it -v "$(pwd)/outputs:/home/artifact/pastry/outputs" -v "$(pwd)/result:/home/artifact/result" --entrypoint bash pastry:latest run.sh --run-all -t 90
+```
+or on Windows PowerShell, run this command:
+```bash
+docker run --rm -it -v "$(Get-Location)/outputs:/home/artifact/pastry/outputs" -v "$(Get-Location)/result:/home/artifact/result" --entrypoint bash pastry:latest run.sh --run-all -t 90
 ```
 
 The result in CSV format can be found in '/home/artifact/result'.
@@ -95,14 +98,23 @@ The result in CSV format can be found in '/home/artifact/result'.
 
 To run the benchmark suite, run:
 ```bash
-docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/outputs" --entrypoint bash pastry:latest pastry/benchmark.sh 
+docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/output" --entrypoint bash pastry:latest pastry/benchmark.sh 
 ```
-or run Pastry on a specific benchmark (for example, 2d_bounded_rw):
+or on Windows PowerShell, run this command:
+```bash
+docker run --rm -v "$(Get-Location)/outputs:/home/artifact/pastry/output" --entrypoint bash pastry:latest pastry/benchmark.sh 
+```
+
+To run Pastry on a specific benchmark (for example, 2d_bounded_rw):
+
 ```bash 
 docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/outputs" --entrypoint bash pastry:latest run.sh pastry 2d_bounded_rw
 ```
-
-The detailed logs will be available in './outputs/logs'.
+or on Windows PowerShell, run this command:
+```bash 
+docker run --rm -v "$(Get-Location)/outputs:/home/artifact/pastry/outputs" --entrypoint bash pastry:latest run.sh pastry 2d_bounded_rw
+```
+The detailed logs will be available in '/home/artifact/pastry/outputs'.
 
 
 ## Writing your own example
@@ -132,25 +144,25 @@ instruction: "skip"                                 -> skip
 block: "{" instruction* "}"
 
 expression: var                                  -> var
-           | INT                                 -> int
-           | expression "+" expression           -> add
-           | expression "-" expression           -> sub
-           | expression "*" expression           -> mul
-           | expression "**" NAT                 -> pow
-           | "MOD" "(" expression "," POSINT ")" -> mod
-           | "DIV" "(" expression "," POSINT ")" -> div
+            | INT                                 -> int
+            | expression "+" expression           -> add
+            | expression "-" expression           -> sub
+            | expression "*" expression           -> mul
+            | expression "**" NAT                 -> pow
+            | "MOD" "(" expression "," POSINT ")" -> mod
+            | "DIV" "(" expression "," POSINT ")" -> div
 
 guard: "true"                                  -> true
-      | "false"                                -> false
-      | expression ">" expression              -> gt
-      | expression "<" expression              -> lt
-      | expression ">=" expression             -> ge
-      | expression "<=" expression             -> le
-      | "Eq" "(" expression "," expression ")" -> eq
-      | "Ne" "(" expression "," expression ")" -> neq
-      | guard "&" guard                        -> and
-      | guard "|" guard                        -> or
-      | "Not" "(" guard ")"                    -> not
+        | "false"                                -> false
+        | expression ">" expression              -> gt
+        | expression "<" expression              -> lt
+        | expression ">=" expression             -> ge
+        | expression "<=" expression             -> le
+        | "Eq" "(" expression "," expression ")" -> eq
+        | "Ne" "(" expression "," expression ")" -> neq
+        | guard "&" guard                        -> and
+        | guard "|" guard                        -> or
+        | "Not" "(" guard ")"                    -> not
 
 literal: INT     -> int
         | NAT    -> nat         
@@ -164,10 +176,10 @@ var: CNAME
 
 
 **Note:** Direct assignment format like `var := c` are not allowed. Instead, use two consecutive counter-style loops to simulate the direct assignment `var := c`:
- ``` 
- while (var < c) { var := var + 1 }
- while (var > c) { var := var - 1 }
- ```
+    ``` 
+    while (var < c) { var := var + 1 }
+    while (var > c) { var := var - 1 }
+    ```
 
 ### Annotation rules
 In addition to 1-d PCPs, Pastry also supports verification for four classes of k-d PCPs: Monotone PCPs, Constant PCPs, All But One Counters are Bounded PCPs, and Conditionally Bounded PCPs. For Monotone PCPs and Constant PCPs, Pastry supports automated checking of whether an input k-d PCP belongs to these categories and thus perform verification without any user's hint. However, For **All But One Counters are Bounded PCPs** and **Conditionally Bounded PCPs**, users are required to provide correct annotations to assist the analysis：
@@ -211,7 +223,7 @@ An example of Constant k-d PCP:
 int T = 0;
 int H = 0;
 while(T - H > -1){
-   {T := T + 1}[9/10]{H := H + 1}
+    {T := T + 1}[9/10]{H := H + 1}
 }
 ```
 
@@ -260,7 +272,6 @@ Suppose you saved your example in a file named `xxx.txt` in the path /home/artif
 
 
 ```bash
-./run.sh pastry xxx
+bash exec.sh pastry xxx
 ```
-
 
