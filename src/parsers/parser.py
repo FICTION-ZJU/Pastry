@@ -79,10 +79,10 @@ def split_string(input_string):
     # Remove leading whitespace from the input
     input_string = input_string.lstrip()
     
-    # Pattern to match one or more variable declarations at the beginning of the string
-    pattern = r'^\s*(int\s+[a-zA-Z_]\w*\s*=\s*-?\d+\s*(?:;|\r?\n)\s*)+'
+    # Pattern to match one or more variable declarations at the beginning of the string.
+    pattern = r'^\s*(int\s+[a-zA-Z_]\w*\s*=\s*-?\d+\s*(?:;|\r?\n)?\s*)+'
     # Pattern to capture variable name and value from each declaration
-    var_value_pattern = r'int\s+(?P<var>[a-zA-Z_]\w*)\s*=\s*(?P<value>-?\d+)\s*(?:;|\r?\n)'
+    var_value_pattern = r'int\s+(?P<var>[a-zA-Z_]\w*)\s*=\s*(?P<value>-?\d+)\s*(?:;|\r?\n)?'
 
     # Try to match the initial declaration block from the input
     match = re.match(pattern, input_string)
