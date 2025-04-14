@@ -68,6 +68,7 @@ def parse_program_info(input_string):
         return category, remaining_part, var_abc_info, central_var
     
     else:
+        logger.error(f"Unsupported category '{category}' encountered in annotation. Expected 'Bounded' or 'CondBounded'.")
         raise TypeError(f"Unsupported type: {category}")
 
 
