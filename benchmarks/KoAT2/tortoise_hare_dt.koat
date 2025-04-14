@@ -1,0 +1,13 @@
+(GOAL EXPECTEDCOMPLEXITY)
+  (STARTTERM (FUNCTIONSYMBOLS s0))
+  (VAR T H)
+  (RULES
+    s1(T,H) -> s2(0,H)
+    s6(T,H) -> s7(1,H)
+    s4(T,H) -> 0.9:s5(T,H) :+: 0.1:s6(T,H)
+    s3(T,H) -> s4(T,H) :|: ((T - H) + 1) > 0
+    s5(T,H) -> s3(T + 1,H)
+    s7(T,H) -> s3(T,2)
+    s2(T,H) -> s3(T,0)
+    s0(T,H) -> s1(T,H)
+  )

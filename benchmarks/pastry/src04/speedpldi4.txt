@@ -1,0 +1,30 @@
+#var i, m, n;
+#if m < 1 then skip else
+#	if n <= m then skip else
+#		i:=n;
+#		while i>0 do
+#if prob(0.5) then
+#			if i<m then
+#			  i:=i-1
+#			else
+#			  i := i-m
+#			fi
+#		else skip fi
+#od
+#	fi
+#fi
+
+#Parameter setting: m=2, n=2
+
+int i=10;
+while(i>0){
+    {
+        if(i<2){
+            i:=i-1
+        }else{
+            i:=i-2
+        }
+    }[0.5]{
+        
+    }
+}

@@ -1,0 +1,48 @@
+(GOAL EXPECTEDCOMPLEXITY)
+  (STARTTERM (FUNCTIONSYMBOLS s0))
+  (VAR s d)
+  (RULES
+    s1(s,d) -> s2(0,d)
+    s5(s,d) -> 0.5:s6(s,d) :+: 0.5:s7(s,d)
+    s4(s,d) -> s5(s,d) :|: s < 1
+    s9(s,d) -> 0.5:s10(s,d) :+: 0.5:s11(s,d)
+    s8(s,d) -> s9(s,d) :|: s < 2
+    s13(s,d) -> 0.5:s14(s,d) :+: 0.5:s15(s,d)
+    s12(s,d) -> s13(s,d) :|: s < 3
+    s19(s,d) -> s20(7,d)
+    s17(s,d) -> 0.5:s18(s,d) :+: 0.5:s19(s,d)
+    s16(s,d) -> s17(s,d) :|: s < 4
+    s23(s,d) -> s24(7,d)
+    s25(s,d) -> s26(7,d)
+    s22(s,d) -> 0.5:s23(s,d) :+: 0.5:s25(s,d)
+    s21(s,d) -> s22(s,d) :|: s < 5
+    s29(s,d) -> s30(7,d)
+    s31(s,d) -> s32(7,d)
+    s28(s,d) -> 0.5:s29(s,d) :+: 0.5:s31(s,d)
+    s27(s,d) -> s28(s,d) :|: s < 6
+    s35(s,d) -> s36(7,d)
+    s33(s,d) -> 0.5:s34(s,d) :+: 0.5:s35(s,d)
+    s27(s,d) -> s33(s,d) :|: 6<s
+    s21(s,d) -> s27(s,d) :|: 5<s
+    s16(s,d) -> s21(s,d) :|: 4<s
+    s12(s,d) -> s16(s,d) :|: 3<s
+    s8(s,d) -> s12(s,d) :|: 2<s
+    s4(s,d) -> s8(s,d) :|: 1<s
+    s3(s,d) -> s4(s,d) :|: s < 7
+    s6(s,d) -> s3(1,d)
+    s7(s,d) -> s3(2,d)
+    s10(s,d) -> s3(3,d)
+    s11(s,d) -> s3(4,d)
+    s14(s,d) -> s3(5,d)
+    s15(s,d) -> s3(6,d)
+    s18(s,d) -> s3(1,d)
+    s20(s,d) -> s3(s,1)
+    s24(s,d) -> s3(s,2)
+    s26(s,d) -> s3(s,3)
+    s30(s,d) -> s3(s,4)
+    s32(s,d) -> s3(s,5)
+    s34(s,d) -> s3(2,d)
+    s36(s,d) -> s3(s,6)
+    s2(s,d) -> s3(s,0)
+    s0(s,d) -> s1(s,d)
+  )

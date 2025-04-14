@@ -1,0 +1,11 @@
+(GOAL EXPECTEDCOMPLEXITY)
+  (STARTTERM (FUNCTIONSYMBOLS s0))
+  (VAR stop)
+  (RULES
+    s3(stop) -> 0.5:s4(stop) :+: 0.5:s5(stop)
+    s2(stop) -> s3(stop) :|: stop < 1
+    s4(stop) -> s2(stop + 1)
+    s5(stop) -> s2(stop)
+    s1(stop) -> s2(0)
+    s0(stop) -> s1(stop)
+  )

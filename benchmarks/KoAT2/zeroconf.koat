@@ -1,0 +1,20 @@
+(GOAL EXPECTEDCOMPLEXITY)
+  (STARTTERM (FUNCTIONSYMBOLS s0))
+  (VAR start established probe)
+  (RULES
+    s1(start,established,probe) -> s2(1,established,probe)
+    s2(start,established,probe) -> s3(start,0,probe)
+    s8(start,established,probe) -> s9(0,established,probe)
+    s6(start,established,probe) -> 0.5:s7(start,established,probe) :+: 0.5:s8(start,established,probe)
+    s5(start,established,probe) -> s6(start,established,probe) :|: start > 0
+    s12(start,established,probe) -> s13(1,established,probe)
+    s10(start,established,probe) -> 0.001:s11(start,established,probe) :+: 0.999:s12(start,established,probe)
+    s5(start,established,probe) -> s10(start,established,probe) :|: 0>start
+    s4(start,established,probe) -> s5(start,established,probe) :|: ((start <= 1) && (established <= 0)) && (probe <= 4)
+    s7(start,established,probe) -> s4(0,established,probe)
+    s9(start,established,probe) -> s4(start,1,probe)
+    s11(start,established,probe) -> s4(start,established,probe + 1)
+    s13(start,established,probe) -> s4(start,established,0)
+    s3(start,established,probe) -> s4(start,established,0)
+    s0(start,established,probe) -> s1(start,established,probe)
+  )

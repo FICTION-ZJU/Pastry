@@ -1,0 +1,15 @@
+(GOAL EXPECTEDCOMPLEXITY)
+  (STARTTERM (FUNCTIONSYMBOLS s0))
+  (VAR x y)
+  (RULES
+    s1(x,y) -> s2(0,y)
+    s4(x,y) -> 0.5:s5(x,y) :+: 0.5:s6(x,y)
+    s7(x,y) -> 0.5:s8(x,y) :+: 0.5:s9(x,y)
+    s5(x,y) -> s7(x + 1,y)
+    s6(x,y) -> s7(x - 1,y)
+    s3(x,y) -> s4(x,y) :|: ((x * x) + (y * y)) < 100
+    s8(x,y) -> s3(x,y + 1)
+    s9(x,y) -> s3(x,y - 1)
+    s2(x,y) -> s3(x,0)
+    s0(x,y) -> s1(x,y)
+  )

@@ -1,0 +1,29 @@
+docs
+*.omc
+.omakedb
+.omakedb.lock
+/src/output/tmp_rvg.dot
+
+#Ignore git patch files
+*.patch
+#Ignore Koat output
+*.dot
+*.png
+*.pdf
+#Ignore txt files
+*.txt
+
+gmon.out
+perf.data*
+*.output
+
+.vscode
+
+#sage file
+*.sage.py
+core
+koat-static
+*.svg
+*.cmt
+*.cmti
+log

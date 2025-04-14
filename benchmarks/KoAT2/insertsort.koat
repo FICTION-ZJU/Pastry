@@ -1,0 +1,18 @@
+(GOAL EXPECTEDCOMPLEXITY)
+  (STARTTERM (FUNCTIONSYMBOLS s0))
+  (VAR i j)
+  (RULES
+    s1(i,j) -> s2(1,j)
+    s7(i,j) -> 0.5:s8(i,j) :+: 0.5:s9(i,j)
+    s6(i,j) -> s7(i,j) :|: (j + 1) > 0
+    s8(i,j) -> s6(i,j - 1)
+    s9(i,j) -> s6(i,j)
+    s5(i,j) -> s6(i,i - 1)
+    s6(i,j) -> s10(i,j) :|: 0>j + 1
+    s4(i,j) -> 0.5:s5(i,j) :+: 0.5:s11(i,j)
+    s3(i,j) -> s4(i,j) :|: i < 3
+    s10(i,j) -> s3(i + 1,j)
+    s11(i,j) -> s3(i,j)
+    s2(i,j) -> s3(i,0)
+    s0(i,j) -> s1(i,j)
+  )

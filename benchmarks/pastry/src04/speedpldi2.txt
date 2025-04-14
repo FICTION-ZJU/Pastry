@@ -1,0 +1,33 @@
+#var v1, v2, n, m;
+#if n>=0 and m>=1 then
+#	v1 := n;
+#	v2 := 0;
+#	while v1 >=1 do
+#if prob(0.5) then
+#		if v2<m then
+#			v2:=v2+1;
+#			v1:=v1-1
+#		else 
+#			v2 := 0
+#		fi
+#	  else skip fi
+#od
+#else skip fi
+
+#Parameter setting: m=1, n=2
+
+/*@Bounded,v1,[0,2],v2,[0,1]@*/
+int v1=2;
+int v2=0;
+while(v1>=1){
+    {
+        if(v2<1){
+            v2:=v2+1
+            v1:=v1-1
+        }else{
+            v2:=v2-1
+        }
+    }[0.5]{
+        
+    }
+}

@@ -1,0 +1,7 @@
+(GOAL EXACTRUNTIME)
+(VAR (X))
+(GUARDPOLY X)
+(GUARDVAL 0)
+(UPDATES 5/21:(1) :+: 4/7:(0) :+: 3/35:(-1) :+: 7/75:(-2) :+: 2/175:(-3))
+(PRECISION 20)
+(INITIAL (10))

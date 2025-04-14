@@ -1,0 +1,3 @@
+scipy
+diofant==0.11.0
+lark-parser==0.11.0

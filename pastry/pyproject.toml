@@ -1,0 +1,23 @@
+[project]
+name = "pastry"
+version = "0.1.0"
+description = "Probabilistic Program Termination Analyzer"
+authors = [
+    {name = "Mingshuai Chen", email = "m.chen@zju.edu.cn"},
+    {name = "Zhiyang Li", email = "misakalzy@zju.edu.cn"},
+    {name = "Sergei Novozhilov", email = "snovozhilov@connect.ust.hk"},
+    {name = "Mingqi Yang", email = "mingqiyang@zju.edu.cn"}
+]
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "probably @ ./probably",
+    "numpy (>=1.26.4,<1.26.5)",
+    "sympy (>=1.13.3,<2.0.0)",
+    "networkx (>=2.5,<2.6)",  # Changed to be compatible with probably's requirement
+    "rustworkx (>=0.16.0,<0.17.0)",
+    "scipy (>=1.15.2,<2.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
