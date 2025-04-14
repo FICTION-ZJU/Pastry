@@ -51,7 +51,7 @@ docker load -i pastry.tar
 For a quick test to see if everything works:
 
 ```bash
-docker run --rm -v $(pwd):/data pastry:latest pastry/batch_test.sh --input \
+docker run --rm pastry:latest pastry/batch_test.sh --input \
 test/ast.txt \
 test/past.txt \
 test/none.txt
