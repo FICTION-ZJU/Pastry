@@ -58,7 +58,7 @@ def convert_bounded_AST(syntax_tree, replacement_map, var_coeff_dict, var_sub_di
         syntax_tree.rhs.lhs = VarExpr('z_bd')
         syntax_tree.rhs.rhs = NatLitExpr(int(syntax_tree.rhs.rhs.value * var_coeff_dict[ovar]))
 
-def convert_bounded_pcp(sd_pgcl_prog, replacement_map, var_comp_dict, var_bound_dict, M_str, filtering):
+def convert_bounded_pcp(sd_pgcl_prog, replacement_map, var_comp_dict, var_bound_dict, M_str, filtering=False):
     """
     Convert a bounded k-d PCP to a 1-d PCP.
     """
