@@ -22,7 +22,6 @@ def remove_comments_from_code(input_string):
     return '\n'.join(cleaned_lines)
 
 
-
 def parse_program_info(input_string):
     """
     Parse the metadata annotation block (/*@...@*/) from the program header.
@@ -101,10 +100,9 @@ def split_string(input_string):
 
         # Extract the initialized values of the declared variables
         for var_match in re.finditer(var_value_pattern, declaration_part):
-            var_name = var_match.group('var')
+            var_name = var_match.group('var').strip()
             var_value = int(var_match.group('value'))
             variables_dict[var_name] = var_value
-
     return remaining_part.lstrip(), variables_dict
 
 
@@ -141,7 +139,6 @@ def replace_guards(code):
     # Apply guard replacement to the entire program string
     modified_code = pattern.sub(replacement_function, code)
     return modified_code, replacement_map, meaningful_vars
-
 
 
 def remove_redundant_instructions(syntax_tree, meaningful_vars):
@@ -242,11 +239,11 @@ def parse_pcp(pcp_str):
     excluded_vars = set(pcp_dict.keys()) - meaningful_vars
     if excluded_vars:
         log.info("The following variables were excluded: %s. Since they do not appear in any guard conditions, they are irrelevant to the termination analysis.",
-             ", ".join(sorted(excluded_vars)))
+             ", ".join(excluded_vars))
     sd_pgcl_prog.variables = {key: value for key, value in pcp_dict.items() if key in meaningful_vars}
     remove_redundant_instructions(sd_pgcl_prog.instructions, meaningful_vars)
     if not sd_pgcl_prog.variables:
-        log.info("No variables remain after filtering. Adding dummy variable 'x' = 0 (no effect on program termination).")
+        log.info("No program variables remain after filtering. A dummy variable 'x' with initial value 0 has been added. This addition does not affect the program's termination semantics.")
         sd_pgcl_prog.variables['x'] = 0
     
     if len(pcp_dict)>1:
