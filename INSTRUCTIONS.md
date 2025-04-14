@@ -76,10 +76,10 @@ Time : 0.01s
 
 ## Replicating the results from the paper
 
-Reproduce the Table 1 presented in the paper by typing (take ~ mins):
+Reproduce the Table 1 presented in the paper by typing (take ~ secs):
 
 ```bash
-./run.sh --run-all -t 90
+docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/outputs" -v "$(pwd)/result:/home/artifact/result" --entrypoint bash pastry:latest run.sh --run-all -t 90
 ```
 
 The result in CSV format can be found in '/home/artifact/result'.
@@ -89,11 +89,11 @@ The result in CSV format can be found in '/home/artifact/result'.
 
 To run the benchmark suite, run:
 ```bash
-docker run --rm -v $(pwd)/outputs:/home/artifact/pastry/outputs -v $(pwd)/result:/home/artifact/result --entrypoint bash pastry:latest pastry/benchmark.sh 
+docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/outputs" --entrypoint bash pastry:latest pastry/benchmark.sh 
 ```
-or run Pastry on a specific benchmark (for example 2d_bounded_rw):
+or run Pastry on a specific benchmark (for example, 2d_bounded_rw):
 ```bash 
-./run.sh pastry 2d_bounded_rw
+docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/outputs" --entrypoint bash pastry:latest run.sh pastry 2d_bounded_rw
 ```
 
 The detailed logs will be available in './outputs/logs'.
