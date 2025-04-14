@@ -41,7 +41,7 @@ def check_const_guard(replacement_map):
                     # Compare the current coefficients with the benchmark coefficients for consistency
                     is_reversed = -1
                     for var, coeff in bench_coeff_dict.items():
-                        cur_coeff = poly.coeff_monomial(var)
+                        cur_coeff = poly.coeff_monomial(var) if poly.has(var) else 0
                         if cur_coeff != coeff:
                             if not (cur_coeff == -coeff and is_reversed == -1):
                                 return False, None, None
