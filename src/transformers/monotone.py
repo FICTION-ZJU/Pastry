@@ -10,18 +10,18 @@ def check_guard_separability(sp_guard, info_dict, var_trend_dict):
     """
     Check if a given guard is a Rectangular Guard using Sympy.
     """
-    # Extract all sub-expressions from the guard.
+    # Extract all sub-expressions from the guard
     exprs = get_exprs(sp_guard)
     
-    # Iterate through each expression to check if it contains more than one variable.
+    # Iterate through each expression to check if it contains more than one variable
     for expr in exprs:
         variables = expr.free_symbols
         
-        # If the expression contains no variables, skip it.
+        # If the expression contains no variables, skip it
         if len(variables) == 0:
             continue
             
-        # If the expression contains more than one variable, it's not a Rectangular Guard.
+        # If the expression contains more than one variable, it's not a Rectangular Guard
         elif len(variables) > 1:
             return False
         
@@ -46,10 +46,10 @@ def check_mono(sd_pgcl_prog, var_trend_dict):
     """
     Check if the program's variable trends are monotone, ensuring that at most one variable is non-monotonic.
     """
-    # Initialize the flag to track whether the program is monotone.
+    # Initialize the flag to track whether the program is monotone
     is_mono = True
     
-    # Helper function to recursively traverse the AST and check the trends of variables.
+    # Helper function to recursively traverse the AST and check the trends of variables
     def traverse_AST_get_trend(syntex_tree):
         nonlocal is_mono, var_trend_dict
         if isinstance(syntex_tree, list):
@@ -69,7 +69,7 @@ def check_mono(sd_pgcl_prog, var_trend_dict):
             traverse_AST_get_trend(syntex_tree.lhs)
             traverse_AST_get_trend(syntex_tree.rhs)
                 
-        # If the syntax tree is an AsgnInstr, check its trend.
+        # If the syntax tree is an AsgnInstr, check its trend
         elif isinstance(syntex_tree, AsgnInstr):
             change_value = syntex_tree.rhs.rhs.value
             change_dir = syntex_tree.rhs.operator == Binop.PLUS
@@ -165,7 +165,7 @@ def check_mono_pcp(sd_pgcl_prog, replacement_map):
     if not result:
         return False, None, None
     
-    # Initialize the information dictionary, excluding 'free' variables and those with no change.
+    # Initialize the information dictionary, excluding 'free' variables and those with no change
     info_dict = {key: {'threshold': [], 'period': []} for key, value in var_trend_dict.items() if value is not None and value != 'free'}
     
     # Check each guard to determine if it is a Rectangular Guard (i.e., each atomic proposition contains no more than one variable)
@@ -183,7 +183,7 @@ def convert_mono_pcp(sd_pgcl_prog, replacement_map, var_trend_dict, info_dict):
     2. It then calculates intermediate information necessary for further conversion, such as variable bounds 
        and coefficients, and transforms the program into a 1-d PCP using the `convert_bounded_pcp` function.
     """
-    # Convert monotone k-d PCP to bounded k-d PCP.
+    # Convert monotone k-d PCP to bounded k-d PCP
     convert_mono_AST(sd_pgcl_prog.instructions, var_trend_dict, info_dict, replacement_map)
     
     # Calculate intermediate information needed for the next convertion
