@@ -82,7 +82,7 @@ Time : 0.01s
 
 ## Replicating the results from the paper
 
-Reproduce the Table 1 presented in the paper by typing (take ~ secs):
+Reproduce Table 1 of the paper by typing (take ~ secs):
 
 ```bash
 docker run --rm -v "$(pwd)/outputs:/home/artifact/pastry/outputs" -v "$(pwd)/result:/home/artifact/result" --entrypoint bash pastry:latest run.sh --run-all -t 90
