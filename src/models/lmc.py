@@ -116,7 +116,6 @@ class LabeledMarkovChain:
                 G.add_edge(edge[0], edge[1])
 
         G.layout(prog='dot')
-
         if file_path is None:
             output_image_path = 'finite_chain_graph.png'
         else:
