@@ -96,7 +96,7 @@ or run Pastry on a specific benchmark (for example 2d_bounded_rw):
 ./run.sh pastry 2d_bounded_rw
 ```
 
-The detailed logs will be available in '/home/artifact/pastry/outputs'.
+The detailed logs will be available in './outputs/logs'.
 
 
 ## Writing your own example
