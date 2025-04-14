@@ -8,12 +8,6 @@ def check_const_guard(replacement_map):
     """
     Check the consistency of variable coefficients across different guards and prepare intermediate results
     for the conversion of constant k-d PCP to 1-d PCP.
-
-    :param replacement_map: A dictionary mapping guard labels (e.g., "guard_0") to their original symbolic expressions.
-    :return: A tuple containing:
-        - A boolean indicating whether the guards' coefficients are consistent (True if consistent).
-        - A dictionary mapping guard labels to their corresponding updated guard expressions.
-        - A dictionary mapping variables to their coefficients in the benchmark guard.
     """
     ct_guard_dict = {}
     bench_coeff_dict = {}
@@ -66,11 +60,6 @@ def convert_const_AST(syntax_tree, ct_guard_dict, bench_coeff_dict):
     """
     Convert the syntax tree of a constant k-d PCP to a 1-d PCP syntax tree by replacing guards
     and assignments.
-    
-    :param syntax_tree: The syntax tree of the constant k-d PCP to be transformed.
-    :param ct_guard_dict: A dictionary mapping guard labels to their corresponding updated guard expressions.
-    :param bench_coeff_dict: A dictionary mapping variables to their coefficients in the benchmark guard.
-    :return:
     """
     if isinstance(syntax_tree, list):
         for item in syntax_tree:
@@ -107,11 +96,6 @@ def convert_const_AST(syntax_tree, ct_guard_dict, bench_coeff_dict):
 def convert_const_pcp(sd_pgcl_prog, ct_guard_dict, bench_coeff_dict):
     """
     Convert a constant k-d PCP to a 1-d PCP.
-    
-    :param sd_pgcl_prog: A constant k-d PCP object.
-    :param ct_guard_dict: A dictionary mapping guard labels to their corresponding updated guard expressions.
-    :param bench_coeff_dict: A dictionary mapping variables to their coefficients in the benchmark guard.
-    :return:
     """
     # Update the program's variables and their initial values.
     init_val = 0
