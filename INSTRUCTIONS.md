@@ -75,7 +75,7 @@ Time : 0.01s
 
 ## Replicating the results from the paper
 
-Reproduce the Table 1 presented in the paper by typing(take ~ mins):
+Reproduce the Table 1 presented in the paper by typing (take ~ mins):
 
 ```bash
 ./run.sh --run-all -t 90
