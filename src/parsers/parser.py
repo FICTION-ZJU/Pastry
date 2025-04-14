@@ -246,7 +246,7 @@ def parse_pcp(pcp_str):
         log.info("No program variables remain after filtering. A dummy variable 'x' with initial value 0 has been added. This addition does not affect the program's termination semantics.")
         sd_pgcl_prog.variables['x'] = 0
     
-    if len(pcp_dict)>1:
+    if len(sd_pgcl_prog.variables)>1:
         if meta_info[0]:
             if meta_info[0] == 'Bounded':
                 logger.info(f"Program classified as Bounded ({len(pcp_dict)}-d PCP).")
