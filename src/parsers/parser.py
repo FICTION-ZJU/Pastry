@@ -250,20 +250,20 @@ def parse_pcp(pcp_str):
     if len(sd_pgcl_prog.variables)>1:
         if meta_info[0]:
             if meta_info[0] == 'Bounded':
-                logger.info(f"Program classified as Bounded ({len(pcp_dict)}-d PCP).")
+                logger.info(f"Program classified as Bounded {len(pcp_dict)}-d PCP.")
                 convert_bounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], meta_info[4], True)
             elif meta_info[0] == 'CondBounded':
-                logger.info(f"Program classified as Conditionally Bounded ({len(pcp_dict)}-d PCP).")
+                logger.info(f"Program classified as Conditionally Bounded {len(pcp_dict)}-d PCP.")
                 convert_condbounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], True)
         else:
             is_valid, ct_guard_dict, bench_coeff_dict = check_const_guard(replacement_map)
             if is_valid:
-                logger.info(f"Program classified as Constant ({len(pcp_dict)}-d PCP).")
+                logger.info(f"Program classified as Constant {len(pcp_dict)}-d PCP.")
                 convert_const_pcp(sd_pgcl_prog, ct_guard_dict, bench_coeff_dict)
             else:
                 is_valid, var_trend_dict, info_dict = check_mono_pcp(sd_pgcl_prog, replacement_map)
                 if is_valid:
-                    logger.info(f"Program classified as Monotone ({len(pcp_dict)}-d PCP).")
+                    logger.info(f"Program classified as Monotone {len(pcp_dict)}-d PCP.")
                     convert_mono_pcp(sd_pgcl_prog, replacement_map, var_trend_dict, info_dict)
                 else:
                     logger.error("Failed to classify input program as any PCP category supported by Pastry.")
