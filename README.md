@@ -44,23 +44,23 @@ docker build -t pastry:latest .
 For a quick test to see if everything works:
 
 ```bash
-docker run --rm -v $(pwd):/data pastry:latest --input \
-/data/test/ast.txt \
-/data/test/past.txt \
-/data/test/none.txt
+docker run --rm pastry:latest pastry/batch_test.sh --input \
+test/ast.txt \
+test/past.txt \
+test/none.txt
 ```
 
 Expected output is: 
 ```
-Running: /data/test/ast.txt
+Running: test/ast.txt
 AST  : True
 PAST : False
 Time : 0.097s
-Running: /data/test/past.txt
+Running: test/past.txt
 AST  : True
 PAST : True
 Time : 0.013s
-Running: /data/test/none.txt
+Running: test/none.txt
 AST  : False
 PAST : False
 Time : 0.01s
@@ -73,10 +73,10 @@ poetry install
 
 ## Smoke test (Poetry)
 
-To thest the correctness of the setup, run:
+To test the correctness of the setup, run:
 
 ```bash
-poetry run python pastry.py --input \
+cd poetry && poetry run python pastry.py --input \
 ./test/ast.txt \
 ./test/past.txt \
 ./test/none.txt
@@ -103,10 +103,10 @@ Time : 0.011s
 To run the benchmark suite, run: 
 
 ```bash
-docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest benchmark.sh 
+docker run --rm -v $(pwd)/outputs:/home/artifact/pastry/outputs -v $(pwd)/result:/home/artifact/result --entrypoint bash pastry:latest pastry/benchmark.sh
 ```
 
-The detailed logs will be available in the `./outputs/logs/` folder
+The detailed logs will be available in the `./outputs/logs` folder
 
 ## Writing your own example
 
@@ -258,7 +258,11 @@ More examples can be found in the benchmarks folder.
 
 ### Running your own example
 
+Suppose you saved your example in a file named `xxx.txt` in the path /home/artifact/benchmarks/pastry. Then the tool can be run as:
 
+```bash
+./run.sh pastry xxx
+```
 
 ### Running (Poetry)
 Pastry accepts a list of program files, printing the termination status for each of the file, for example
@@ -282,7 +286,7 @@ PAST : False
 Time : 0.02s
 ```
 
-To run on the benchmar suite: 
+To run on the benchmark suite: 
 
 ```bash
 find benchmarks -name "*.txt" -type f | sort | xargs -I{} poetry run python pastry.py --input {}
