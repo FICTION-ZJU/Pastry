@@ -32,7 +32,7 @@ ENV POETRY_REQUESTS_TIMEOUT=60
 COPY pastry ./pastry
 COPY baselines ./baselines
 COPY benchmarks ./benchmarks
-COPY run.py run.sh README.md INSTRUCTIONS.md ./
+COPY run.py run.sh ./
 RUN sudo ln -s /home/artifact/benchmarks/pastry /home/artifact/pastry/benchmarks
 RUN sudo ln -s /home/artifact/benchmarks/KoAT1 /home/artifact/baselines/KoAT1/benchmarks
 RUN sudo ln -s /home/artifact/benchmarks/KoAT2 /home/artifact/baselines/KoAT2/benchmarks
