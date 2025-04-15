@@ -229,7 +229,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
     for line in result.stderr.splitlines():
         line = line.strip()
         if line.startswith("real"):
-            time = float(line.split("real", 1)[1].strip())
+            time = parse_time_to_seconds(line.split("real", 1)[1].strip())
     if det:
         if time != -1:
             if single:
