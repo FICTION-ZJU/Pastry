@@ -1,8 +1,12 @@
+# Pastry: The Positive Almost-Sure Termination Prototype
 
+Pastry is an academic prototype for deciding (positive) almost-sure termination ((P)AST) of essentially 1-dimensional probabilistic counter programs (PCPs).
+For more technical details, please refer to our CAV'25 paper:
 
-# Pastry: the Positive AST pRototYpe
+> Sergei Novozhilov, Mingqi Yang, Mingshuai Chen, Zhiyang Li, Jianwei Yin:
+On the Almost-Sure Termination of Probabilistic Counter Programs. In Proc. of CAV 2025.
 
-Pastry is an academic prototype for deciding (positive) Almost-Sure Termination of essentially 1-d probabilistic counter programs (PCPs).
+This file contains instructions for the artifact evaluation of Pastry. In particular, we show how to reproduce the experimental results as reported in Table 1 of the above paper and how to reuse Pastry beyond the paper, e.g., to run user-supplied examples.
 
 ## Contents
 - [Project Structure](#project-structure)
