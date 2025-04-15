@@ -40,10 +40,10 @@ def run_all(timeout = 100):
         ) as progress:
             console = Console(file=f)
             task = progress.add_task("Running...", total = len(namelist))
-            console.print("benchmark_name,pastry,KoAT1,KoAT2,amber")
+            console.print("benchmark_name,Pastry,Amber,KoAT1,KoAT2")
             for name in namelist:
                 progress.update(task, description = f"Running {name}")
-                console.print(f"{name},{run_pastry(name, timeout, single = False)},{run_koat1(name, timeout, single = False)},{run_koat2(name, timeout, single = False)},{run_amber(name, timeout, single = False)}")
+                console.print(f"{name},{run_pastry(name, timeout, single = False)},{run_amber(name, timeout, single = False)},{run_koat1(name, timeout, single = False)},{run_koat2(name, timeout, single = False)}")
                 progress.update(task, advance = 1)
             progress.update(task, description = "done.")
 
