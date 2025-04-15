@@ -105,7 +105,7 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}s")
+                print(f"TIME : {time:.3f}s")
             else:
                 return round(time, 3)
         else:
@@ -171,7 +171,7 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}s")
+                print(f"TIME : {time:.3f}s")
             else:
                 return round(time, 3)
         else:
@@ -232,7 +232,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}s")
+                print(f"TIME : {time:.3f}s")
             else:
                 return round(time, 3)
         else:
@@ -304,7 +304,7 @@ def run_amber(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}s")
+                print(f"TIME : {time:.3f}s")
             else:
                 return round(time, 3)
         else:
