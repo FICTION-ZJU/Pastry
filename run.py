@@ -72,6 +72,7 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
     elif result.returncode != 0:
         if single:
             print('An error occurred:')
+            print(f"return code: {result.returncode}")
             print('stdout:')
             print(result.stdout)
             print('stderr:')
@@ -138,6 +139,7 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
     elif result.returncode != 0:
         if single:
             print('An error occurred:')
+            print(f"return code: {result.returncode}")
             print('stdout:')
             print(result.stdout)
             print('stderr:')
@@ -203,6 +205,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
     elif result.returncode != 0:
         if single:
             print('An error occurred:')
+            print(f"return code: {result.returncode}")
             print('stdout:')
             print(result.stdout)
             print('stderr:')
@@ -263,6 +266,7 @@ def run_amber(benchmark_name, timeout = 100, single = True):
     elif result.returncode != 0:
         if single:
             print('An error occurred:')
+            print(f"return code: {result.returncode}")
             print('stdout:')
             print(result.stdout)
             print('stderr:')
