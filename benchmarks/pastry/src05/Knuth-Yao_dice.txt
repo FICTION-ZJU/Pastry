@@ -19,7 +19,9 @@
 #endrewards
 
 
+/*@Bounded,d,[0,6],s[0,7]@*/
 int s = 0;
+int d = 0;
 while(s<7) {
     if (Eq(s, 0)) {
         {
@@ -90,6 +92,7 @@ while(s<7) {
                         while(s < 7) {
                             s := s + 1
                         }
+                        d := d + 1
 
                     }
                 } else {
@@ -102,6 +105,7 @@ while(s<7) {
                             while(s < 7) {
                                 s := s + 1
                             }
+                            d := d + 2
 
                         } [0.5] {
                             while(s > 7) {
@@ -110,6 +114,7 @@ while(s<7) {
                             while(s < 7) {
                                 s := s + 1
                             }
+                            d := d + 3
                         }
 
                     } else {
@@ -122,6 +127,7 @@ while(s<7) {
                                 while(s < 7) {
                                     s := s + 1
                                 }
+                                d := d + 4
 
                             } [0.5] {
                                 while(s > 7) {
@@ -130,6 +136,7 @@ while(s<7) {
                                 while(s < 7) {
                                     s := s + 1
                                 }
+                                d := d + 5
 
                             }
                         } else {
@@ -149,6 +156,7 @@ while(s<7) {
                                     while(s < 7) {
                                         s := s + 1
                                     }
+                                    d := d + 6
 
                                 }
                             } else {
