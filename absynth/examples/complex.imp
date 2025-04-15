@@ -1,0 +1,26 @@
+# A complex expected polynomial bound program.
+# It involves sequential and nested loops, 
+# different types of probabilistic commands, 
+# and multiplication
+
+def f():
+    var x, y, w, N, M, z
+    assume M >= 0
+    assume y >= 0
+    
+    x = 0
+    while x < N:
+        x = x + unif(-1,2)
+        y = y + 3*M
+        y = y + bin(3,1,2)
+
+    while y > 0:
+        while w > 0:
+            w = w - 1
+            tick 1
+        prob(2,1):
+            y = y - 1
+        else:
+            y = y + 1
+        tick 1
+

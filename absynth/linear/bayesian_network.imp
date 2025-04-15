@@ -1,0 +1,43 @@
+# Example of Bayesian Network 
+# Perform n iterations over the network with 5 nodes 
+
+
+def f():
+    var i, d, s, l, g, z
+
+	while n > 0:
+		i = ber(3,10)
+		z = z + 1
+		d = ber(2,5)
+		tick 1
+
+		if i < 1 and d < 1:
+			g = ber(7,10)
+			tick 1
+		else:
+			if i < 1 and d > 0:
+				g = ber(19,20)
+				tick 1
+			else:
+				if i > 0 and d < 1:
+					g = ber(1,10)
+					tick 1
+				else:
+					g = ber(1,2)
+					tick 1
+		if i < 1:
+			s = ber(1,20)
+			tick 1
+		else:
+			s = ber(4,5)
+			tick 1
+		if g < 1:
+			l = ber(1,10)
+			tick 1
+		else:
+			l = ber(3,5)
+			tick 1
+		n = n - 1
+
+
+	

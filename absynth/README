@@ -1,0 +1,54 @@
+     Absynth - Automatic Bound Synthesizer for Probabilistic Programs
+     ================================================================
+
+
+Absynth is a static analyzer for automatically computing upper bounds on 
+the expected resource usage for probabilistic programs.  It comes with 
+its rarely installed dependencies.  To build it you will still need to 
+have the following core:
+  
+  * GMP 4.2 or up (with development headers)
+  * MPFR 2.2 or up (with development headers)
+  * GSL 1.6 or up (e.g., installed at /usr/local)
+  * OCaml 4.0 or up (and ocamlbuild)
+  * A C99 compiler (gcc/clang)
+  * A C++ compiler (g++/clang++)
+
+The location of most of these dependencies can be specified using
+the main configure script, see ./configure -help for details.
+
+~ To build Absynth:
+~~~~~~~~~~~~~~~~~~~
+  
+    ./configure
+    make
+
+The configuration script might fail to find the location of the GSL
+library.  If that is the case, it will fail to build the `gsl_caller`
+program.  This is however not fatal and many examples can be tested
+without this program.
+
+~ To run Absynth:
+~~~~~~~~~~~~~~~~~
+
+    source/absynth examples/probabilistic/linear/race.imp
+    source/absynth -degree 2 examples/probabilistic/polynomial/trader.imp
+
+Note that the polynomial bounds generated use unicode symbols for the
+exponents.  If you don't see them on your terminal, use the `-ascii`
+option.
+
+To get more statistics about the analysis, you can use the option
+`-dump-stats`.
+
+~ Examples:
+~~~~~~~~~~~
+
+There are many examples (including the ones in our paper) in the
+`examples/` sub-directory.  They all use a Python-like syntax.
+
+The examples are arranged in a self-explanatory directory structure.
+
+For the polynomial examples (in the sub-directory
+`examples/probabilistic/polynomial`), it is required to pass the
+option `-degree 2`, otherwise the analysis looks for linear bounds.

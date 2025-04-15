@@ -1,0 +1,7 @@
+# hyper(n, r, m) where m <= n and r <= n
+
+def f():
+	var x, n, z
+	while x + 2 <= n:
+		x = x + hyper(30, 3, 2)
+		tick 1

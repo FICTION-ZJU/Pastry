@@ -1,0 +1,8 @@
+# simple random walk
+
+def f():
+    var x, n, z
+    
+    while x < n:
+        x = x + unif(0,1)
+        tick 1

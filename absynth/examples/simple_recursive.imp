@@ -1,0 +1,31 @@
+# Non-determinism, for example, models the key is 
+# found in an array
+# With probability 2/3, a recursive call with n 
+# decreased by 1. With probability 1/3, a recursive 
+# call with the same value of n. 
+# Compute the expected number of calls
+# The program can be modeled by a random walk that 
+# ends non-deterministically. 
+# Then one can find a recursive relation, solves it 
+# to have the upper-bound of 
+# the expectations expected number of calls, 
+# that is, T(n) = 2/3*T(n-1) + 1/3*T(n)
+
+var n, z
+
+def f():
+    if n > 0:
+        if random:
+            # the key is found
+            n = 0
+        else:
+            prob(2,1):
+                # search from the next element
+                n = n - 1
+                tick 1
+                f()
+            else:
+                # search from the current element
+                tick 1
+                f()
+

@@ -1,0 +1,19 @@
+# deterministic version takes 0.5.max(0, n-1).max(0, n-2)
+# probabilistic version takes (1/p).0.5.max(0, n-1).max(0, n-2)
+
+def f():
+    var i, j, n, z
+    
+    i = 1
+    while i < n:
+        j = i - 1
+        
+        while j > 0:
+        	prob(1,2):
+            	j = j - 1
+			else:
+            	j = j - 0
+            tick 1
+        
+        i = i + 1
+

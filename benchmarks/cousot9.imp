@@ -1,0 +1,14 @@
+def f():
+    var i, j
+    
+    i = 2
+    j = 1
+    while i>0:
+        tick 1
+        prob(1,1):
+            if j>0:
+                j = j - 1
+            else:
+                j = 2
+                i = i - 1
+

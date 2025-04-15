@@ -1,0 +1,11 @@
+# random walk with T = 1, K1 = 2, K2 = 1, p = 1/2
+def f():
+    var x, n, z
+    
+    while x < n:
+        prob(1,1):
+            x = x + 2      
+        else:
+            x = x - 1
+        tick 1
+

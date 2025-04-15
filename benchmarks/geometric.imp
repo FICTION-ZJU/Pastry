@@ -1,0 +1,11 @@
+def f():
+    var stop
+    
+    stop = 0
+    while stop<1:
+        prob(1,1):
+            stop = stop + 1
+        else:
+            stop = stop
+        tick 1
+

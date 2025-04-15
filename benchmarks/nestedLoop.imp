@@ -1,0 +1,22 @@
+def f():
+    var i, j, k
+    
+    i = 0
+    j = 0
+    k = 0
+    while i<2:
+        tick 1
+        prob(1,1):
+            j = 0
+            while j<2:
+                tick 1
+                prob(1,1):
+                    j = j + 1
+                    k = i
+                    while k<2:
+                        tick 1
+                        prob(1,1):
+                            k = k + 1
+                    i = k
+            i = i + 1
+

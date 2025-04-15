@@ -1,0 +1,17 @@
+def f():
+    var x
+    
+    x = 0
+    if x<=6:
+        while x<=5:
+            tick 1
+            prob(1,9):
+                if x<=7:
+                    x = x + 1
+                else:
+                    x = x - 1
+            else:
+                x = x
+    else:
+        x = x
+

@@ -1,0 +1,23 @@
+# filling containers
+
+def f():
+    var volToFill, fast, medium, slow, vol, volMeasured, z
+	fast = 10
+	medium = 3
+	slow = 1
+	volMeasured = 0
+	volMeasured = volMeasured + unif(0,1)
+
+	while volMeasured <= volToFill:
+		if volToFill < (volMeasured + fast):
+			volMeasured = volMeasured + unif(9,10)
+		else:
+			if volToFill < (volMeasured + medium):
+				volMeasured = volMeasured + unif(2,4)
+			else:
+				volMeasured = volMeasured + unif(0,2)
+
+		volMeasured = volMeasured + unif(0,1)
+		tick 1
+        
+

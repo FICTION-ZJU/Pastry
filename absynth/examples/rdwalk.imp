@@ -1,0 +1,20 @@
+# Simple loopy program that simulates a random walk. 
+# Tight bound is 2 max(0, 1 + n - x)
+# Note that x can be n or n+1 when the program 
+# terminates. It makes finding and solving 
+# recurrence relation harder.
+
+def f():
+    var x, n, z
+    
+    while x < n:
+        prob(1,1):
+			# The walker goes forward 
+			# 2 step with probability 
+            x = x + 2      
+        else:
+			# 1/2, backward 1 step with 
+			# probability 1/2
+            x = x - 1
+        tick 1
+

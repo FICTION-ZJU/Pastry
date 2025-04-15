@@ -1,0 +1,16 @@
+def f():
+    var x, y
+    
+    x = 0
+    y = 0
+    while x*x+y*y<100:
+        prob(1,1):
+            x = x + 1
+        else:
+            x = x - 1
+        prob(1,1):
+            y = y + 1
+        else:
+            y = y - 1
+        tick 1
+

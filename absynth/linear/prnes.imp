@@ -1,0 +1,19 @@
+# interacting nested loops
+
+def f():
+    var y, n, z
+    assume y >= 0
+    
+    while n < 0:
+    	prob(9,1):
+    		n = n + 1
+    	tick 9
+        if random:
+            while y >= 100:
+                prob(1,1):
+                    y = y - 100
+                else:
+                    y = y - 90
+                tick 5
+            y = y + 1000
+

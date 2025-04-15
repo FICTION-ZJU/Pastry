@@ -1,0 +1,13 @@
+# tick N = 10
+
+def f():
+    var l, z
+
+    while l >= 8:
+        l = l - unif(6, 8)
+        tick 10
+
+    while l > 0:
+        l = l - 1
+        tick 1
+    

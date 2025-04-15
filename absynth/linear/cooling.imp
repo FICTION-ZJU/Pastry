@@ -1,0 +1,43 @@
+# probabilistic cooling system
+# every time interval, the system uses a sensor to measure the room temperature 
+# and decreases it if it is higher than the setting one
+# decreasing each temperature unit consumes 1 resource unit
+# compute the expected number of consumed resource units
+
+# mt : measured temperature of the room
+# st : desired setting temperature
+# ti : time interval = 5
+# t  : time of operation
+# each time interval, the room temperature increases randomly from 1 to 3 degrees,
+# with probability 1 : 1/10, 2 : 7/10, 3 : 2/10
+# modeled as a uniform distribution
+# the sensor for measuring the temperature has some error modeling as a uniform 
+# distribution from -1 to 1
+
+# exact value : max(0, mt - st) + (2/5)max(0, t + 5)
+# max(0, mt - st) : the cost for the first time of execution the inner loop
+# max(0, t + 5) : the bound on expected number of outer loop iterations
+# 2/5 : cost for each iteration
+
+def f():
+    var mt, st, t, z
+
+	while t >= 0:
+		# decrease the room temperature if needed
+		while mt > st:
+			mt = mt - 1
+			# consume 1 resource unit
+			tick 1
+		# the room temperature increases randomly
+		assume mt = st
+		prob(1,9):
+			mt = mt + 1
+		else:
+			prob(7,2):
+				mt = mt + 2
+			else:
+				mt = mt + 3
+		# error of sensor
+		mt = mt + unif(-1,1)
+		# advance to the next time interval
+		t = t - 5

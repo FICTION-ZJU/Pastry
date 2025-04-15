@@ -1,0 +1,19 @@
+# This program models a race between a hare and a 
+# tortoise. For each unit of time, the tortoise goes 
+# forward 1 step. While the hare stays at the same 
+# position with probability 1/2, and with the same 
+# probability it moves a random number of steps 
+# from 0 to 10, following a uniform distribution.
+
+def f():
+    var h, t, z
+
+    while h <= t:
+        t = t + 1
+    	prob(1, 1):
+            # uniform distribution
+    		h = h + unif(0, 10)
+    	else:
+    		h = h + 0
+        z = z + 1
+        

@@ -1,0 +1,17 @@
+# Truncated geometric distribution
+
+def f():
+    var c, z
+    
+    while true:
+        prob(1, 1):
+            c = 1
+            tick 1
+            break
+        else:
+            c = 0
+            tick 1
+        tick 2
+    tick 1
+
+        

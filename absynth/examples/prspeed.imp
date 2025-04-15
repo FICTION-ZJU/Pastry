@@ -1,0 +1,23 @@
+# This example shows the capacity of handling single 
+# loops with tricky iteration patterns. 
+# The iteration first increases y by 0 or 1 randomly 
+# according to a uniform distribution until y 
+# reaches m. 
+# After that it increases x by 0 to 3 according to a 
+# binomial distribution. 
+# The deterministic version is a challenging example 
+# for standard tools. Absynth derives a tight bound 
+# 2/3.max(0,n-x) + 2.max(0, m-y).
+
+def f():
+    var x, y, m, n, z
+
+    while x + 3 <= n:
+        if y < m:
+            prob(1,1):
+                y = y + 1
+            else:
+                y = y + 0
+        else:
+            x = x + bin(3,1,2)
+        tick 1

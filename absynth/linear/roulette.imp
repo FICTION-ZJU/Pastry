@@ -1,0 +1,41 @@
+# Betting strategy for Roulette
+# Amount of betting is random value from 5 to 10
+# Compute the expectation of games such that the player
+# have at least n units of money after
+
+def f():
+    var money, n, z
+    money = 10
+    while money >= n:
+    	# bank lost
+    	prob(36,1):
+    		# col 1
+    		prob(1,2):
+    			# Red
+    			prob(1,1):
+    				# bet = unif(5,10)
+    				# money = money - bet + 1.6*bet = money + 0.6*bet
+    				money = money + unif(3,6)
+    			# Black
+    			else:
+    				money = money + unif(1,2)
+    		else:
+    			# col 2
+    			prob(1,1):
+    				# Red
+    				prob(1,2):
+    					money = money + unif(3,6)
+    				# Black
+    				else:
+    					money = money + unif(1,2)
+    			else:
+    				# col 3
+    				prob(2,1):
+    					# Red
+    					money = money - unif(3,6)
+    				else:
+    					money = money - unif(5,10)
+    	else:
+    		money = money - unif(5,10)
+    	tick 1
+

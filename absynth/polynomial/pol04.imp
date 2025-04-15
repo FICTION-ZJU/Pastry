@@ -1,0 +1,44 @@
+def start():
+      var x, y, n, z
+      while x>0:
+         prob(1,2):
+            x=x+1
+         else:
+            x=x-1
+         y=x-1
+         while y>0:
+            prob(1,2):
+               y=y+1
+            else:
+               y=y-1
+            tick 1
+        
+
+def f():
+      x=0
+      while x<n:
+         prob(2,1):
+            x=x+1
+         else:
+            x=x-1
+         y=0
+         while y<x:
+#            assume y < n
+            prob(2,1):
+               y=y+1
+            else:
+               y=y-1
+            tick 1
+
+
+
+def g():
+      x=0
+      while x<n:
+         x=x+1
+         y=0
+         while y<x:
+            y=y+1
+            tick 1
+
+

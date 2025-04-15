@@ -1,0 +1,15 @@
+# t15 in C4B figure 8
+
+def f():
+    var x, y, t, z
+    assume y >= 0
+    while x > y:
+        x = x - y
+        x = x - 1
+        t = y
+        while t > 0:
+        	t = t - unif(1, 2)
+        	tick 1
+
+        tick 1
+

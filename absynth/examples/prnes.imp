@@ -1,0 +1,31 @@
+# This example contains a nested loop, in which 
+# n is increased by 1 with 
+# probability 9/10, by 0 with probability 1/10. 
+# In each iteration, y is increased by 1000. 
+# In the inner loop, y is 
+# decreased by 100 and 90 with probabilities 1/2. 
+# The analysis discovers that only the first 
+# execution of the inner 
+# loop depends on the initial value of y. 
+# For other iteration, the expected cost is 
+# 1000*5/95 = 1000/19.
+# The deterministic version is a challenging 
+# example for standard tools.
+
+def f():
+    var y, n, z
+    assume y >= 0
+    
+    while n < 0:
+    	prob(9,1):
+    		n = n + 1
+    	tick 9
+        if random:
+            while y >= 100:
+                prob(1,1):
+                    y = y - 100
+                else:
+                    y = y - 90
+                tick 5
+            y = y + 1000
+

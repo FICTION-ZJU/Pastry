@@ -1,0 +1,78 @@
+# Suppose there are 3 cowboys A, B, C. They get into an argument and decide to settle it with a three way duel. 
+# Because C is the most dangerous, A shoots C first if C is still alive, otherwise he shoots B, the probability 1/3 to kill
+# If B is still alive, will shoots C first if C is still alive, otherwise he shoots A, the probability 1/2 to kill
+# If C is still alive, will shoots A first if A is still alive, otherwise he shoots B, the probability 1 to kill
+# Compute the expected number of rounds, the game ends, that is, there is only one cowboy remains
+
+# The probability that the duel ends in 1 round is 1/3*1/2 = 1/6
+# The probability that C is down, A and B still are alive after 1 round is 1/3*1/2 + 2/3*1/2 = 1/2. 
+# The expected number of rounds of the duel between A and B is 3/2. 
+# Thus the probability that the duel ends in (1 + 3/2) is 1/2
+# The probability that the duel ends in 2 rounds is 2/3*1/2 = 1/3
+# Therefore, the expected number of rounds is 1/6*1 + 1/2*(1 + 3/2) + 1/3*2 = 25/12 = 2.08333
+
+var flag_ab, flag_ac, flag_bc, z
+
+def start():
+    flag_ab = 1
+    flag_ac = 1
+    flag_bc = 1
+    # round 1, 1 of A, B, and C is down
+    abc()
+    # if C has been down
+    if flag_ab = 1:
+        ab()
+    # if B has been down
+    if flag_ac = 1:
+        ac()
+    # if A has been down
+    if flag_bc = 1:
+        bc()
+
+def abc():
+    prob(1,2):
+        # A shoots C
+        flag_ac = 0
+        flag_bc = 0
+        prob(1,1):
+            # B shoots A
+            flag_ab = 0
+    else:
+        prob(1,1):
+            # B shoots C
+            flag_ac = 0
+            flag_bc = 0
+        else:
+            # C shoots A
+            flag_ab = 0
+            flag_ac = 0
+    z = z + 1
+
+
+def ab():
+    while flag_ab > 0:
+        prob(1,2):
+            flag_ab = 0
+        else:
+            prob(1,1):
+                flag_ab = 0
+            else:
+                flag_ab = 1
+        z = z + 1
+
+def ac():
+    while flag_ac > 0:
+        prob(1,2):
+            flag_ac = 0
+        else:
+            flag_ac = 0
+        z = z + 1
+
+def bc():
+    while flag_bc > 0:
+        prob(1,1):
+            flag_bc = 0
+        else:
+            flag_bc = 0
+        z = z + 1
+

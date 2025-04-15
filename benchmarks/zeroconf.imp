@@ -1,0 +1,21 @@
+def f():
+    var start, established, probe
+    
+    start = 1
+    established = 0
+    probe = 0
+    while start<=1 and established<=0 and probe<=4:
+        tick 1
+        if start=1:
+            prob(1,1):
+                start = 0
+            else:
+                start = 0
+                established = 1
+        else:
+            prob(1,999):
+                probe = probe + 1
+            else:
+                start = 1
+                probe = 0
+

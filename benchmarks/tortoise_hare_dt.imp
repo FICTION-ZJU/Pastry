@@ -1,0 +1,13 @@
+def f():
+    var t, h
+    
+    t = 10
+    h = 10
+    while t-h>-1:
+        tick 1
+        prob(9,1):
+            t = t + 1
+        else:
+            t = 1
+            h = 2
+

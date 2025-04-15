@@ -1,0 +1,14 @@
+def f():
+    var sent, fail, totalFail
+    
+    sent = 0
+    fail = 0
+    totalFail = 0
+    while sent<5 and fail<5:
+        tick 1
+        prob(9,1):
+            fail = 0
+            sent = sent + 1
+        else:
+            fail = fail + 1
+            totalFail = totalFail + 1

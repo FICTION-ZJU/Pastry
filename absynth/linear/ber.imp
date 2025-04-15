@@ -1,0 +1,7 @@
+def f():
+    var x, n, z
+    
+    while x < n:
+        x = x + ber(1, 2)
+        tick 1
+        

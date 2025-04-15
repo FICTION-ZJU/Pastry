@@ -1,0 +1,15 @@
+# Race between tortoise and hare
+
+def f():
+    var h, t, z
+
+    #h = 0
+    #t = 30
+    while h <= t:
+        t = t + 1
+    	prob(1, 1):
+    		h = h + unif(0, 10)
+    	else:
+    		h = h + 0
+        z = z + 1
+        

@@ -1,0 +1,40 @@
+# recursive function with polynomial bound
+# example of hints on base functions
+
+var arg_h, arg_l, c, z
+
+def qsquad():
+    var h, l, m
+
+    # hints ------------------------------------
+    # do not compromise soundness
+    focus \
+      # binomial coefficient of max(0,h-l) and 2
+      binom_monotonic(2, h - l, 0),
+      h - l,
+      product(m - l, h - (m+1)),
+      h-1 - m,
+      arg_h, arg_l, arg_h * arg_h, arg_l * arg_l, arg_h * arg_l
+    # ------------------------------------------
+
+    h = arg_h
+    l = arg_l
+    assume h >= l
+
+    if l < h:
+        m = l
+        c = unif(0,1)
+        while m < h-1 and c > 0:
+            tick 1
+            m = m + 1
+        assume m >= l and m < h
+
+        tick 1
+        arg_h = m
+        arg_l = l
+        qsquad()
+
+        tick 1
+        arg_h = h
+        arg_l = m + 1
+        qsquad()

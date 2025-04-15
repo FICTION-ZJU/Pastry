@@ -1,0 +1,19 @@
+def f():
+    var x
+    
+    x = 10
+    while x>0:
+        tick 1
+        prob(5,31):
+            x = x + 1
+        else:
+            prob(90,65):
+                x = x
+            else:
+                prob(39,26):
+                    x = x - 1
+                else:
+                    prob(14,12):
+                        x = x - 2
+                    else:
+                        x = x - 3

@@ -1,0 +1,30 @@
+var sPrice, minPrice, z
+
+def start():
+      assume minPrice>=0
+      while minPrice<sPrice:
+         prob(1,3):
+            sPrice=sPrice+1
+         else:
+            sPrice=sPrice-1
+         trade()
+
+def trade():
+      var numShares
+      #numShares = 100 + unif(0,3)
+      numShares = unif(0,3)
+      while numShares>0:
+         numShares=numShares-1
+         z=z+sPrice
+
+def trade_l():
+      var numShares
+      numShares = unif(0,3)
+      while numShares > 0:
+         numShares = numShares - 1
+         i = sPrice
+         while i > 0:
+            i = i - 1
+            z = z + 1
+
+
