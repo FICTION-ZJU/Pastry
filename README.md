@@ -26,7 +26,11 @@ The structure of the artifact is as follows.
 ```
 
 ## Requirements
-- Install Python and Anaconda in case you do not have it yet.
+- Install Python and Anaconda.
+- Install coreutils to make sure `gtimeout` is available:
+```bash
+brew install coreutils
+```
 - Experiments in the paper are conducted on a 3.22 GHz Apple M1 Pro processor with 16GB RAM running macOS Sonoma. Make sure to have similar specs when comparing timing results.
 
 
