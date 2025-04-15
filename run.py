@@ -86,22 +86,25 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
         if line.startswith('PAST'):
             if line.split(':', 1)[1].strip() == "True":
                 if single:
-                    print("PAST")
+                    print("PAST : True")
+                    print("AST  : True")
                 det = True
         elif line.startswith('AST'):
             if line.split(':', 1)[1].strip() == "True":
                 if single and not det:
-                    print("AST but not PAST")
+                    print("PAST : False")
+                    print("AST  : True")
             else:
                 if single:
-                    print("non-AST")
+                    print("PAST : False")
+                    print("AST  : False")
             det = True
         elif line.startswith('Time'):
             time = parse_time_to_seconds(line.split(":", 1)[1].strip())
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}")
+                print(f"TIME: {time:.3f}s")
             else:
                 return round(time, 3)
         else:
@@ -148,22 +151,25 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
         line = line.strip()
         if line.startswith('UPPER BOUND'):
             if single:
-                print('PAST')
+                print("PAST : True")
+                print("AST  : True")
             det = True
         elif line.startswith('WARNING: The given program is not AST'):
             if single:
-                print('non-AST')
+                print("PAST : False")
+                print("AST  : False")
             det = True
         elif line.startswith('WARNING: The given program is AST, but not PAST'):
             if single:
-                print('AST but not PAST')
+                print("PAST : False")
+                print("AST  : True")
             det = True
         elif line.startswith('TIME:'):
             time = float(line.split(":", 1)[1].strip())
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}")
+                print(f"TIME: {time:.3f}s")
             else:
                 return round(time, 3)
         else:
@@ -213,7 +219,8 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
             break
         elif line.startswith('WORST_CASE'):
             if single:
-                print('PAST')
+                print("PAST : True")
+                print("AST  : True")
             det = True
     for line in result.stderr.splitlines():
         line = line.strip()
@@ -222,7 +229,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}")
+                print(f"TIME: {time:.3f}s")
             else:
                 return round(time, 3)
         else:
@@ -275,22 +282,25 @@ def run_amber(benchmark_name, timeout = 100, single = True):
         elif line.startswith('PAST'):
             if line.split(':', 1)[1].strip() == "Yes":
                 if single:
-                    print("PAST")
+                    print("PAST : True")
+                    print("AST  : True")
                 det = True
         elif line.startswith('AST'):
             if line.split(':', 1)[1].strip() == "Yes":
                 if single and not det:
-                    print("AST but not PAST")
+                    print("PAST : False")
+                    print("AST  : True")
             else:
                 if single:
-                    print("non-AST")
+                    print("PAST : False")
+                    print("AST  : False")
             det = True
         elif line.startswith('Computation time:'):
             time = parse_time_to_seconds(line.split(":", 1)[1].strip())
     if det:
         if time != -1:
             if single:
-                print(f"TIME: {time:.3f}")
+                print(f"TIME: {time:.3f}s")
             else:
                 return round(time, 3)
         else:
