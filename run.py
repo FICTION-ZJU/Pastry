@@ -191,7 +191,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
             exit(-1)
         else:
             return "-"
-    command = f'time ./koat2 analyse -i ./benchmarks/KoAT2/{benchmark_name+".koat"}'
+    command = f'time ./baselines/KoAT2/koat2 analyse -i ./benchmarks/KoAT2/{benchmark_name+".koat"}'
     result = subprocess.run(
         ["timeout", f"{timeout}s", "bash", "-c", command], 
         capture_output=True,
