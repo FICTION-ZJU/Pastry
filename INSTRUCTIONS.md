@@ -143,7 +143,7 @@ instruction: "skip"                                 -> skip
 
 block: "{" instruction* "}"
 
-expression: var                                  -> var
+expression: var                                   -> var
             | INT                                 -> int
             | expression "+" expression           -> add
             | expression "-" expression           -> sub
@@ -152,7 +152,7 @@ expression: var                                  -> var
             | "MOD" "(" expression "," POSINT ")" -> mod
             | "DIV" "(" expression "," POSINT ")" -> div
 
-guard: "true"                                  -> true
+guard: "true"                                    -> true
         | "false"                                -> false
         | expression ">" expression              -> gt
         | expression "<" expression              -> lt
@@ -160,8 +160,8 @@ guard: "true"                                  -> true
         | expression "<=" expression             -> le
         | "Eq" "(" expression "," expression ")" -> eq
         | "Ne" "(" expression "," expression ")" -> neq
-        | guard "&" guard                        -> and
-        | guard "|" guard                        -> or
+        | "(" guard ")" "&" "(" guard ")"        -> and
+        | "(" guard ")" "|" "(" guard ")"        -> or
         | "Not" "(" guard ")"                    -> not
 
 literal: INT     -> int
