@@ -191,8 +191,9 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
             exit(-1)
         else:
             return "-"
+    command = f'time -f "real: %e" ./koat2 analyse -i ./benchmarks/KoAT2/{benchmark_name+".koat"}'
     result = subprocess.run(
-        ["timeout", f"{timeout}s", "time", "-f", "real: %e", "./baselines/KoAT2/koat2", "analyse", "-i", f"./benchmarks/KoAT2/{benchmark_name+".koat"}"], 
+        ["timeout", f"{timeout}s", "bash", "-c", command], 
         capture_output=True,
         text=True
     )
@@ -228,7 +229,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
     for line in result.stderr.splitlines():
         line = line.strip()
         if line.startswith("real"):
-            time = float(line.split(":", 1)[1].strip())
+            time = float(line.split("real", 1)[1].strip())
     if det:
         if time != -1:
             if single:
