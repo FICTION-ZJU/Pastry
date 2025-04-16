@@ -43,7 +43,23 @@ def run_all(timeout = 100):
             console.print("benchmark_name,Pastry,Amber,KoAT1,KoAT2")
             for name in namelist:
                 progress.update(task, description = f"Running {name}")
-                console.print(f"{name},{run_pastry(name, timeout, single = False)},{run_amber(name, timeout, single = False)},{run_koat1(name, timeout, single = False)},{run_koat2(name, timeout, single = False)}")
+                past_pastry, ast_pastry, res_pastry = run_pastry(name, timeout, single = False)
+                past, ast, res_amber = run_amber(name, timeout, single = False)
+                if res_pastry != "-" and res_amber != "-":
+                    if past_pastry != past or ast_pastry != ast:
+                        sys.stderr.write(f"error: {name}, pastry: {past_pastry}, {ast_pastry}, amber: {past}, {ast}")
+                    exit(2)
+                past, ast, res_koat1 = run_koat1(name, timeout, single = False)
+                if res_pastry != "-" and res_koat1 != "-":
+                    if past_pastry != past or ast_pastry != ast:
+                        sys.stderr.write(f"error: {name}, pastry: {past_pastry}, {ast_pastry}, koat1: {past}, {ast}")
+                    exit(2)
+                past, ast, res_koat2 = run_koat2(name, timeout, single = False)
+                if res_pastry != "-" and res_koat2 != "-":
+                    if past_pastry != past or ast_pastry != ast:
+                        sys.stderr.write(f"error: {name}, pastry: {past_pastry}, {ast_pastry}, koat2: {past}, {ast}")
+                    exit(2)
+                console.print(f"{name},{res_pastry},{res_amber},{res_koat1},{res_koat2}")
                 progress.update(task, advance = 1)
             progress.update(task, description = "done.")
 
@@ -57,7 +73,7 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
             print(f"No such benchmark named {benchmark_name}")
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     result = subprocess.run(
         ["timeout", f"{timeout}s", "pastry/run.sh", f"./benchmarks/{path[18:]}", f"{2*timeout+100}"], 
         capture_output=True,
@@ -79,9 +95,11 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
             print(result.stderr)
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     time = -1
     det = False
+    past = False
+    ast = False
     for line in result.stdout.splitlines():
         line = line.strip()
         if line.startswith('PAST'):
@@ -89,12 +107,15 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
                 if single:
                     print("PAST : True")
                     print("AST  : True")
+                past = True
+                ast = True
                 det = True
         elif line.startswith('AST'):
             if line.split(':', 1)[1].strip() == "True":
                 if single and not det:
                     print("PAST : False")
                     print("AST  : True")
+                ast = True
             else:
                 if single:
                     print("PAST : False")
@@ -107,7 +128,7 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
             if single:
                 print(f"TIME : {time:.3f}s")
             else:
-                return round(time, 3)
+                return past, ast, round(time, 3)
         else:
             sys.stderr.write(f"Cannot get running time of {benchmark_name} from pastry!")
             exit(-1)
@@ -115,7 +136,7 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
         if single:
             print("pastry cannot determine termination property")
         else:
-            return "-"
+            return None, None, "-"
 
 def run_koat1(benchmark_name, timeout = 100, single = True):
     # print(f"./benchmarks/KoAT1/{benchmark_name+".koat"}")
@@ -124,7 +145,7 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
             print(f"No such benchmark named {benchmark_name}")
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     result = subprocess.run(
         ["timeout", f"{timeout}s", "./baselines/KoAT1/main/run.sh", "-i", f"../benchmarks/{benchmark_name+".koat"}", "-t", f"{2*timeout+100}"], 
         capture_output=True,
@@ -146,15 +167,19 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
             print(result.stderr)
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     time = -1
     det = False
+    past = False
+    ast = False
     for line in result.stdout.splitlines():
         line = line.strip()
         if line.startswith('UPPER BOUND'):
             if single:
                 print("PAST : True")
                 print("AST  : True")
+            past = True
+            ast = True
             det = True
         elif line.startswith('WARNING: The given program is not AST'):
             if single:
@@ -165,6 +190,7 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
             if single:
                 print("PAST : False")
                 print("AST  : True")
+            ast = True
             det = True
         elif line.startswith('TIME:'):
             time = float(line.split(":", 1)[1].strip())
@@ -173,7 +199,7 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
             if single:
                 print(f"TIME : {time:.3f}s")
             else:
-                return round(time, 3)
+                return past, ast, round(time, 3)
         else:
             sys.stderr.write(f"Cannot get running time of {benchmark_name} from KoAT1!")
             exit(-1)
@@ -181,7 +207,7 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
         if single:
             print("KoAT1 cannot determine termination property")
         else:
-            return "-"
+            return None, None, "-"
 
 def run_koat2(benchmark_name, timeout = 100, single = True):
     # print(f"./benchmarks/KoAT2/{benchmark_name+".koat"}")
@@ -190,7 +216,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
             print(f"No such benchmark named {benchmark_name}")
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     command = f'time ./baselines/KoAT2/koat2 analyse -i ./benchmarks/KoAT2/{benchmark_name+".koat"}'
     result = subprocess.run(
         ["timeout", f"{timeout}s", "bash", "-c", command], 
@@ -213,9 +239,11 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
             print(result.stderr)
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     time = -1
     det = False
+    past = False
+    ast = False
     for line in result.stdout.splitlines():
         line = line.strip()
         if line.startswith('MAYBE'):
@@ -225,6 +253,8 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
             if single:
                 print("PAST : True")
                 print("AST  : True")
+            past = True
+            ast = True
             det = True
     for line in result.stderr.splitlines():
         line = line.strip()
@@ -235,7 +265,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
             if single:
                 print(f"TIME : {time:.3f}s")
             else:
-                return round(time, 3)
+                return past, ast, round(time, 3)
         else:
             sys.stderr.write(f"Cannot get running time of {benchmark_name} from KoAT2!")
             exit(-1)
@@ -243,7 +273,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
         if single:
             print("KoAT2 cannot determine termination property")
         else:
-            return "-"
+            return None, None, "-"
 
 def run_amber(benchmark_name, timeout = 100, single = True):
     # print(f"./benchmarks/amber/{benchmark_name}")
@@ -252,7 +282,7 @@ def run_amber(benchmark_name, timeout = 100, single = True):
             print(f"No such benchmark named {benchmark_name}")
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     result = subprocess.run(
         ["timeout", f"{timeout}s", "./baselines/amber/amber", f"./benchmarks/{benchmark_name}"], 
         capture_output=True,
@@ -274,10 +304,12 @@ def run_amber(benchmark_name, timeout = 100, single = True):
             print(result.stderr)
             exit(-1)
         else:
-            return "-"
+            return None, None, "-"
     time = -1
     det = False
     error = False
+    ast = False
+    past = False
     for line in result.stdout.splitlines():
         line = line.strip()
         if line.startswith('Something went wrong'):
@@ -289,12 +321,15 @@ def run_amber(benchmark_name, timeout = 100, single = True):
                 if single:
                     print("PAST : True")
                     print("AST  : True")
+                ast = True
+                past = True
                 det = True
         elif line.startswith('AST'):
             if line.split(':', 1)[1].strip() == "Yes":
                 if single and not det:
                     print("PAST : False")
                     print("AST  : True")
+                ast = True
             else:
                 if single:
                     print("PAST : False")
@@ -307,7 +342,7 @@ def run_amber(benchmark_name, timeout = 100, single = True):
             if single:
                 print(f"TIME : {time:.3f}s")
             else:
-                return round(time, 3)
+                return past, ast, round(time, 3)
         else:
             sys.stderr.write(f"Cannot get running time of {benchmark_name} from amber!")
             exit(-1)
@@ -323,7 +358,7 @@ def run_amber(benchmark_name, timeout = 100, single = True):
             else:
                 print("amber cannot determine termination property")
         else:
-            return "-"
+            return None, None, "-"
 
 def main():
     if len(sys.argv) < 2:
