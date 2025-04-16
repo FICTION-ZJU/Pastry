@@ -15,11 +15,11 @@ On the Almost-Sure Termination of Probabilistic Counter Programs. In Proc. of CA
 - [Smoke test (Docker)](#smoke-test-docker)
 - [Setup (Poetry)](#setup-poetry)
 - [Smoke test (Poetry)](#smoke-test-poetry)
-- [Replicating the results from the paper](#replicating-the-results-from-the-paper)
-- [Writing your own example](#writing-your-own-example)
-- [Running your own example](#running-your-own-example)
+- [Replicate the results from the paper](#replicate-the-results-from-the-paper)
+- [Write your own example](#write-your-own-example)
+- [Run your own example](#run-your-own-example)
 - [Becnhmarks](#benchmarks)
-- [Building Artifacts](#building-artifacts)
+- [Build Artifacts](#build-artifacts)
 - [One-Click Table Generation](#one-click-table-generation)
 
 
@@ -98,7 +98,7 @@ PAST : False
 Time : 0.011s
 ```
 
-## Replicating the results from the paper
+## Replicate the results from the paper
 
 To run the benchmark suite, run: 
 
@@ -108,12 +108,12 @@ docker run --rm -v $(pwd)/outputs:/home/artifact/pastry/outputs -v $(pwd)/result
 
 The detailed logs will be available in the `./outputs/logs` folder
 
-## Writing your own example
+## Write your own example
 
 This section describes the input language used by Pastry and how users can write, annotate their own probabilistic counter programs, along with example programs illustrating the format.
 
 
-### Progeam syntax rules:
+### Program syntax rules:
 
 
 ```
@@ -256,7 +256,7 @@ while(x + y >= 0){
 
 More examples can be found in the benchmarks folder.
 
-### Running your own example
+### Run your own example
 
 Suppose you saved your example in a file named `xxx.txt` in the path /home/artifact/benchmarks/pastry. Then the tool can be run as:
 
@@ -264,7 +264,7 @@ Suppose you saved your example in a file named `xxx.txt` in the path /home/artif
 ./run.sh pastry xxx
 ```
 
-### Running (Poetry)
+### Run (with Poetry)
 Pastry accepts a list of program files, printing the termination status for each of the file, for example
 
 ```bash
@@ -292,7 +292,7 @@ To run on the benchmark suite:
 find benchmarks -name "*.txt" -type f | sort | xargs -I{} poetry run python pastry.py --input {}
 ```
 
-### Running (Docker)
+### Run (with Docker)
 Docker image can be envoked either using a wrapper: 
 
 ```bash
@@ -317,7 +317,7 @@ docker run --rm -v $(pwd)/outputs:/app/outputs --entrypoint bash pastry:latest b
 
 ------
 
-### Building Artifacts 
+### Build Artifacts 
 
 To build a docker image, run: 
 
