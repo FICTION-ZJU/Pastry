@@ -48,17 +48,17 @@ def run_all(timeout = 100):
                 if res_pastry != "-" and res_pastry != "TO" and res_amber != "-" and res_amber != "TO":
                     if past_pastry != past or ast_pastry != ast:
                         sys.stderr.write(f"error: {name}, pastry: {past_pastry}, {ast_pastry}, amber: {past}, {ast}")
-                    exit(2)
+                        exit(2)
                 past, ast, res_koat1 = run_koat1(name, timeout, single = False)
                 if res_pastry != "-" and res_pastry != "TO" and res_koat1 != "-" and res_koat1 != "TO":
                     if past_pastry != past or ast_pastry != ast:
                         sys.stderr.write(f"error: {name}, pastry: {past_pastry}, {ast_pastry}, koat1: {past}, {ast}")
-                    exit(2)
+                        exit(2)
                 past, ast, res_koat2 = run_koat2(name, timeout, single = False)
                 if res_pastry != "-" and res_pastry != "TO" and res_koat2 != "-" and res_koat2 != "TO":
                     if past_pastry != past or ast_pastry != ast:
                         sys.stderr.write(f"error: {name}, pastry: {past_pastry}, {ast_pastry}, koat2: {past}, {ast}")
-                    exit(2)
+                        exit(2)
                 console.print(f"{name},{res_pastry},{res_amber},{res_koat1},{res_koat2}")
                 progress.update(task, advance = 1)
             progress.update(task, description = "done.")
