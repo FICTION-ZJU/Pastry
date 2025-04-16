@@ -85,7 +85,8 @@ def convert_const_AST(syntax_tree, ct_guard_dict, bench_coeff_dict):
 
     elif isinstance(syntax_tree, AsgnInstr):
         ovar = syntax_tree.lhs
-        new_value = int(syntax_tree.rhs.rhs.value * bench_coeff_dict[sp.Symbol(ovar)])
+        or_value = (-1 if syntax_tree.rhs.operator == Binop.MINUS else 1)*syntax_tree.rhs.rhs.value
+        new_value = int(or_value * bench_coeff_dict[sp.Symbol(ovar)])
         syntax_tree.lhs = 'z_ct'
         syntax_tree.rhs = create_AsgnInstr_rhs('z_ct', new_value)
         
