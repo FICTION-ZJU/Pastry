@@ -90,7 +90,7 @@ Time : 0.01s
 ```
 
 
-## Replicate the results from the paper
+## Replicating the results from the paper
 
 Reproduce the results in Table 1 (except for the column of Absynth, which has a separate artifact) by running the following command (which takes around 7 minutes):
 
@@ -118,7 +118,7 @@ docker run --platform linux/amd64 --rm -v "$(Get-Location)/outputs:/home/artifac
 **The detailed logs** for Pastry are recorded in `./pastry/outputs/logs`. The logs contain reports for each step of the algorithm: preprocessing, special case recognition, transformation of inputs into a Probabilistic Transition System instance, finitization, labeling procedure, and conclusion of results.
 
 
-## Run Pastry on benchmarks
+## Running Pastry on benchmarks
 
 To run only Pastry on the benchmarks, invoke on Unix-like systems:
 ```bash
@@ -142,7 +142,7 @@ docker run --platform linux/amd64 --rm -v "$(Get-Location)/outputs:/home/artifac
 ```
 
 
-## Write your own example
+## Writing your own example
 
 This section describes the input language used by Pastry and explains how users can write and annotate their own probabilistic counter programs. Example programs are provided to illustrate the format.
 
@@ -282,7 +282,7 @@ while(T - H > -1){
 More examples can be found in the benchmarks folder.
 
 
-## Run Pastry on your own example
+## Running Pastry on your own example
 
 Suppose you have saved your example in a file named `path/to/a/program.txt`. Then Pastry can be invoked as
 
