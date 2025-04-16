@@ -7,14 +7,14 @@ logger = logging.getLogger("pastry")
 
 def create_AsgnInstr(var_name, value):
     if value == 0:
-        logger.error(f"Attempted to create AsgnInstr for variable '{var_name}' with value 0, which is semantically meaningless.")
+        logger.error(f"Creating AsgnInstr for variable '{var_name}' with value 0 is semantically meaningless.")
         raise ValueError(f"Creating AsgnInstr for {var_name} with value 0 is meaningless.")
     return AsgnInstr(lhs=var_name, rhs=BinopExpr(operator=(Binop.MINUS if value<0 else Binop.PLUS), lhs=VarExpr(var_name), rhs=NatLitExpr(abs(value))))
 
 
 def create_AsgnInstr_rhs(var_name, value):
     if value == 0:
-        logger.error(f"Attempted to create rhs expression of AsgnInstr for variable '{var_name}' with value 0, which is semantically meaningless.")
+        logger.error(f"Creating rhs expression of AsgnInstr for variable '{var_name}' with value 0 is semantically meaningless.")
         raise ValueError(f"Creating rhs of AsgnInstr for {var_name} with value 0 is meaningless.")
     return BinopExpr(operator=(Binop.MINUS if value<0 else Binop.PLUS), lhs=VarExpr(var_name), rhs=NatLitExpr(abs(value)))
 
