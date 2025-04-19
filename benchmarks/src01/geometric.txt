@@ -1,9 +1,0 @@
-#stop = 0
-#while stop < 1:
-#    stop = stop + 1 @ 1/2; stop + 0
-
-
-int stop = 0;
-while(stop<1){
-   {stop := stop+1}[0.5]{}
-}
