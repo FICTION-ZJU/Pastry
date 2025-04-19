@@ -1,0 +1,35 @@
+#var i, j, m, n;
+#if m <= 0 then skip else
+#  if n <= m then skip else
+#    i:=0;
+#    j:=0;
+#    while i<n do
+#if prob(0.5) then
+#      if j<m then 
+#        j:=j+1
+#      else
+#        j := 0;
+#        i := i+1
+#      fi
+#    else skip fi
+#od
+#  fi
+#fi
+
+#Parameter setting: m=3, n=2
+
+/*@Bounded,i,[0,2],j,[0,3]@*/
+int i=0;
+int j=0;
+while(i<2){
+    {
+        if(j<3){
+            j:=j+1
+        }else{
+            j:=j-2
+            i:=i+1
+        }
+    }[0.5]{
+        
+    }
+}

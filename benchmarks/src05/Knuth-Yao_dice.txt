@@ -1,0 +1,171 @@
+#dtmc
+#module die
+#	// local state
+#	s : [0..7] init 0;
+#	// value of the dice
+#	d : [0..6] init 0;
+#	
+#	[] s=0 -> 0.5 : (s'=1) + 0.5 : (s'=2);
+#	[] s=1 -> 0.5 : (s'=3) + 0.5 : (s'=4);
+#	[] s=2 -> 0.5 : (s'=5) + 0.5 : (s'=6);
+#	[] s=3 -> 0.5 : (s'=1) + 0.5 : (s'=7) & (d'=1);
+#	[] s=4 -> 0.5 : (s'=7) & (d'=2) + 0.5 : (s'=7) & (d'=3);
+#	[] s=5 -> 0.5 : (s'=7) & (d'=4) + 0.5 : (s'=7) & (d'=5);
+#	[] s=6 -> 0.5 : (s'=2) + 0.5 : (s'=7) & (d'=6);
+#	[] s=7 -> (s'=7);
+#endmodule
+#rewards "coin_flips"
+#	[] s<7 : 1;
+#endrewards
+
+
+/*@Bounded,d,[0,6],s[0,7]@*/
+int s = 0;
+int d = 0;
+while(s<7) {
+    if (Eq(s, 0)) {
+        {
+            while(s > 1) {
+                s := s - 1
+            }
+            while(s < 1) {
+                s := s + 1
+            }
+        } [0.5] {
+            while(s > 2) {
+                s := s - 1
+            }
+            while(s < 2) {
+                s := s + 1
+            }
+        }
+    } else {
+
+        if (Eq(s, 1)) {
+            {
+                while(s > 3) {
+                    s := s - 1
+                }
+                while(s < 3) {
+                    s := s + 1
+                }
+            } [0.5] {
+                while(s > 4) {
+                    s := s - 1
+                }
+                while(s < 4) {
+                    s := s + 1
+                }
+            }
+        } else {
+
+            if (Eq(s, 2)) {
+                {
+                    while(s > 5) {
+                        s := s - 1
+                    }
+                    while(s < 5) {
+                        s := s + 1
+                    }
+                } [0.5] {
+                    while(s > 6) {
+                        s := s - 1
+                    }
+                    while(s < 6) {
+                        s := s + 1
+                    }
+                }
+            } else {
+
+                if (Eq(s, 3)) {
+                    {
+                        while(s > 1) {
+                            s := s - 1
+                        }
+                        while(s < 1) {
+                            s := s + 1
+                        }
+                    } [0.5] {
+                        while(s > 7) {
+                            s := s - 1
+                        }
+                        while(s < 7) {
+                            s := s + 1
+                        }
+                        d := d + 1
+
+                    }
+                } else {
+
+                    if (Eq(s, 4)) {
+                        {
+                            while(s > 7) {
+                                s := s - 1
+                            }
+                            while(s < 7) {
+                                s := s + 1
+                            }
+                            d := d + 2
+
+                        } [0.5] {
+                            while(s > 7) {
+                                s := s - 1
+                            }
+                            while(s < 7) {
+                                s := s + 1
+                            }
+                            d := d + 3
+                        }
+
+                    } else {
+
+                        if (Eq(s, 5)) {
+                            {
+                                while(s > 7) {
+                                    s := s - 1
+                                }
+                                while(s < 7) {
+                                    s := s + 1
+                                }
+                                d := d + 4
+
+                            } [0.5] {
+                                while(s > 7) {
+                                    s := s - 1
+                                }
+                                while(s < 7) {
+                                    s := s + 1
+                                }
+                                d := d + 5
+
+                            }
+                        } else {
+
+                            if (Eq(s, 6)) {
+                                {
+                                    while(s > 2) {
+                                        s := s - 1
+                                    }
+                                    while(s < 2) {
+                                        s := s + 1
+                                    }
+                                } [0.5] {
+                                    while(s > 7) {
+                                        s := s - 1
+                                    }
+                                    while(s < 7) {
+                                        s := s + 1
+                                    }
+                                    d := d + 6
+
+                                }
+                            } else {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
