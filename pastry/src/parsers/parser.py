@@ -271,7 +271,7 @@ def parse_pcp(pcp_str):
                         "The input program does not match any supported PCP subclass: 1-d PCP, constant k-d PCP, or monotone k-d PCP. "
                         "No valid annotation block was detected to classify it as a bounded or conditionally bounded k-d PCP. "
                         "Please ensure that the program either conforms to a supported subclass, or includes a valid annotation block "
-                        "placed at the beginning of the program, such as `/*@Bounded,...@*/` or `/*@ConditionallyBounded,...@*/`."
+                        "at the beginning of the program, such as `/*@Bounded,...@*/` or `/*@ConditionallyBounded,...@*/`."
                     )
     else:
         logger.info("Program classified as 1-d PCP.")
