@@ -1,2 +1,3 @@
 pastry.tar
 .venv
+.DS_Store
