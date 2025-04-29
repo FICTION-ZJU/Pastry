@@ -266,11 +266,12 @@ def parse_pcp(pcp_str):
                     logger.info(f"Program classified as Monotone {len(pcp_dict)}-d PCP.")
                     convert_mono_pcp(sd_pgcl_prog, replacement_map, var_trend_dict, info_dict)
                 else:
-                    logger.error("Input program classification failed: does not match any PCP category supported by Pastry.")
+                    logger.error("Unsupported input program: it does not match any supported PCP subclass or lacks a valid annotation block.")
                     raise ValueError(
-                        "The input program could not be classified as 1-dimensional PCP, constant k-dimensional PCP, or monotone k-dimensional PCP. "
-                        "In addition, no valid annotation block was detected. "
-                        "Please ensure that the program conforms to a supported PCP class or includes an appropriate annotation block."
+                        "The input program does not match any supported PCP subclass: 1-d PCP, constant k-d PCP, or monotone k-d PCP. "
+                        "No valid annotation block was detected to classify it as a bounded or conditionally bounded k-d PCP. "
+                        "Please ensure that the program either conforms to a supported subclass, or includes a valid annotation block "
+                        "placed at the beginning of the program, such as `/*@Bounded,...@*/` or `/*@ConditionallyBounded,...@*/`."
                     )
     else:
         logger.info("Program classified as 1-d PCP.")
