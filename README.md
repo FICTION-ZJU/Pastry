@@ -92,7 +92,7 @@ Time : 0.01s
 
 ## Replicating the results from the paper
 
-Reproduce the results in Table 1 (except for the column of Absynth, which has a separate artifact) by running the following command (which takes around 7 minutes):
+Reproduce the results in Table 1 (except for the column of Absynth, which has a separate artifact) by running the following command (which takes around 8 minutes):
 
 
 ```bash
