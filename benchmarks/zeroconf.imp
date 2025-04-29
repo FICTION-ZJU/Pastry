@@ -6,7 +6,7 @@ def f():
     probe = 0
     while start<=1 and established<=0 and probe<4:
         tick 1
-        if start=1:
+        if start>0:
             prob(1,1):
                 start = 0
             else:
