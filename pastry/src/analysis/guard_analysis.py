@@ -30,7 +30,9 @@ global_dict["MOD"] = MOD
 
 
 class GuardExpr():
-    """We introduce a new type to represent guards in PCP programs."""
+    """
+    We introduce a new type to represent guards in PCPs.
+    """
     def __init__(self, guard):
         if isinstance(guard, str):
             self.sp_expr = sp.parse_expr(guard, global_dict = global_dict)
@@ -147,11 +149,9 @@ def get_exprs(spguard):
 def get_exprs_from_subtree(subtree, exprs):
     if isinstance(subtree, (sp.Eq, sp.Ne, sp.Gt, sp.Lt, sp.Ge, sp.Le)):
         exprs.append(subtree.lhs - subtree.rhs)
-
     elif isinstance(subtree, (sp.And, sp.Or, sp.Not)):
         for arg in subtree.args:
             get_exprs_from_subtree(arg, exprs)
-
     else:
         raise ValueError("Unsupported expression type", type(subtree))
 
@@ -219,7 +219,6 @@ def get_threshold_and_period_from_spguard(spguard):
     else:
         var = next(iter(var_set))
         var_tmp = sp.symbols(var.name + '_tmp')
-
     exprs = get_exprs(spguard)
 
     thresholds = []
@@ -231,7 +230,6 @@ def get_threshold_and_period_from_spguard(spguard):
 
     guard_threshold = max(thresholds)
     guard_period = math.lcm(*periods)
-
     guard_threshold, guard_period_positive, guard_period_negative = minimize_guard_threshold_and_period(spguard, var,
                                                                                                         guard_threshold,
                                                                                                         guard_period)
