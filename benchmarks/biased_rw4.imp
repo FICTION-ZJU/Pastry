@@ -2,7 +2,7 @@
 def f():
     var x
     
-    x = 0
+    x = 10
     while x>0:
         prob(49,51):
             x = x + 1
