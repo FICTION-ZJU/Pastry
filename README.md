@@ -57,11 +57,11 @@ conda activate absynth
 
 First try to run Absynth:
 ```bash
-absynth/absynth -help
+absynth/absynth
 ```
 If you do not receive any error, just skip this step. Otherwise if you receive an error like `Apple could not verify "absynth" is free of malware...`, go to `System Settings -> Privacy & Security -> Security` and find the term `"absynth" was blocked to protect your Mac`. Click `Open Anyway` and run the command again:
 ```bash
-absynth/absynth -help
+absynth/absynth
 ```
 In the pop-up window, click `Open Anyway` and input your system password if required.
 
