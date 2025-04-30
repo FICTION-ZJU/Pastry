@@ -1,3 +1,4 @@
 pastry.tar
 .venv
 .DS_Store
+*/**/__pycache__

@@ -292,3 +292,63 @@ bash exec.sh path/to/a/program.txt
 ```
 
 This will invoke the docker image and report the result.
+
+
+## Installing Pastry from Sources 
+Pastry can be installed from provided source files by following these steps:
+
+1. Install the Poetry dependency management system:
+
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+Then follow the installer instructions.
+
+2. Install Pastry:
+
+```bash
+cd pastry && poetry install
+```
+
+3. To test the installation: 
+
+```bash 
+poetry run python3 pastry.py --input test/*
+```
+Expected ouput: 
+```
+Running: test/ast.txt
+PAST : False
+AST  : True
+Time : 0.03s
+Running: test/none.txt
+PAST : False
+AST  : False
+Time : 0.011s
+Running: test/past.txt
+PAST : True
+AST  : True
+Time : 0.012s
+```
+
+To run Pastry on a program located at path/to/program.txt, run:
+```bash 
+poetry run python3 pastry.py --input path/to/program.txt
+```
+
+## Pastry Internals
+
+Pastry closely follows the definitions and algorithms described in the paper "On the Almost-Sure Termination of Probabilistic Counter Programs", CAV'25. The following table gives the approximate correspondence between the paper and the Pastry source files:
+
+| Paper | Pastry |
+|-------|--------|
+| Fig 1: 1-d PCP | `pastry/src/parsers/parser.py:parse_pcp` |
+| Fig 1: 1-d PCTS | `pastry/src/models/pts.py:ProbabilisticTransitionSystem` |
+| Fig 1: Infinite-State MC | `pastry/src/models/rmc.py:RegularMarkovChain` |
+| Fig 1: Finite-State Labeled MC | `pastry/src/models/lmc.py:LabeledMarkovChain` |
+| Fig 1: Decision | `pastry/src/models/lmc.py:LabeledMarkovChain.is_ast_and_past` |
+| Algorithm 1: Deciding AST and PAST for 1-d PCPs | `pastry/pastry_core.py:run_core_analysis` |
+| Algorithm 2: PCTS Decomposition into | `pastry/src/utils/project_utils.py:analyze_threshold_and_period_from_pts`, `pastry/pastry_core.py:run_core_analysis` |
+| Algorithm 3: Identify the set of exit states at level-0 for each level-1 state | `pastry/src/models/rmc.py:RegularMarkovChain.get_boolean_reachability_matrix` |
+| Algorithm 4: Label the coupled Markov chain | `pastry/src/lmc.py:RegularMarkovChain._get_bscc_category`, `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
+| Algorithm 5: Label the level-11 states of | `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
