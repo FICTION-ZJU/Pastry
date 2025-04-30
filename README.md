@@ -58,7 +58,7 @@ The structure of the artifact is as follows.
 
 
 ## Setup
-Create a docker container from the provided tar file (which requires docker daemon running in the background):
+Create a docker container from the provided tar file (which requires docker daemon running in the background); the loading process may take up to 2 mins:
 ```bash
 docker load -i pastry.tar
 ```
