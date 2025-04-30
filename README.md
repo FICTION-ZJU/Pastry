@@ -11,7 +11,7 @@ On the Almost-Sure Termination of Probabilistic Counter Programs. In Proc. of CA
 This file contains instructions for the artifact evaluation of Pastry. In particular, we show how to reproduce the experimental results for Pastry and its competitors Amber, KoAT1, and KoAT2 as reported in Table 1 of the above paper and how to reuse Pastry beyond the paper, e.g., to run user-supplied examples.
 
 ## Contents
-- [Project Structure](#project-structure)
+- [Artifact structure](#artifact-structure)
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Smoke test](#smoke-test)
@@ -21,7 +21,7 @@ This file contains instructions for the artifact evaluation of Pastry. In partic
 - [Running Pastry on your own example](#running-pastry-on-your-own-example)
 - [Installing Pastry from Sources](#installing-pastry-from-sources)
 - [Pastry Internals](#pastry-internals)
-## Project structure
+## Artifact structure
 The structure of the artifact is as follows.
 
 ```
