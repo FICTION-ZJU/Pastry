@@ -33,7 +33,7 @@ The structure of the artifact is as follows.
 ```
 
 ## Requirements
-- Install Python 3 and Anaconda. If you have not used conda before, refer to the Appendix for a tutorial on installation and initialization.
+- Install Python 3 and Anaconda. If you have not used Conda before, refer to the Appendix for a tutorial on installation and initialization.
 
 - Install coreutils (for the use of `gtimeout`):
 ```bash
