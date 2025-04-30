@@ -117,7 +117,7 @@ vim ~/.bash_profile
 ```
 - Add the following line:
 
-On Intel Macs:  
+&ensp;&ensp;On Intel Macs:  
 ```bash
 export PATH="/usr/local/anaconda3/bin:$PATH"
 ```  
@@ -138,7 +138,7 @@ vim ~/.zshrc
 ```  
 - Add the following line:  
 
-On Intel Macs:
+&ensp;&ensp;On Intel Macs:
 ```bash
 export PATH="/usr/local/anaconda3/bin:$PATH"
 ```  
@@ -159,7 +159,7 @@ vim ~/.config/fish/config.fish
 ```  
 - Add the following line:  
 
-On Intel Macs:  
+&ensp;&ensp;On Intel Macs:  
 ```fish
 set -gx PATH /usr/local/anaconda3/bin $PATH
 ```  
