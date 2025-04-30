@@ -1,4 +1,4 @@
-# Instructions on running benchmarks with Absynth
+# Instructions on Running Benchmarks with Absynth
 
 This file contains instructions for the artifact evaluation of our CAV'25 paper:
 
