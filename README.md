@@ -11,17 +11,17 @@ On the Almost-Sure Termination of Probabilistic Counter Programs. In Proc. of CA
 This file contains instructions for the artifact evaluation of Pastry. In particular, we show how to reproduce the experimental results for Pastry and its competitors Amber, KoAT1, and KoAT2 as reported in Table 1 of the above paper and how to reuse Pastry beyond the paper, e.g., to run user-supplied examples.
 
 ## Contents
-- [Artifact structure](#artifact-structure)
+- [Artifact Structure](#artifact-structure)
 - [Requirements](#requirements)
 - [Setup](#setup)
-- [Smoke test](#smoke-test)
-- [Replicating the results from the paper](#replicating-the-results-from-the-paper)
-- [Running Pastry on benchmarks](#running-pastry-on-benchmarks)
-- [Writing your own example](#writing-your-own-example)
-- [Running Pastry on your own example](#running-pastry-on-your-own-example)
-- [Installing Pastry from sources](#installing-pastry-from-sources)
+- [Smoke Test](#smoke-test)
+- [Replicating the Results from the Paper](#replicating-the-results-from-the-paper)
+- [Running Pastry on Benchmarks](#running-pastry-on-benchmarks)
+- [Writing Your Own Example](#writing-your-own-example)
+- [Running Pastry on Your Own Example](#running-pastry-on-your-own-example)
+- [Installing Pastry from Sources](#installing-pastry-from-sources)
 - [Pastry Internals](#pastry-internals)
-## Artifact structure
+## Artifact Structure
 The structure of the artifact is as follows.
 
 ```
@@ -63,7 +63,7 @@ Create a docker container from the provided tar file (which requires docker daem
 docker load -i pastry.tar
 ```
 
-## Smoke test
+## Smoke Test
 
 For a quick test to see if everything works:
 
@@ -91,7 +91,7 @@ Time : 0.01s
 ```
 
 
-## Replicating the results from the paper
+## Replicating the Results from the Paper
 
 Reproduce the results in Table 1 (except for the column of Absynth, which has a separate artifact) by running the following command (which takes around 8 minutes):
 
@@ -119,7 +119,7 @@ docker run --platform linux/amd64 --rm -v "$(Get-Location)/outputs:/home/artifac
 **The detailed logs** for Pastry are recorded in `./pastry/outputs/logs`. The logs contain reports for each step of the algorithm: preprocessing, special case recognition, transformation of inputs into a Probabilistic Transition System instance, finitization, labeling procedure, and conclusion of results.
 
 
-## Running Pastry on benchmarks
+## Running Pastry on Benchmarks
 
 To run only Pastry on the benchmarks, invoke on Unix-like systems:
 ```bash
@@ -143,7 +143,7 @@ docker run --platform linux/amd64 --rm -v "$(Get-Location)/outputs:/home/artifac
 ```
 
 
-## Writing your own example
+## Writing Your Own Example
 
 This section describes the input language used by Pastry and explains how users can write and annotate their own probabilistic counter programs. Example programs are provided to illustrate the format.
 
@@ -205,12 +205,12 @@ while (var < c) { var := var + 1 }
 while (var > c) { var := var - 1 }
 ```
 
-### Annotation rules
+### Annotation Rules
 In addition to 1-d PCPs, Pastry admits four classes of $k$-d PCPs that are reducible to $1$-d PCPs while preserving their termination properties (see Section 5 of the paper). These four classes include (i) All But One Counters are Bounded; (ii) Monotone Counters; (iii) Conditionally Bounded Counters; and (iv) Constant Probability Programs. For Classes (ii) and (iv), Pastry supports automated checking of whether an input $k$-d PCP belongs to these categories and thus decides termination without any user hint. However, For Classes (i) and (iii), users need to provide correct annotations to assist the analysis：
 - For *All But One Counters are Bounded PCPs*, users need to annotate the unbounded variable and the bounds (in the form of closed intervals) for the other variables at the top of the program using the following format:```/*@Bounded, <unbounded_var>, <var1>,[<lower>,<upper>], <var2>, [<lower>,<upper>], ...@*/```. If all variable are bounded, ```<unbounded_var>``` can be omitted from the annotation.
 - For *Conditionally Bounded PCPs*, users need to provide valid constants (see Section 5 of the paper) at the top of the program using the following format: ```/*@CondBounded, y, x1[A1,B1,C1,D1], x2[A2,B2,C2,D2], ...@*/```
 
-### Program examples
+### Program Examples
 
 An example of $1$-d PCP:
 ```
@@ -283,7 +283,7 @@ while(T - H > -1){
 More examples can be found in the benchmarks folder.
 
 
-## Running Pastry on your own example
+## Running Pastry on Your Own Example
 
 Suppose you have saved your example in a file named `path/to/a/program.txt`. Then Pastry can be invoked as
 
@@ -295,7 +295,7 @@ bash exec.sh path/to/a/program.txt
 This will invoke the docker image and report the result.
 
 
-## Installing Pastry from sources 
+## Installing Pastry from Sources 
 Pastry can be installed from provided source files by following these steps:
 
 1. Install the Poetry dependency management system:
