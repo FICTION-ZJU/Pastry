@@ -9,7 +9,7 @@ In particular, we show how to reproduce the experimental results for Absynth (wh
 
 ## Contents
   - [Contents](#contents)
-  - [Artifact Structure](#artifact-structure)
+  - [Artifact structure](#artifact-structure)
   - [Requirements](#requirements)
   - [Setup](#setup)
   - [Replicate the results from the paper](#replicate-the-results-from-the-paper)
