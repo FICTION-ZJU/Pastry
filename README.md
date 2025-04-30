@@ -14,6 +14,7 @@ In particular, we show how to reproduce the experimental results for Absynth (wh
   - [Setup](#setup)
   - [Replicate the results from the paper](#replicate-the-results-from-the-paper)
   - [Merge result tables](#merge-result-tables)
+  - [Applendix](#applendix)
 
 ## Artifact structure
 The structure of the artifact is as follows.
@@ -32,10 +33,8 @@ The structure of the artifact is as follows.
 ```
 
 ## Requirements
-- Install Python 3 and Anaconda (https://www.anaconda.com/download). The latter can be installed by
-```bash
-brew install --cask anaconda
-```
+- Install Python 3 and Anaconda. If you have not used conda before, refer to Applendix for a tutorial on installation and initialization.
+
 - Install coreutils (for the use of `gtimeout`):
 ```bash
 brew install coreutils
@@ -57,11 +56,11 @@ conda activate absynth
 
 First try to run Absynth:
 ```bash
-absynth/absynth
+absynth/absynth -help
 ```
 If you do not receive any error, just skip this step. Otherwise if you receive an error like `Apple could not verify "absynth" is free of malware...`, go to `System Settings -> Privacy & Security -> Security` and find the term `"absynth" was blocked to protect your Mac`. Click `Open Anyway` and run the command again:
 ```bash
-absynth/absynth
+absynth/absynth -help
 ```
 In the pop-up window, click `Open Anyway` and input your system password if required.
 
@@ -89,3 +88,89 @@ python merge_table.py result/all_experiment_data.csv result/absynth_all_experime
 ut path/to/result/file
 ```
 The default path is `./result/merged_all_experiment_data.csv`.
+
+
+## Applendix
+
+### Install and initialize anaconda
+
+The following steps shows how to install Anaconda via Homebrew Cask (First make sure you have homebrew installed)
+
+#### (I) Update Homebrew and install the Anaconda Cask:  
+```bash
+brew update
+brew install --cask anaconda
+```
+#### (II) Update `PATH`
+
+By default, the Anaconda distribution will be installed to:
+   - `/usr/local/anaconda3` on Intel Macs  
+   - `/opt/homebrew/anaconda3` on Apple Silicon Macs
+
+To make the `conda` command available in your shell, you must prepend the Anaconda `bin` directory to your `PATH`. This involves editing your shell’s startup file.
+
+i) For Bash users (`~/.bash_profile` or `~/.bashrc`):
+
+- Open your Bash startup file in a text editor, for example:
+```bash
+vim ~/.bash_profile
+```
+- Add the following line (adjust the path if on Apple Silicon):  
+```bash
+export PATH="/usr/local/anaconda3/bin:$PATH"
+```  
+&ensp;&ensp;Or for Apple Silicon:  
+```bash
+export PATH="/opt/homebrew/anaconda3/bin:$PATH"
+```
+- Save and source the file:  
+```bash
+source ~/.bash_profile
+```
+
+ii) For Zsh users (`~/.zshrc`):
+
+- Open Zsh config file:  
+```bash
+vim ~/.zshrc
+```  
+- Add the following line (adjust the path if on Apple Silicon):  
+```bash
+export PATH="/usr/local/anaconda3/bin:$PATH"
+```  
+&ensp;&ensp;Or for Apple Silicon:  
+```bash
+export PATH="/opt/homebrew/anaconda3/bin:$PATH"
+```
+- Apply changes:  
+```bash
+source ~/.zshrc
+```
+
+iii) For Fish Shell users (`~/.config/fish/config.fish`):
+
+- Open Fish config file:  
+```bash
+vim ~/.config/fish/config.fish
+```  
+- Add the following:  
+```fish
+set -gx PATH /usr/local/anaconda3/bin $PATH
+```  
+&ensp;&ensp;Or for Apple Silicon:  
+```fish
+set -gx PATH /opt/homebrew/anaconda3/bin $PATH
+```  
+- Reload Fish config:  
+```bash
+source ~/.config/fish/config.fish
+```
+
+#### (III) Initialize Conda for Your Shell
+
+- In Terminal, execute:
+```bash
+conda init --all
+```
+
+- After running `conda init`, close and reopen your Terminal to load the changes.
