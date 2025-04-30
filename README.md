@@ -116,6 +116,7 @@ i) For Bash users (`~/.bash_profile` or `~/.bashrc`):
 vim ~/.bash_profile
 ```
 - Add the following line:
+
 On Intel Macs:  
 ```bash
 export PATH="/usr/local/anaconda3/bin:$PATH"
@@ -136,6 +137,7 @@ ii) For Zsh users (`~/.zshrc`):
 vim ~/.zshrc
 ```  
 - Add the following line:  
+
 On Intel Macs:
 ```bash
 export PATH="/usr/local/anaconda3/bin:$PATH"
@@ -156,6 +158,7 @@ iii) For Fish Shell users (`~/.config/fish/config.fish`):
 vim ~/.config/fish/config.fish
 ```  
 - Add the following line:  
+
 On Intel Macs:  
 ```fish
 set -gx PATH /usr/local/anaconda3/bin $PATH
