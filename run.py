@@ -97,7 +97,7 @@ def run_absynth(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME : {time:.3f}s")
+                print(f"Time : {time:.3f}s")
             else:
                 return round(time, 3)
         else:
