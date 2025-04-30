@@ -19,7 +19,7 @@ This file contains instructions for the artifact evaluation of Pastry. In partic
 - [Running Pastry on benchmarks](#running-pastry-on-benchmarks)
 - [Writing your own example](#writing-your-own-example)
 - [Running Pastry on your own example](#running-pastry-on-your-own-example)
-- [Installing Pastry from Sources](#installing-pastry-from-sources)
+- [Installing Pastry from sources](#installing-pastry-from-sources)
 - [Pastry Internals](#pastry-internals)
 ## Artifact structure
 The structure of the artifact is as follows.
@@ -295,7 +295,7 @@ bash exec.sh path/to/a/program.txt
 This will invoke the docker image and report the result.
 
 
-## Installing Pastry from Sources 
+## Installing Pastry from sources 
 Pastry can be installed from provided source files by following these steps:
 
 1. Install the Poetry dependency management system:
