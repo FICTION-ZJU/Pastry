@@ -14,7 +14,7 @@ In particular, we show how to reproduce the experimental results for Absynth (wh
   - [Setup](#setup)
   - [Replicate the results from the paper](#replicate-the-results-from-the-paper)
   - [Merge result tables](#merge-result-tables)
-  - [Applendix](#applendix)
+  - [Appendix](#appendix)
 
 ## Artifact structure
 The structure of the artifact is as follows.
@@ -33,7 +33,7 @@ The structure of the artifact is as follows.
 ```
 
 ## Requirements
-- Install Python 3 and Anaconda. If you have not used conda before, refer to Applendix for a tutorial on installation and initialization.
+- Install Python 3 and Anaconda. If you have not used conda before, refer to the Appendix for a tutorial on installation and initialization.
 
 - Install coreutils (for the use of `gtimeout`):
 ```bash
@@ -90,7 +90,7 @@ ut path/to/result/file
 The default path is `./result/merged_all_experiment_data.csv`.
 
 
-## Applendix
+## Appendix
 
 ### Install and initialize anaconda
 
