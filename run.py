@@ -126,7 +126,7 @@ def run_pastry(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME : {time:.3f}s")
+                print(f"Time : {time:.3f}s")
             else:
                 return past, ast, round(time, 3)
         else:
@@ -192,7 +192,7 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
                 print("AST  : True")
             ast = True
             det = True
-        elif line.startswith('TIME:'):
+        elif line.startswith('Time:'):
             time = float(line.split(":", 1)[1].strip())
     if det:
         if time != -1:
@@ -263,7 +263,7 @@ def run_koat2(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME : {time:.3f}s")
+                print(f"Time : {time:.3f}s")
             else:
                 return past, ast, round(time, 3)
         else:
@@ -340,7 +340,7 @@ def run_amber(benchmark_name, timeout = 100, single = True):
     if det:
         if time != -1:
             if single:
-                print(f"TIME : {time:.3f}s")
+                print(f"Time : {time:.3f}s")
             else:
                 return past, ast, round(time, 3)
         else:
