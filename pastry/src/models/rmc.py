@@ -11,11 +11,11 @@ class RegularMarkovChain:
     Represents the regular markov chain corresponding to a 1-d PCP.
     """
     def __init__(self, pts, direction, threshold, period):
-        logger.info("Starting creation of Regular Markov Chain with '%s' direction.", direction)
+        logger.info("Starting creation of Regular Markov Chain with '%s' direction", direction)
         
         # Initialize class variables
         if direction not in ["forward", "backward"]:
-            logger.error("Invalid direction: '%s'. Expected 'forward' or 'backward'.", direction)
+            logger.error("Invalid direction: '%s'. Expected 'forward' or 'backward'", direction)
             raise ValueError("Unknown direction type")
         self.pts = pts
         self.direction = direction
@@ -31,7 +31,7 @@ class RegularMarkovChain:
         self.B, self.B_nonzero_locs = self._create_prob_matrix(level1_rmc_list, level1_rmc_list)
         self.C, self.C_nonzero_locs = self._create_prob_matrix(level0_rmc_list, level1_rmc_list)
         
-        logger.info("Regular Markov Chain with direction '%s' successfully created. Each level contains %d states.", direction, self.rmc_width)
+        logger.info("Regular Markov Chain with direction '%s' successfully created, each level contains %d states", direction, self.rmc_width)
 
     def get_global_state(self, rmc_state):
         """
