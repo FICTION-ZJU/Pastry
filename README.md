@@ -349,7 +349,7 @@ Pastry closely follows the definitions and algorithms described in the paper "On
 | Fig 1: Finite-State Labeled MC | `pastry/src/models/lmc.py:LabeledMarkovChain` |
 | Fig 1: Decision | `pastry/src/models/lmc.py:LabeledMarkovChain.is_ast_and_past` |
 | Algorithm 1: Deciding AST and PAST for 1-d PCPs | `pastry/pastry_core.py:run_core_analysis` |
-| Algorithm 2: PCTS Decomposition into | `pastry/src/utils/project_utils.py:analyze_threshold_and_period_from_pts`, `pastry/pastry_core.py:run_core_analysis` |
+| Algorithm 2: PCTS Decomposition into $$M_{\text{irreg}},\ M_{\text{reg}}^{+,-}$$ | `pastry/src/utils/project_utils.py:analyze_threshold_and_period_from_pts`, `pastry/pastry_core.py:run_core_analysis` |
 | Algorithm 3: Identify the set of exit states at level-0 for each level-1 state | `pastry/src/models/rmc.py:RegularMarkovChain.get_boolean_reachability_matrix` |
-| Algorithm 4: Label the coupled Markov chain | `pastry/src/lmc.py:RegularMarkovChain._get_bscc_category`, `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
-| Algorithm 5: Label the level-1 states of | `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
+| Algorithm 4: Label the coupled Markov chain $$\bar M$$ | `pastry/src/lmc.py:RegularMarkovChain._get_bscc_category`, `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
+| Algorithm 5: Label the level-1 states of $$M_{\text{reg}}^{+}$$ | `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
