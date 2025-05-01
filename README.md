@@ -352,4 +352,4 @@ Pastry closely follows the definitions and algorithms described in the paper "On
 | Algorithm 2: PCTS Decomposition into | `pastry/src/utils/project_utils.py:analyze_threshold_and_period_from_pts`, `pastry/pastry_core.py:run_core_analysis` |
 | Algorithm 3: Identify the set of exit states at level-0 for each level-1 state | `pastry/src/models/rmc.py:RegularMarkovChain.get_boolean_reachability_matrix` |
 | Algorithm 4: Label the coupled Markov chain | `pastry/src/lmc.py:RegularMarkovChain._get_bscc_category`, `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
-| Algorithm 5: Label the level-11 states of | `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
+| Algorithm 5: Label the level-1 states of | `pastry/src/lmc.py:RegularMarkovChain.get_level1_info` |
