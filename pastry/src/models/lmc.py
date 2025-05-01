@@ -6,7 +6,7 @@ logger = logging.getLogger("pastry")
 
 class LabeledMarkovChain:
     def __init__(self, pts, threshold, forward_rmc, backward_rmc):
-        logger.info("Starting creation of Labeled Markov Chain.")
+        logger.info("Starting creation of Labeled Markov Chain")
         
         self.pts = pts
         self.threshold = threshold
@@ -59,7 +59,7 @@ class LabeledMarkovChain:
             rmc = self.backward_rmc
             boundary_value = -self.threshold
         else:
-            logger.error("Invalid direction: '%s'. Expected 'forward' or 'backward'.", direction)
+            logger.error("Invalid direction: '%s'. Expected 'forward' or 'backward'", direction)
             raise ValueError("Invalid direction")
 
         connection_rmc_states = {(direction, (0, i)) for i in range(self.pts.states_num)}
