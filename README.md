@@ -84,8 +84,7 @@ python merge_table.py ./result/all_experiment_data.csv ./result/absynth_all_expe
 ```
 One can also specify the output path by
 ```bash
-python merge_table.py result/all_experiment_data.csv result/absynth_all_experiment_data.csv --outp
-ut path/to/result/file
+python merge_table.py result/all_experiment_data.csv result/absynth_all_experiment_data.csv --output path/to/result/file
 ```
 The default path is `./result/merged_all_experiment_data.csv`.
 
