@@ -68,7 +68,7 @@ def parse_program_info(input_string):
         return category, remaining_part, var_abc_info, central_var
     
     else:
-        logger.error(f"Unsupported category '{category}' encountered in annotation. Expected 'Bounded' or 'CondBounded'.")
+        logger.error(f"Unsupported category '{category}' encountered in annotation. Expected 'Bounded' or 'CondBounded'")
         raise TypeError(f"Unsupported type: {category}")
 
 
@@ -221,7 +221,7 @@ def parse_pcp(pcp_str):
     Automatically detects and handles 1-d, Constant, and Monotone PCPs. 
     For Bounded or Conditionally Bounded PCPs, requires annotation via /*@...@*/.
     """
-    logger.info("Preprocessing started.")
+    logger.info("Preprocessing started")
     
     # Remove inline and block comments from the input program
     pcp_str = remove_comments_from_code(pcp_str)
@@ -239,34 +239,34 @@ def parse_pcp(pcp_str):
     # Filter out unused variables and redundant instructions from the program
     excluded_vars = set(pcp_dict.keys()) - meaningful_vars
     if excluded_vars:
-        logger.info("The following variables were excluded: %s. Since they do not appear in any guard conditions, they are irrelevant to the termination analysis.",
+        logger.info("The following variables were excluded: %s. Since they do not appear in any guard conditions, they are irrelevant to the termination analysis",
              ", ".join(excluded_vars))
     sd_pgcl_prog.variables = {key: value for key, value in pcp_dict.items() if key in meaningful_vars}
     remove_redundant_instructions(sd_pgcl_prog.instructions, meaningful_vars)
     if not sd_pgcl_prog.variables:
-        logger.info("No program variables remain after filtering. A dummy variable 'x' with initial value 0 has been added. This addition does not affect the program's termination semantics.")
+        logger.info("No program variables remain after filtering. A dummy variable 'x' with initial value 0 has been added. This addition does not affect the program's termination semantics")
         sd_pgcl_prog.variables['x'] = 0
     
     if len(sd_pgcl_prog.variables)>1:
         if meta_info[0]:
             if meta_info[0] == 'Bounded':
-                logger.info(f"Program classified as Bounded {len(pcp_dict)}-d PCP.")
+                logger.info(f"Program classified as Bounded {len(pcp_dict)}-d PCP")
                 convert_bounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], meta_info[4], True)
             elif meta_info[0] == 'CondBounded':
-                logger.info(f"Program classified as Conditionally Bounded {len(pcp_dict)}-d PCP.")
+                logger.info(f"Program classified as Conditionally Bounded {len(pcp_dict)}-d PCP")
                 convert_condbounded_pcp(sd_pgcl_prog, replacement_map, meta_info[2], meta_info[3], True)
         else:
             is_valid, ct_guard_dict, bench_coeff_dict = check_const_guard(replacement_map)
             if is_valid:
-                logger.info(f"Program classified as Constant {len(pcp_dict)}-d PCP.")
+                logger.info(f"Program classified as Constant {len(pcp_dict)}-d PCP")
                 convert_const_pcp(sd_pgcl_prog, ct_guard_dict, bench_coeff_dict)
             else:
                 is_valid, var_trend_dict, info_dict = check_mono_pcp(sd_pgcl_prog, replacement_map)
                 if is_valid:
-                    logger.info(f"Program classified as Monotone {len(pcp_dict)}-d PCP.")
+                    logger.info(f"Program classified as Monotone {len(pcp_dict)}-d PCP")
                     convert_mono_pcp(sd_pgcl_prog, replacement_map, var_trend_dict, info_dict)
                 else:
-                    logger.error("Unsupported input program: it does not match any supported PCP subclass or lacks a valid annotation block.")
+                    logger.error("Unsupported input program: it does not match any supported PCP subclass or lacks a valid annotation block")
                     raise ValueError(
                         "The input program does not match any supported PCP subclass: 1-d PCP, constant k-d PCP, or monotone k-d PCP. "
                         "No valid annotation block was detected to classify it as a bounded or conditionally bounded k-d PCP. "
@@ -274,8 +274,8 @@ def parse_pcp(pcp_str):
                         "at the beginning of the program, such as `/*@Bounded,...@*/` or `/*@ConditionallyBounded,...@*/`."
                     )
     else:
-        logger.info("Program classified as 1-d PCP.")
+        logger.info("Program classified as 1-d PCP")
         reverse_replace_instruction(sd_pgcl_prog.instructions, replacement_map)
     
-    logger.info("Preprocessing completed.")
+    logger.info("Preprocessing completed")
     return sd_pgcl_prog
