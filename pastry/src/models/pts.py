@@ -10,7 +10,7 @@ class ProbabilisticTransitionSystem:
     Represents the probabilistic transition system for a 1-d probabilistic counter program.
     """
     def __init__(self, program):
-        logger.info("Starting creation of Probabilistic Transition System.")
+        logger.info("Starting creation of Probabilistic Transition System")
 
         # Initialize class variables
         self.init_val = int(list(program.variables.values())[0])
@@ -31,7 +31,7 @@ class ProbabilisticTransitionSystem:
         self._add_transition(terminal_state, terminal_state, GuardExpr(self.var_name + '<0'), 1, 1, 1)
         self._add_transition(terminal_state, terminal_state, GuardExpr('Eq(' + self.var_name + ',0)'), 1, 1, 0)
         
-        logger.info("Probabilistic Transition System successfully created with %d states and %d transitions.", len(self.states_types_dict), len(self.states_transitions_dict))
+        logger.info("Probabilistic Transition System successfully created with %d states and %d transitions", len(self.states_types_dict), len(self.states_transitions_dict))
     
     def get_mc_transition_prob(self, mc_state_from, mc_state_to):
         """
