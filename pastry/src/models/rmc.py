@@ -105,7 +105,7 @@ class RegularMarkovChain:
                 print(f"Converged after {iteration + 1} iterations.")
                 return re_next
             re_new = re_next
-        logger.warning("Maximum number of iterations (%d) reached without convergence.", max_iter)
+        logger.warning("Maximum number of iterations (%d) reached without convergence", max_iter)
         print("Warning: Maximum number of iterations reached without convergence.")
         return re_new
 
@@ -168,7 +168,7 @@ class RegularMarkovChain:
         solution = sp.solve(equations, pi_symbols, dict=True)
 
         if len(solution) > 1:
-            logger.error("Multiple solutions found for steady-state distribution. Expected a unique solution.")
+            logger.error("Multiple solutions found for steady-state distribution. Expected a unique solution")
             raise ValueError("Multiple solutions found, expected a unique solution.")
 
         if solution:
@@ -190,7 +190,7 @@ class RegularMarkovChain:
             else:
                 return 1
         else:
-            logger.error("No solution found for the stationary distribution.")
+            logger.error("No solution found for the stationary distribution")
             raise ValueError("No solution found for the stationary distribution.")
 
     def _analyze_runway(self, max_level):
@@ -248,7 +248,7 @@ class RegularMarkovChain:
         """
         Determines level1 states info based on the coupled markov chain and runway analysis.
         """
-        logger.info("Starting the analysis of Regular Markov Chain with direction: %s.", self.direction)
+        logger.info("Starting the analysis of Regular Markov Chain with direction: %s", self.direction)
 
         ac_matrix = np.block([[self.A, self.B, self.C], [self.A, self.B, self.C], [self.A, self.B, self.C]])
         abstract_chain = nx.from_numpy_array(ac_matrix != 0, create_using=nx.DiGraph())
@@ -288,7 +288,7 @@ class RegularMarkovChain:
                                 axis_acstates_categories[acstate] = max(axis_acstates_categories[acstate],
                                                                         bottom_category)
                                 
-        logger.info("Starting runway analysis. Total runway states to be analyzed: %d.", 3 * self.rmc_width * self.rmc_width)
+        logger.info("Starting runway analysis. Total runway states to be analyzed: %d", 3 * self.rmc_width * self.rmc_width)
         
         max_level = 3 * self.rmc_width
         trapped_level1_states, exit_level1_states, boolean_reachability_matrix = self._analyze_runway(max_level)
@@ -306,5 +306,5 @@ class RegularMarkovChain:
                 elif category == 1:
                     nullrec_level1_states.add(rmc_state)
                     
-        logger.info("Completed the analysis of Regular Markov Chain with direction: %s.", self.direction)
+        logger.info("Completed the analysis of Regular Markov Chain with direction: %s", self.direction)
         return transient_level1_states, nullrec_level1_states, boolean_reachability_matrix
