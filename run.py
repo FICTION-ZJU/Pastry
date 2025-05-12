@@ -192,12 +192,12 @@ def run_koat1(benchmark_name, timeout = 100, single = True):
                 print("AST  : True")
             ast = True
             det = True
-        elif line.startswith('Time:'):
+        elif line.startswith('TIME:'):
             time = float(line.split(":", 1)[1].strip())
     if det:
         if time != -1:
             if single:
-                print(f"TIME : {time:.3f}s")
+                print(f"Time : {time:.3f}s")
             else:
                 return past, ast, round(time, 3)
         else:
