@@ -3,6 +3,6 @@
   (VAR sent fail totalFail)
   (RULES
     s0(sent,fail,totalFail) -> s1(0,0,0)
-    s1(sent,fail,totalFail) -> 0.9:s2(sent+1,0,totalFail) :+: 0.1:s2(sent,1,totalFail+1) :|: (sent < 5) && (fail < 5)
+    s1(sent,fail,totalFail) -> 0.9:s2(sent+1,0,totalFail) :+: 0.1:s2(sent,fail+1,totalFail+1) :|: (sent < 5) && (fail < 5)
     s2(sent,fail,totalFail) -> s1(sent,fail,totalFail)
   )
