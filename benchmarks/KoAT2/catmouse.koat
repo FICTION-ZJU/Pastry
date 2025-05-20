@@ -1,5 +1,5 @@
 (GOAL EXPECTEDCOMPLEXITY)
-  (STARTTERM (FUNCTIONSYMBOLS s0))
+  (STARTTERM (FUNCTIONSYMBOLS s1))
   (VAR x)
   (RULES
     s5(x) -> s6(x) :|: x <= 7
@@ -12,5 +12,4 @@
     s2(x) -> s3(x) :|: x <= 6
     s2(x) -> s9(x) :|: x>6
     s1(x) -> s2(0)
-    s0(x) -> s1(x)
   )
