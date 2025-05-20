@@ -2,10 +2,9 @@
   (STARTTERM (FUNCTIONSYMBOLS s0))
   (VAR X)
   (RULES
-    s3(X) -> 0.25:s4(X) :+: 0.75:s5(X)
-    s2(X) -> s3(X) :|: X > 0
-    s4(X) -> s2(X + 1)
-    s5(X) -> s2(X - 1)
-    s1(X) -> s2(10)
-    s0(X) -> s1(X)
+    s2(X) -> 0.25:s3(X) :+: 0.75:s4(X)
+    s1(X) -> s2(X) :|: X > 0
+    s3(X) -> s1(X + 1)
+    s4(X) -> s1(X - 1)
+    s0(X) -> s1(10)
   )
